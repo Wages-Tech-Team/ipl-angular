@@ -1,0 +1,223 @@
+.inner-card {
+    padding: 30px 35px 35px 30px;
+    box-shadow: 0 0 10px #ccc
+}
+
+.disableField {
+    background: #adb3af;
+}
+
+.font15 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.modalClass {
+    /* width: 40%; */
+    justify-content: end;
+    align-items: end;
+}
+
+.font22 {
+    font-size: 20px;
+}
+
+.w-45 {
+    width: 40%;
+}
+
+.w-35{
+    width: 35%;
+}
+
+.w-15{
+    width: 15%;
+}
+
+.paddingLeft{
+    text-align: center;
+}
+
+.currency{
+    position: absolute;
+    left: 0px;
+    padding: 3px 8px;
+    background: #0d89ec;
+    color: white;
+}
+
+.marginspace {
+    margin-right: 1em;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.error {
+    color: red;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+:host ::ng-deep button {
+    margin-right: .25em;
+}
+
+.addWages {
+    color: #096ead;
+    border: 2px solid #096ead;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 2px 6px;
+}
+
+.borderBox {
+    border: 1px solid #a8a7a78c;
+}
+
+.backoption {
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 1.5rem;
+    position: absolute;
+    cursor: pointer;
+}
+
+.addIcon {
+    color: red;
+    font-size: 14px;
+    border: 2px solid red;
+    padding: 0px 4px;
+    font-weight: bold;
+}
+
+.backGround {
+    height: 700px;
+    background-color: #fcfcfc;
+}
+
+.tableColor {
+    background-color: white;
+}
+
+.marginLeft {
+    margin-left: 1em;
+}
+
+.color-grey {
+    color: black;
+    font-weight: 600;
+}
+
+.selectdropdown1 {
+    cursor: pointer;
+    word-wrap: break-word;
+    line-height: 1em;
+    white-space: normal;
+    font-weight: 600;
+    outline: 0;
+    -webkit-transform: rotateZ(0);
+    transform: rotateZ(0);
+    /* min-width: 14em; */
+    min-height: 2.71428571em;
+    background: #fff;
+    display: inline-block;
+    padding: .78571429em 0.1em .78571429em 0.5em;
+    color: rgba(0, 0, 0, .87);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 1px solid rgba(34, 36, 38, .15);
+    border-radius: .28571429rem;
+    -webkit-transition: width .1s ease, -webkit-box-shadow .1s ease;
+    transition: width .1s ease, -webkit-box-shadow .1s ease;
+    transition: box-shadow .1s ease, width .1s ease;
+    transition: box-shadow .1s ease, width .1s ease, -webkit-box-shadow .1s ease;
+}
+
+.selectdropdown1:disabled {
+    background: #cfd4d1;
+    color: #6f7070;
+}
+
+.projectHeading {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #096ead;
+}
+
+.boxShadow {
+    box-shadow: 0 0 10px #ccc;
+    padding: 15px;
+}
+
+.mainHeading {
+    font-size: 20px;
+    color: #838383;
+    font-weight: bold;
+}
+
+.subHeading {
+    font-size: 18px;
+    color: #e31b10;
+    font-weight: 600;
+}
+
+.alignCenter {
+    text-align: center;
+}
+
+.widthSelect {
+    width: 16em;
+}
+
+.table-span {
+    color: #736160;
+    padding: 0.571em 0.857em;
+}
+
+.w-10 {
+    width: 10% !important;
+}
+
+.w-20 {
+    width: 20% !important;
+}
+
+.mainBox {
+    display: flex;
+}
+
+@media screen and (max-width: 1279px) and (min-width: 768px) {
+    .widthSelect {
+        width: auto;
+        font-size: 14px;
+    }
+    .font15 {
+        font-size: 15px;
+    }
+    .addWages {
+        padding: 0px;
+    }
+}
+
+@media screen and (max-width: 1400px) and (min-width: 1279px) {
+    .widthSelect {
+        width: 14em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .mainBox {
+        display: block;
+    }
+    .widthSelect {
+        width: 100%;
+    }
+    .spacingTop {
+        margin-top: 1rem;
+    }
+    .table-body {
+        overflow: auto;
+    }
+}

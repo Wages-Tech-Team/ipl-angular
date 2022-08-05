@@ -1,0 +1,34 @@
+<div [ngClass]="{'loading-css' : this.service.showloader}">
+    <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
+        <ng-template pTemplate="footer">
+            <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="reject()"></button>
+            <!-- <button type="button" pButton icon="pi pi-check" label="Yes" (click)="accept()"></button> -->
+        </ng-template>
+    </p-confirmDialog>
+    <div class="d-flex justify-content-center align-items-center mt-4">
+        <div class="projectHeading">Add Pay To</div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center mt-4">
+        <div class="boxStyle mt-4" [formGroup]="this.addpayTo">
+            <div class="d-block mt-4">
+                <div class="d-flex mt-4">
+                    <div>
+                        <input type="text" class="selectdropdown marginRight" placeholder="Enter Pay To" formControlName="pay_to">
+                        <p *ngIf="this.submitted && !this.addpayTo?.get('pay_to')?.value" class="error">
+                            Pay To is required</p>
+                    </div>
+                    <div>
+                        <input type="text" class="selectdropdown marginleft" placeholder="Enter Pay To Code" formControlName="pay_to_code">
+                        <p *ngIf="this.submitted && !this.addpayTo?.get('pay_to_code')?.value" class="error marginleft">
+                            Pay To Code is required</p>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button class="mt-4 upload-btn" (click)="submitPayTo()">Submit</button>
+                </div>
+            </div>
+            <div class="inputLabel mt-4 cursor-pointor" (click)="navigatedToSignUp()">Don't have an Account? <span class="spanColor cursor-pointor">Sign Up</span></div>
+            <div class="spanColor cursor-pointor mt-4" (click)="navigatedToAccount()">Manage User Accounts</div>
+        </div>
+    </div>
+</div>

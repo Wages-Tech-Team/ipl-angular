@@ -1,0 +1,44 @@
+.projectHeading {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #096ead;
+}
+
+.boxStyle {
+    box-shadow: 0 0 10px #ccc;
+    padding: 2em
+}
+
+.cursor-pointor {
+    cursor: pointer !important;
+}
+
+.marginRight {
+    margin-right: 1.5em;
+}
+
+.marginleft {
+    margin-left: 1.5em;
+}
+
+.upload-btn {
+    width: 100%;
+    color: white;
+    background-color: #096ead;
+    border: none;
+    padding: 0.5em;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.spanColor {
+    color: #096ead;
+    font-weight: 600;
+}
+
+.inputLabel {
+    font-size: 1vw;
+    color: #7993a8;
+    font-weight: 600;
+    margin-bottom: 0!important;
+}

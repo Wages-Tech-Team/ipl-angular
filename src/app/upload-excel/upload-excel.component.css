@@ -1,0 +1,93 @@
+.upload-btn {
+    width: 400px;
+    color: white;
+    background-color: #096ead;
+    border: none;
+    padding: 0.7em;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.colorRed {
+    background-color: red !important;
+    border: none;
+}
+
+.width {
+    width: 400px;
+}
+
+.marginPosition {
+    margin-left: 1em !important;
+}
+
+.inputLabel {
+    font-size: 1vw;
+    color: black;
+    font-weight: 600;
+    margin-bottom: 0!important;
+}
+
+.projectHeading {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #096ead;
+}
+
+.spacingBtn {
+    padding: 4em 6em;
+}
+
+.btnStyle {
+    background-color: white;
+    border: none;
+}
+
+.box-container {
+    border: 2px solid #8d8e8f;
+    display: flex;
+    width: 400px;
+    justify-content: space-between;
+    padding: 7px 10px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.uploadFile {
+    background: black;
+    color: white;
+    width: 150px;
+    padding: 4px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.textStyle {
+    color: red;
+}
+
+.boxStyle {
+    box-shadow: 0 0 10px #ccc;
+    padding: 2em
+}
+
+.spanStyle {
+    color: #7993A8;
+}
+
+.mr {
+    margin-right: 4px;
+}
+
+@media screen and (max-width: 1279px) and (min-width: 768px) {
+    .upload-btn {
+        width: 350px;
+    }
+    .box-container {
+        width: 350px;
+    }
+    .boxStyle {
+        box-shadow: 0 0 10px #ccc;
+        padding: 1em
+    }
+}

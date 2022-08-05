@@ -1,0 +1,52 @@
+<div class="backstyle" [formGroup]="this.projectForm" [ngClass]="{'loading-css' : this.service.showloader}">
+    <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
+        <ng-template pTemplate="footer">
+            <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="reject()"></button>
+        </ng-template>
+    </p-confirmDialog>
+    <div class="d-flex justify-content-center align-item-center">
+        <div class="d-flex flex-column cardStyling mt-4">
+            <div class="d-flex mt-4">
+                <div class="d-block">
+                    <div>
+                        <!-- <select class="selectdropdown marginRight width" formControlName="project_name" (change)="setPayToId(this.projectForm?.get('project_name')?.value)">
+                        <option value="PS">Please Select Pay To</option>
+                        <option *ngFor="let detail of this.payTo" value="{{detail?.pay_to_name}}">{{detail?.pay_to_name}}
+                        </option>
+                    </select> -->
+                        <p-dropdown [options]="payTo" formControlName="project_name" optionLabel="pay_to_name" [filter]="true" filterBy="pay_to_name" [showClear]="true" placeholder="Please Select Pay To" (onChange)="setPayToId(this.projectForm?.get('project_name')?.value)">
+                            <ng-template pTemplate="this.projectForm?.get('project_name')?.value">
+                                <div class="country-item country-item-value selectdropdown marginRight width " *ngIf="this.projectForm?.get('project_name')?.value">
+                                    <div class="dropdownStyle">{{this.projectForm?.get('project_name')?.value}}</div>
+                                </div>
+                            </ng-template>
+                            <ng-template let-detail pTemplate="item">
+                                <div class="country-item">
+                                    <div class="dropdownStyle">{{detail.pay_to_name}}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                        <p *ngIf="this.submitted && !this.projectForm?.get('project_name')?.value?.pay_to_name" class="error">
+                            Pay To is required</p>
+                    </div>
+                    <div>
+                        <input type="text" disabled class="selectdropdown mt-4 width" value="{{this.payToCode}}" placeholder="Pay To Code">
+                    </div>
+                </div>
+                <div class="d-block">
+                    <div>
+                        <select class="selectdropdown marginleft width" formControlName="block_name">
+                        <option value="PS">Please Select Trade</option>
+                        <option *ngFor="let list of this.tradeList" value={{list.key}}>{{list.key}}</option>
+                    </select>
+                        <p *ngIf="this.submitted && this.projectForm?.get('block_name')?.value == 'PS'" class="error marginleft">Trade is required</p>
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center mt-4">
+                        <!-- <button class="width mt-2 marginleft addWages">Add Pay To</button> -->
+                    </div>
+                </div>
+            </div>
+            <button (click)="navigatedTo()" class="continueBtn">Continue</button>
+        </div>
+    </div>
+</div>

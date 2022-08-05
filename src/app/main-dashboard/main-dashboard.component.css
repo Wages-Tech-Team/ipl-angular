@@ -1,0 +1,63 @@
+.continueBtn {
+    border: none;
+    color: white;
+    background-color: #096ead;
+    border: none;
+    margin-top: 3em;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.dropdownStyle {
+    font-size: 1vw !important;
+    font-weight: 600 !important;
+    color: black !important;
+}
+
+.marginRight {
+    margin-right: 1.5em;
+}
+
+.marginleft {
+    margin-left: 1.5em;
+}
+
+.cardStyling {
+    box-shadow: 0 0 10px #ccc;
+    padding: 10em 5em !important;
+    /* background: #096ead; */
+    background: white;
+}
+
+.inputLabel {
+    font-size: 1vw;
+    color: #7993a8;
+    font-weight: 600;
+    margin-bottom: 0!important;
+}
+
+.addWages {
+    background: white;
+    border: 2px solid #096ead;
+    color: #096ead;
+    font-size: 14px;
+    min-height: 2.8em;
+    font-weight: 600;
+}
+
+.width {
+    width: 16em !important;
+}
+
+.backGround {
+    height: 700px;
+    background-color: #fcfcfc;
+}
+
+@media screen and (max-width: 768px) {
+    .cardStyling {
+        box-shadow: 0 0 10px #ccc;
+        padding: 9em 2em !important;
+    }
+}

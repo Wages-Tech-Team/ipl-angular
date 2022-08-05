@@ -1,0 +1,52 @@
+<div [ngClass]="{'loading-css' : this.service.showloader}" class="backGround">
+    <div class="p-4">
+        <!-- <span class="backoption" (click)="navigatedTo()"> Back</span> -->
+        <div class="d-flex justify-content-center align-item-center tableColor">
+            <span class="projectHeading">IPL</span>
+        </div>
+        <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
+            <ng-template pTemplate="footer">
+                <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="reject()" *ngIf="this.modalHeading == 'Error'"></button>
+                <button type="button" pButton icon="pi pi-times" label="No" (click)="reject()" *ngIf="this.modalHeading != 'Error'"></button>
+                <button type="button" pButton icon="pi pi-check" label="Yes" (click)="accept()" *ngIf="this.modalHeading != 'Error'"></button>
+            </ng-template>
+        </p-confirmDialog>
+        <div class="mt-4 inner-card">
+            <div class="d-flex justify-content-end">
+                <button class="finalSubmit" (click)="confirm('Are you sure you want to final submit the wages ?','Final Submit',null)">Final Submission</button>
+            </div>
+            <div class="mt-4 table-body">
+                <p-table [columns]="column" [value]="data" [responsive]="false" [paginator]='true' [alwaysShowPaginator]="false" [(first)]='first' [rows]='10' [totalRecords]='this.totalRecords'>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr class="row-background-color2">
+                            <th *ngFor="let col of columns; let i = index" class="color-grey font22" [ngClass]="{'w-20':i==0,'w-15':(i==8 || i==4),'w-10': (i!=0 && i !=8 && i!=4)}">
+                                <span>{{col.header}}</span>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-row="rowIndex" [formGroup]="this.editForm">
+                        <tr>
+                            <td *ngFor="let col of columns; let i = index">
+                                <span *ngIf="i != 7"> {{rowData[col.field] ? rowData[col.field] : "-"}} </span>
+                                <span *ngIf="i==7 && !this.editOption[row]">£ {{this.service.formatNumber(number(rowData[col.field])?.toFixed(2))}}</span>
+                                <span *ngIf="i==7 && this.editOption[row]"><input type="text" class="w-100" formControlName="amount" (input)="amountCheck(row)"></span>
+                                <p *ngIf="i==7 && this.editOption[row] && this.errorMessage[row]" class="error mb-0 font11">Amount Should be less than Remaining Amount.</p>
+                                <span *ngIf="i==8" class="d-flex justify-content-between">
+                                <button class="editOption" *ngIf="!this.editOption[row]" (click)="editDetail(row)">Edit</button>
+                                <button class="delete" *ngIf="!this.editOption[row]" (click)="confirm('Are you sure you want to delete the wage ?','Delete Wages',row)">Delete</button>
+                                <button class="editOption" *ngIf="this.editOption[row]" (click)="confirm('Are you sure you want to save the wage ?','Save Wages',null)">Save</button>
+                                <button class="delete" *ngIf="this.editOption[row]" (click)="this.editOption[row] = false">X</button>
+                            </span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <div class="d-flex justify-content-center align-item-center p-4 borderBox" *ngIf="this.data.length == 0">
+                    <td>
+                        <span class="color-grey">No Results Found</span>
+                    </td>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

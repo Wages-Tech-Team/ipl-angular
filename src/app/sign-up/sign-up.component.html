@@ -1,0 +1,68 @@
+<div class="backstyle" [ngClass]="{'loading-css' : this.service.showloader}">
+    <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
+        <ng-template pTemplate="footer">
+            <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="reject()"></button>
+        </ng-template>
+    </p-confirmDialog>
+    <div class="d-flex justify-content-center align-item-center">
+        <div class="d-flex flex-column cardStylingSignUp" [formGroup]="this.signUp">
+            <div class="headingSihnIn">Sign Up</div>
+            <div class="d-flex mt-4 w-100 justify-content-between">
+                <div class="d-block w-100">
+                    <div class="inputLabel">Email Id :</div>
+                    <input type="text" class="inputStyling mt-2 widthEmail" placeholder="Enter Email Id" formControlName="email">
+                    <p *ngIf="this.submitted && !this.signUp?.get('email')?.value" class="error mb-0">
+                        Email Id is required</p>
+                    <p *ngIf="this.signUp?.get('email')?.value && this.submitted && this.signUp?.get('email')?.invalid" class="error mb-0">
+                        Email Id is invalid</p>
+                </div>
+            </div>
+            <div class="d-flex mt-4 w-100 justify-content-between">
+                <div class="d-block">
+                    <div class="inputLabel">First Name :</div>
+                    <input type="text" class="inputStyling mt-2" placeholder="Enter First Name" formControlName="firstName">
+                    <p *ngIf="this.submitted && !this.signUp?.get('firstName')?.value" class="error mb-0">
+                        First Name is required</p>
+                    <p *ngIf="this.signUp?.get('firstName')?.value && this.submitted && this.signUp?.get('firstName')?.invalid" class="error mb-0">
+                        First Name is invalid</p>
+                </div>
+                <div class="d-block">
+                    <div class="inputLabel">Last Name :</div>
+                    <input type="text" class="inputStyling mt-2" placeholder="Enter Last Name" formControlName="lastName">
+                    <p *ngIf="this.submitted && !this.signUp?.get('lastName')?.value" class="error mb-0">
+                        Last Name is required</p>
+                    <p *ngIf="this.signUp?.get('lastName')?.value && this.submitted && this.signUp?.get('lastName')?.invalid" class="error mb-0">
+                        Last Name is invalid</p>
+                </div>
+            </div>
+            <div class="d-flex mt-4 w-100 justify-content-between">
+                <div class="d-block">
+                    <div class="inputLabel">Password :</div>
+                    <input type="password" class="inputStyling mt-2" placeholder="Enter Password" formControlName="password">
+                    <p *ngIf="this.submitted && !this.signUp?.get('password')?.value" class="error mb-0">
+                        Password is required</p>
+                    <p *ngIf="this.signUp?.get('password')?.value && this.submitted && this.signUp?.get('password')?.invalid" class="error mb-0">
+                        Password is invalid</p>
+                </div>
+                <div class="d-block">
+                    <div class="inputLabel">Confirm Password :</div>
+                    <input type="password" class="inputStyling mt-2" placeholder="Enter Confirm Password" formControlName="confirmPassword">
+                    <p *ngIf="this.submitted && !this.signUp?.get('confirmPassword')?.value" class="error mb-0">
+                        Confirm Password is required</p>
+                    <p *ngIf="this.signUp?.get('confirmPassword')?.value && this.submitted && this.signUp?.get('confirmPassword')?.invalid" class="error mb-0">
+                        Confirm Password is invalid</p>
+                    <p *ngIf="(this.signUp?.get('password')?.value && this.signUp?.get('confirmPassword')?.value && (this.signUp?.get('password')?.value != this.signUp?.get('confirmPassword')?.value))" class="error mb-0">
+                        Password does not match</p>
+                </div>
+            </div>
+            <div class="d-block mt-2">
+                <input type="radio" name="user_role" id="admin" value="0" class="mt-1 mr-1 cursor-pointer" (click)="getUserRole('admin')"><label for="admin" class="marginPosition inputLabel cursor-pointer" (click)="getUserRole('admin')"> Admin </label><br>
+                <input type="radio" name="user_role" id="client" value="0" class="mt-1 mr-1 cursor-pointer" (click)="getUserRole('client')"><label for="client" class="marginPosition inputLabel cursor-pointer" (click)="getUserRole('client')"> Client </label>
+            </div>
+            <div class="mt-2">
+                <button class="mt-4 signIn w-100" (click)="submit()">Sign Up</button>
+            </div>
+            <!-- <div class="inputLabel mt-2" (click)="navigatedTo()">Already have an account? <span class="spanColor">Sign In</span></div> -->
+        </div>
+    </div>
+</div>

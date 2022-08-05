@@ -1,0 +1,40 @@
+<div [ngClass]="{'loading-css' : this.service.showloader}" class="backGround">
+    <div class="p-4">
+        <div class="d-flex justify-content-center align-item-center tableColor">
+            <span class="projectHeading">User Details</span>
+        </div>
+        <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
+            <ng-template pTemplate="footer">
+                <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="reject()" *ngIf="this.modalHeading == 'Error'"></button>
+                <button type="button" pButton icon="pi pi-times" label="No" (click)="reject()"  *ngIf="this.modalHeading != 'Error'"></button>
+                <button type="button" pButton icon="pi pi-check" label="Yes" (click)="accept()"  *ngIf="this.modalHeading != 'Error'"></button>
+            </ng-template>
+        </p-confirmDialog>
+        <div class="mt-4 inner-card">
+            <div class="mt-4 table-body">
+                <p-table [columns]="column" [value]="data" [responsive]="false" [paginator]='true'
+                    [alwaysShowPaginator]="false" [(first)]='first' [rows]='10' [totalRecords]='this.totalRecords'>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr class="row-background-color2">
+                            <th *ngFor="let col of columns; let i = index" class="color-grey font22" [ngClass]="{'width-20': (i==0 || i == 1),'width-25' : (i==2 || i ==3), 'width-5': i==4}">
+                                <span>{{col.header}}</span>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-row="rowIndex">
+                        <tr>
+                            <td *ngFor="let col of columns; let i = index" [ngClass]="{'width-20': (i==0 || i == 1),'width-25' : (i==2 || i ==3), 'width-5': i==4}">
+                                <div *ngIf="i!=3 && i !=4" class="mainHeading">{{rowData[col.field]}}</div>
+                                <div *ngIf="i==3" class="d-flex justify-content-between mainHeading">
+                                    <input type="radio" id="admin" [checked]="rowData.user_role == 'admin'" class="mt-1 mr-1 cursor-pointer " (click)="updateStatus(rowData.id,'admin')"><label for="admin" class="marginPosition inputLabel cursor-pointer"> Admin </label><br>
+                                    <input type="radio" id="client" [checked]="rowData.user_role == 'client'" class="mt-1 mr-1 cursor-pointer " (click)="updateStatus(rowData.id,'client')"><label for="client" class="marginPosition inputLabel cursor-pointer"> Client </label>
+                                </div>
+                                <div *ngIf="i==4" (click)="confirm('Are you sure you want to delete this user ?','Delete User' ,rowData.id)" class="removeIcon">X</div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+<div [ngClass]="{'loading-css' : this.service.showloader}" class="backGround">
+    <div class="d-flex justify-content-center align-items-center tableColor">
+        <span class="projectHeading">IPL</span>
+    </div>
+    <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
+        <ng-template pTemplate="footer">
+            <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="reject()" *ngIf="this.modalHeading == 'Error'"></button>
+            <button type="button" pButton icon="pi pi-times" label="No" (click)="reject()" *ngIf="this.modalHeading != 'Error'"></button>
+            <button type="button" pButton icon="pi pi-check" label="Yes" (click)="accept()" *ngIf="this.modalHeading != 'Error'"></button>
+        </ng-template>
+    </p-confirmDialog>
+    <div class="spacingBtn">
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <div class="boxStyle">
+                <button class="btnStyle"><label class="cursor-pointer m-0 upload-btn" for="upload-doc">Browse Excel</label></button>
+                <input #documentInput (change)="this.handleFileUpload($event)" type="file" id="upload-doc" class="d-none" name="avatar">
+                <p *ngIf="this.errorMessage && !this.filename" class="error">{{this.errorMessage}}</p>
+                <div class="d-flex mt-4" *ngIf="this.filename">
+                    <div class="mt-4 box-container">
+                        <div class="spanStyle">
+                            <span><img src="./../../assets/image_icon_document_pic_512x512.png" width="20px" class="mr"></span>{{this.filename}}</div>
+                        <div class="textStyle cursor-pointer" (click)="delete()">X</div>
+                    </div>
+                </div>
+                <div class="d-flex mt-4">
+                    <button class="uploadFile" disable="!this.filename" (click)="confirm('Are you sure you want to upload the project ?','Upload Project')">Upload</button>
+                </div>
+            </div>
+            <div class="boxStyle">
+                <div>
+                    <select class="selectdropdown width" (change)="setProjectId($event)">
+                <option value="PS">Please Select Project Name</option>
+                <option *ngFor="let detail of this.projectDetails" value="{{detail?.id}}" >{{detail?.project_name}}</option>
+               </select>
+                    <p *ngIf="this.submitted && this.selectedId == 'PS'" class="error">
+                        Project Name is required.
+                    </p>
+                </div>
+                <div class="d-block mt-2">
+                    <input type="radio" name="part" id="part1" value="0" class="mt-1 mr-1 cursor-pointer" (click)="getPart(1)"><label for="part1" class="marginPosition inputLabel cursor-pointer" (click)="getPart(1)"> Part 1 </label><br>
+                    <input type="radio" name="part" id="part2" value="0" class="mt-1 mr-1 cursor-pointer" (click)="getPart(2)"><label for="part2" class="marginPosition inputLabel cursor-pointer" (click)="getPart(2)"> Part 2 </label>
+                </div>
+                <p *ngIf="this.selectPart && !this.downloadPart" class="error">
+                    Please Select the Part.
+                </p>
+                <div class="mt-4 d-flex justify-content-between">
+                    <button class="uploadFile" (click)="confirm('Are you sure you want to download the project ?','Download Project')">Download Target</button>
+                    <button class="uploadFile colorRed" (click)="confirm('Are you sure you want to delete the project ?','Delete Project')">Delete</button>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <div class="boxStyle">
+                <div class="p-1">
+                    <button class="upload-btn" (click)="navigatedToPaytoScreen()">Management System</button>
+                </div>
+            </div>
+            <div class="boxStyle">
+                <button class="upload-btn" (click)="navigatedTo()">Go To Wages Portal</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+.inputStyling {
+    width: 100%;
+    padding: 7px;
+    color: #7993a8;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid #7993a8 !important;
+}
+
+.inputLabel {
+    font-size: 1vw;
+    color: #7993a8;
+    font-weight: 600;
+    margin-bottom: 0!important;
+}
+
+.signIn {
+    background-color: #096ead;
+    border: none;
+    padding: 0.6vw 0;
+    font-size: 1.2vw;
+    color: white;
+}
+
+.headingSihnIn {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.spanColor {
+    color: #096ead;
+}
+
+.cardStylingsignIn {
+    box-shadow: 0 0 10px #ccc;
+    padding: 6em 5em !important;
+    /* background: #096ead; */
+    background: white;
+}
+
+.widthField {
+    width: 20em;
+}
+
+@media screen and (max-width: 768px) {
+    .cardStylingsignIn {
+        padding: 2em 2em !important;
+    }
+    .inputLabel {
+        font-size: 3vw;
+    }
+    .signIn {
+        background-color: #096ead;
+        border: none;
+        padding: 1vw 0;
+        font-size: 3vw;
+        color: white;
+    }
+}
