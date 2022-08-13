@@ -13,6 +13,11 @@
     border: 1px solid #a8a7a78c;
 }
 
+.boxStyle{
+    flex-direction: column;
+    /* margin-top: 2px; */
+}
+
 .color-grey {
     color: black;
     font-weight: 600;

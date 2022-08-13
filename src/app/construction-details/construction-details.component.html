@@ -5,61 +5,76 @@
     </div>
     <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
         <ng-template pTemplate="footer">
-            <button type="button" pButton icon="pi pi-times" label="No" (click)="reject()" *ngIf="!this.message[0]"></button>
-            <button type="button" pButton icon="pi pi-check" label="Yes" (click)="accept()" *ngIf="!this.message[0]"></button>
+            <button type="button" pButton icon="pi pi-times" label="No" (click)="reject()"
+                *ngIf="!this.message[0]"></button>
+            <button type="button" pButton icon="pi pi-check" label="Yes" (click)="accept()"
+                *ngIf="!this.message[0]"></button>
         </ng-template>
     </p-confirmDialog>
     <div class="p-4 tableColor" [formGroup]="this.projectForm">
         <div class="boxShadow justify-content-around mainBox">
             <div class="d-block">
                 <div class="font15">Wages Number</div>
-                <select class="selectdropdown1 mt-2 widthSelect" formControlName="wages_number" (change)="checkAvailablity()">
-                <option value="PS">Select Wages Number</option>
-                <option *ngFor="let detail of this.wagesNumber" value="{{detail}}">{{detail}}
-                </option>
-            </select>
+                <select class="selectdropdown1 mt-2 widthSelect" formControlName="wages_number"
+                    (change)="checkAvailablity()">
+                    <option value="PS">Select Wages Number</option>
+                    <option *ngFor="let detail of this.wagesNumber" value="{{detail}}">{{detail}}
+                    </option>
+                </select>
                 <div class="font15">Block Number</div>
                 <select (change)="getFloorData()" class="selectdropdown1 mt-2 widthSelect" formControlName="block_name">
-            <option value="PS">Select Block Number</option>
-            <option *ngFor="let detail of this.blockDetails" value="{{detail?.id}}">{{detail?.block_name}}
-            </option>
-        </select>
+                    <option value="PS">Select Block Number</option>
+                    <option *ngFor="let detail of this.blockDetails" value="{{detail?.id}}">{{detail?.block_name}}
+                    </option>
+                </select>
 
             </div>
             <div class="d-block">
                 <div class="font15">Project Name</div>
-                <select (change)="getBlockData($event)" class="selectdropdown1 mt-2 widthSelect" formControlName="project_name">
-                <option value="PS">Select Project Name</option>
-                <option *ngFor="let detail of this.projectDetails" value="{{detail?.id}}">{{detail?.project_name}}
-                </option>
-            </select>
+                <select (change)="getBlockData($event)" class="selectdropdown1 mt-2 widthSelect"
+                    formControlName="project_name">
+                    <option value="PS">Select Project Name</option>
+                    <option *ngFor="let detail of this.projectDetails" value="{{detail?.id}}">{{detail?.project_name}}
+                    </option>
+                </select>
             </div>
             <div class="d-block">
                 <div class="font15">Single Selection - Levels</div>
-                <select (change)="getConstructionData($event,null,'floor')" class="selectdropdown1  mt-2 widthSelect" formControlName="floor_number">
-                <option value="PS">Select Floor Number</option>
-                <option *ngFor="let detail of this.floorDetails" value="{{detail?.id}}">{{detail?.floor_name}}
-                </option>
-            </select>
+                <select (change)="getConstructionData($event,null,'floor')" class="selectdropdown1  mt-2 widthSelect"
+                    formControlName="floor_number">
+                    <option value="PS">Select Floor Number</option>
+                    <option *ngFor="let detail of this.floorDetails" value="{{detail?.id}}">{{detail?.floor_name}}
+                    </option>
+                </select>
                 <div class="d-block">
                     <div class="font15">Single Selection - Flat/House </div>
-                    <select (change)="getConstructionData($event,null,'apartment')" class="selectdropdown1  mt-2 widthSelect" formControlName="apartment_name">
-            <option value="PS">Select Apartment Number</option>
-            <option *ngFor="let detail of this.apartmentDetails" value="{{detail?.id}}">{{detail?.apartment_number}}
-            </option>
-        </select>
+                    <select (change)="getConstructionData($event,null,'apartment')"
+                        class="selectdropdown1  mt-2 widthSelect" formControlName="apartment_name">
+                        <option value="PS">Select Apartment Number</option>
+                        <option *ngFor="let detail of this.apartmentDetails" value="{{detail?.id}}">
+                            {{detail?.apartment_number}}
+                        </option>
+                    </select>
                 </div>
             </div>
             <div class="d-block">
                 <div>
                     <div class="font15">Multiple Selection - Levels</div>
-                    <p-multiSelect [options]="this.floorDetails" [(ngModel)]="floorids" defaultLabel="Select Floor Number" class="widthSelect" optionLabel="floor_name" selectedItemsLabel="{0} items selected" optionValue="id" [ngModelOptions]="{standalone: true}" (onPanelHide)="getDescription(this.floorids[0],null,'floor')"
-                        [disabled]="(this.selectedFloorType == 'single' || this.selectionType == 'single' ) ? true : false"></p-multiSelect>
+                    <p-multiSelect [options]="this.floorDetails" [(ngModel)]="floorids"
+                        defaultLabel="Select Floor Number" class="widthSelect" optionLabel="floor_name"
+                        selectedItemsLabel="{0} items selected" optionValue="id" [ngModelOptions]="{standalone: true}"
+                        (onPanelHide)="getDescription(this.floorids[0],null,'floor')"
+                        [disabled]="(this.selectedFloorType == 'single' || this.selectionType == 'single' ) ? true : false">
+                    </p-multiSelect>
                 </div>
                 <div>
                     <div class="font15">Multiple Selection - Flat/House</div>
-                    <p-multiSelect [options]="this.apartmentDetails" [(ngModel)]="appartmentids" defaultLabel="Select Apartment Number" class="widthSelect" optionLabel="apartment_number" selectedItemsLabel="{0} items selected" optionValue="id" [ngModelOptions]="{standalone: true}"
-                        (onPanelHide)="getDescription(this.appartmentids[0],null,'aparment')" [disabled]="(this.selectedFloorType == 'single' || this.selectionType == 'single') ? true : false"></p-multiSelect>
+                    <p-multiSelect [options]="this.apartmentDetails" [(ngModel)]="appartmentids"
+                        defaultLabel="Select Apartment Number" class="widthSelect" optionLabel="apartment_number"
+                        selectedItemsLabel="{0} items selected" optionValue="id" [ngModelOptions]="{standalone: true}"
+                        (onPanelHide)="getDescription(this.appartmentids[0],null,'aparment')"
+                        [disabled]="(this.selectedFloorType == 'single' || this.selectionType == 'single') ? true : false">
+                    </p-multiSelect>
                 </div>
             </div>
             <div class="d-flex align-items-start mt-4 spacingTop">
@@ -67,37 +82,48 @@
                 <p-button (click)="navigatedTowages()" label="Check Wages" class="mt-2"></p-button>
             </div>
         </div>
-        <div class="inner-card mt-4 w-100" *ngIf="((this.projectForm.get('apartment_name')?.value != 'PS' && this.appartmentids?.length == 0) || (this.projectForm.get('floor_number')?.value != 'PS' && this.floorids.length == 0) || (this.appartmentids.length == 0 && this.floorids.length == 0))">
+        <div class="inner-card mt-4 w-100"
+            *ngIf="((this.projectForm.get('apartment_name')?.value != 'PS' && this.appartmentids?.length == 0) || (this.projectForm.get('floor_number')?.value != 'PS' && this.floorids.length == 0) || (this.appartmentids.length == 0 && this.floorids.length == 0))">
             <div class="mt-4 table-body">
-                <p-table [columns]="column" [value]="data" dataKey="description_header" selectionMode="single" rowExpandMode="single" [responsive]="false">
+                <p-table [columns]="column" [value]="data" dataKey="description_header" selectionMode="single"
+                    rowExpandMode="single" [responsive]="false">
                     <ng-template pTemplate="header" let-columns>
                         <tr class="row-background-color2">
-                            <th *ngFor="let col of columns; let i = index" class="color-grey font22" [ngClass]="{'w-45': i==0,'w-20': (i==1 || i==3 || i==2),'w-10': i==4}">
+                            <th *ngFor="let col of columns; let i = index" class="color-grey font22"
+                                [ngClass]="{'w-45': i==0,'w-20': (i==1 || i==3 || i==2),'w-10': i==4}">
                                 {{col.header}}
                             </th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns" let-row="rowIndex">
+                    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns"
+                        let-row="rowIndex">
                         <tr class="cursor-pointer" (click)="selectedRow(row)">
                             <td *ngFor="let col of columns; let i = index">
-                                <span class="mainHeading marginLeft cursor-pointer" (click)="deSelectOption()" *ngIf="rowData[col.field] && i==0" [ngClass]="expanded? 'row-select-color': ''" [pRowToggler]="rowData">
+                                <span class="mainHeading marginLeft cursor-pointer" (click)="deSelectOption()"
+                                    *ngIf="rowData[col.field] && i==0" [ngClass]="expanded? 'row-select-color': ''"
+                                    [pRowToggler]="rowData">
                                     {{rowData[col.field]}} <span class="addIcon marginLeft"
-                                        *ngIf="!expanded">+</span><span class="addIcon marginLeft" *ngIf="expanded">-</span></span>
-                                        <span *ngIf="i==1" class="marginLeft">£ {{(rowData.total) ? this.service.formatNumber((rowData.total).toFixed(2)) : 0.00}}</span>
+                                        *ngIf="!expanded">+</span><span class="addIcon marginLeft"
+                                        *ngIf="expanded">-</span></span>
+                                <span *ngIf="i==1" class="marginLeft">£ {{(rowData.total) ?
+                                    this.service.formatNumber((rowData.total).toFixed(2)) : 0.00}}</span>
                                 <span *ngIf="i==2" class="marginLeft">£ {{(rowData.total -
                                     rowData.total_amount_booked) ? this.service.formatNumber((rowData.total -
                                     rowData.total_amount_booked).toFixed(2)) : 0.00}}</span>
                                 <span *ngIf="i==3">
-                                    <div class="d-block position-relative"><span class="currency">£</span><input type="number" value="this.totalAmount"
-                                            (input)="calculate(row,$event)" class="paddingLeft"> 
-                                        <p class="error mb-0" *ngIf="this.showerror[row] && this.enteredValue != 0">Booking Amount Should be less
+                                    <div class="d-block position-relative"><span class="currency">£</span><input
+                                            type="number" value="this.totalAmount" (input)="calculate(row,$event)"
+                                            class="paddingLeft">
+                                        <p class="error mb-0" *ngIf="this.showerror[row] && this.enteredValue != 0">
+                                            Booking Amount Should be less
                                             than total Amount.</p>
-                                        <p class="error mb-0" *ngIf="this.showerror[row] && this.enteredValue == 0">Booking Amount Should be greater than 0.</p>
+                                        <p class="error mb-0" *ngIf="this.showerror[row] && this.enteredValue == 0">
+                                            Booking Amount Should be greater than 0.</p>
                                     </div>
                                 </span>
-                                <span *ngIf="i==4" (click)="addWages(row)"><span class="addWages">Add
+                                <span *ngIf="i==4" (click)="addWages(row,null)"><span class="addWages">Add
                                         Wages</span>
-                                <!-- <p class="error mb-0    " *ngIf="this.message[row]">Added !</p> -->
+                                    <!-- <p class="error mb-0    " *ngIf="this.message[row]">Added !</p> -->
                                 </span>
                             </td>
                         </tr>
@@ -105,47 +131,56 @@
                     <ng-template pTemplate="rowexpansion" let-rowData>
                         <tr class="p-0">
                             <td [attr.colspan]="column.length" class="p-3">
-                                <p-table [value]="description.records" *ngFor="let description of this.data[this.selectedRowIndex].sub_description_records;let i =index">
+                                <p-table [value]="description.records"
+                                    *ngFor="let description of this.data[this.selectedRowIndex].sub_description_records;let i =index">
                                     <ng-template pTemplate="header">
-                                        <tr>
-                                            <div class="subHeading p-2" style="width: 600px;">{{i+1}}. {{description?.sub_description}}
-                                            </div>
-                                        </tr>
-                                        <tr>
-                                            <th class="color-grey" *ngFor="let cols of nestedcolumns; let j = index" [ngClass]="{'w-20' : j == 0,'w-10' : j!=0}">
-                                                {{cols.header}}
-                                            </th>
-                                        </tr>
-                                    </ng-template>
-                                    <ng-template pTemplate="body" let-rowData let-index="rowIndex" let-row="rowIndex" [formGroup]="this.wages">
-                                        <tr>
-                                            <td *ngFor="let cols of nestedcolumns; let j = index" class="table-span">
-                                                <span *ngIf="i!=this.selectedTable || !this.editOption[row]">
-                                                <span *ngIf="j!=3 && j!=4"> {{rowData[cols.field]}}</span>
-                                                <span *ngIf="j==3 || j==4">£ {{rowData[cols.field] ? this.service.formatNumber(rowData[cols.field]) : 0.00}}</span>
-                                                </span>
-                                                <span *ngIf="this.editOption[row] && i==this.selectedTable">
-                                                    <span *ngIf="j==0">{{rowData[cols.field]}}</span>
-                                                <span *ngIf="j==1"><input type="text" formControlName="area"></span>
-                                                <span *ngIf="j==2"><input type="text" formControlName="unit"></span>
-                                                <span *ngIf="j==3"><input type="text" formControlName="lab_rate"></span>
-                                                <span *ngIf="j==4">£ {{rowData[cols.field] ? this.service.formatNumber(rowData[cols.field]) : 0.00}}</span>
-                                                </span>
-                                                <span *ngIf="j==4 && this.service.getRole()=='admin'" class="marginLeft">
-                                                    <button class="addWages marginLeft" (click)="edit(i , row)" *ngIf="i!=this.selectedTable || !this.editOption[row]">Edit</button>
-                                                    <button class="addWages marginLeft" (click)="save()" *ngIf="this.editOption[row] && i==this.selectedTable">Save</button>
-                                                    <span class="addIcon marginLeft" (click)="deleteOption()" *ngIf="i==this.selectedTable && this.editOption[row]">X</span>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    </ng-template>
-                                </p-table>
+                        <tr>
+                            <div class="subHeading p-2" style="width: 600px;">{{i+1}}. {{description?.sub_description}}
+                            </div>
+                        </tr>
+                        <tr>
+                            <th class="color-grey" *ngFor="let cols of nestedcolumns; let j = index"
+                                [ngClass]="{'w-20' : j == 0,'w-10' : j!=0}">
+                                {{cols.header}}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-index="rowIndex" let-row="rowIndex"
+                        [formGroup]="this.wages">
+                        <tr>
+                            <td *ngFor="let cols of nestedcolumns; let j = index" class="table-span">
+                                <span *ngIf="i!=this.selectedTable || !this.editOption[row]">
+                                    <span *ngIf="j!=3 && j!=4"> {{rowData[cols.field]}}</span>
+                                    <span *ngIf="j==3 || j==4">£ {{rowData[cols.field] ?
+                                        this.service.formatNumber(rowData[cols.field]) : 0.00}}</span>
+                                </span>
+                                <span *ngIf="this.editOption[row] && i==this.selectedTable">
+                                    <span *ngIf="j==0">{{rowData[cols.field]}}</span>
+                                    <span *ngIf="j==1"><input type="text" formControlName="area"></span>
+                                    <span *ngIf="j==2"><input type="text" formControlName="unit"></span>
+                                    <span *ngIf="j==3"><input type="text" formControlName="lab_rate"></span>
+                                    <span *ngIf="j==4">£ {{rowData[cols.field] ?
+                                        this.service.formatNumber(rowData[cols.field]) : 0.00}}</span>
+                                </span>
+                                <span *ngIf="j==4 && this.service.getRole()=='admin'" class="marginLeft">
+                                    <button class="addWages marginLeft" (click)="edit(i , row)"
+                                        *ngIf="i!=this.selectedTable || !this.editOption[row]">Edit</button>
+                                    <button class="addWages marginLeft" (click)="save()"
+                                        *ngIf="this.editOption[row] && i==this.selectedTable">Save</button>
+                                    <span class="addIcon marginLeft" (click)="deleteOption()"
+                                        *ngIf="i==this.selectedTable && this.editOption[row]">X</span>
+                                </span>
                             </td>
                         </tr>
                     </ng-template>
                 </p-table>
+                </td>
+                </tr>
+                </ng-template>
+                </p-table>
                 <!-- <ng-template pTemplate="emptymessage" let-columns> -->
-                <div class="d-flex justify-content-center align-item-center p-4 borderBox" *ngIf="this.data.length == 0">
+                <div class="d-flex justify-content-center align-item-center p-4 borderBox"
+                    *ngIf="this.data.length == 0">
                     <td>
                         <span class="color-grey">No Results Found</span>
                     </td>
@@ -153,35 +188,87 @@
                 <!-- </ng-template> -->
             </div>
         </div>
-        <div class="inner-card mt-4 w-100" *ngIf="((this.projectForm.get('apartment_name')?.value == 'PS' && this.appartmentids.length > 0) || (this.projectForm.get('floor_number')?.value == 'PS' && this.floorids.length > 0))">
+        <div class="inner-card mt-4 w-100"
+            *ngIf="((this.projectForm.get('apartment_name')?.value == 'PS' && this.appartmentids.length > 0) || (this.projectForm.get('floor_number')?.value == 'PS' && this.floorids.length > 0))">
             <div class="mt-4 table-body">
-                <p-table [columns]="column" [value]="data" [responsive]="false">
+                <p-table [columns]="column" [value]="data" [responsive]="false" dataKey="description_header"
+                    selectionMode="single" rowExpandMode="single">
                     <ng-template pTemplate="header" let-columns>
                         <tr class="row-background-color2">
-                            <th *ngFor="let col of columns; let i = index" class="color-grey font22" [ngClass]="{'w-35': i==0,'w-20': (i==3 || i==2),'w-10': (i==4),'w-15': i==1}">
+                            <th *ngFor="let col of columns; let i = index" class="color-grey font22"
+                                [ngClass]="{'w-35': i==0,'w-20': (i==3 || i==2),'w-10': (i==4),'w-15': i==1}">
                                 <span>{{col.header}}</span>
                             </th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-row="rowIndex">
-                        <tr>
+                    <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns"
+                        let-row="rowIndex">
+                        <tr (click)="selectedRow(row)">
                             <td *ngFor="let col of columns; let i = index">
-                                <span class="mainHeading cursor-pointer" *ngIf="i == 0"> {{rowData[col.field]}} </span>
-                                <span *ngIf="i==1" class="marginLeft">£ {{(rowData.total) ? this.service.formatNumber((rowData.total).toFixed(2)) : 0.00}}</span>
-                                <span class="cursor-pointer" *ngIf="i == 2"><input type="number" value ="{{percentageAmount[row]}}" (input)="getBookingAmount($event, row)">
-                                    <p class="error mb-0" *ngIf="percentageAmount[row] && (percentageAmount[row] > 100)">% Completed can't be greater than 100.</p>
+                                <span class="mainHeading cursor-pointer" *ngIf="i == 0"
+                                    [ngClass]="expanded? 'row-select-color': ''" [pRowToggler]="rowData">
+                                    {{rowData[col.field]}} <span class="addIcon marginLeft"
+                                        *ngIf="!expanded">+</span><span class="addIcon marginLeft"
+                                        *ngIf="expanded">-</span></span>
+                                <span *ngIf="i==1" class="marginLeft">£ {{(rowData.total) ?
+                                    this.service.formatNumber((rowData.total).toFixed(2)) : 0.00}}</span>
+                                <!-- <span class="cursor-pointer" *ngIf="i == 2"><input type="number"
+                                        value="{{percentageAmount[row]}}" (input)="getBookingAmount($event, row)">
+                                    <p class="error mb-0"
+                                        *ngIf="percentageAmount[row] && (percentageAmount[row] > 100)">% Completed can't
+                                        be greater than 100.</p>
+                                </span> -->
+                                <!-- <span class="cursor-pointer position-relative" *ngIf="i == 3"><span
+                                        class="currency">£</span><input type="number" value="{{bookingAmount[row]}}"
+                                        class="paddingLeft" [disabled]="true">
+                                    <p class="error mb-0" *ngIf="bookingAmount[row] && (bookingAmount[row] <= 0)">
+                                        Booking Amount can't be smaller than 0.</p>
+                                </span> -->
+                                <!-- <span *ngIf="i==4" (click)="addWages(row)" class="cursor-pointer"><span
+                                        class="addWages">Add Wages</span> -->
+                                    <!-- <p class="error mb-0" *ngIf="this.message[row]">Added !</p> -->
+                                <!-- </span> -->
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="rowexpansion" let-rowData>
+                        <tr class="p-0">
+                            <td [attr.colspan]="column.length" class="p-3">
+                                <p-table [value]="this.data[this.selectedRowIndex].records">
+                                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="color-grey" *ngFor="let cols of nestedcolumns; let j = index"
+                                [ngClass]="{'w-20' : j == 0,'w-10' : j!=0}">
+                                {{cols.header}}
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-index="rowIndex" let-row="rowIndex">
+                        <tr>
+                            <td *ngFor="let cols of nestedcolumns; let j = index" class="table-span">
+                                <span *ngIf="j==0">{{rowData[cols.field]}}</span>
+                                <span *ngIf="j==1">£ {{rowData[cols.field] ?
+                                    this.service.formatNumber(rowData[cols.field]) : 0.00}}</span>
+                                <span class="cursor-pointer" *ngIf="j == 2"><input type="number"
+                                        value="{{percentageAmount[row]}}" (input)="getBookingAmount($event,row,this.selectedRowIndex)">
+                                    <p class="error mb-0"
+                                        *ngIf="percentageAmount[row] && (percentageAmount[row] > 100)">% Completed can't
+                                        be greater than 100.</p>
                                 </span>
-                                <span class="cursor-pointer position-relative" *ngIf="i == 3"><span class="currency">£</span><input type="number" value="{{bookingAmount[row]}}" class="paddingLeft" [disabled] = "true">
+                                <span class="cursor-pointer position-relative" *ngIf="j == 3"><span class="currency">£</span><input type="number" value="{{bookingAmount[row]}}" class="paddingLeft" [disabled] = "true">
                                     <p class="error mb-0" *ngIf="bookingAmount[row] && (bookingAmount[row] <= 0)">Booking Amount can't be smaller than 0.</p>
                                 </span>
-                                <span *ngIf="i==4" (click)="addWages(row)" class="cursor-pointer"><span class="addWages">Add Wages</span>
-                                <!-- <p class="error mb-0" *ngIf="this.message[row]">Added !</p> -->
-                                </span>
+                                <div *ngIf="j==4" (click)="addWages(this.selectedRowIndex,row)" class="cursor-pointer paddingLeft"><span class="addWages">Add Wages</span></div>
                             </td>
                         </tr>
                     </ng-template>
                 </p-table>
-                <div class="d-flex justify-content-center align-item-center p-4 borderBox" *ngIf="this.data.length == 0">
+                </td>
+                </tr>
+                </ng-template>
+                </p-table>
+                <div class="d-flex justify-content-center align-item-center p-4 borderBox"
+                    *ngIf="this.data.length == 0">
                     <td>
                         <span class="color-grey">No Results Found</span>
                     </td>
