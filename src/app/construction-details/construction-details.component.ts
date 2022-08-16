@@ -91,7 +91,7 @@ export class ConstructionDetailsComponent implements OnInit {
       this.getConstructionData(this.projectForm.get('floor_number')?.value, null, 'floor')
     }
     this.projectForm.get('apartment_name')?.setValue(sessionStorage.getItem('apartment_name') ? sessionStorage.getItem('apartment_name') : 'PS');
-    if (sessionStorage.getItem('floorId') && sessionStorage.getItem('appartmentId')) {
+    if(sessionStorage.getItem('floorId') && sessionStorage.getItem('appartmentId')) {
       this.floorids = JSON.parse(String(sessionStorage.getItem('floorId')));
       this.appartmentids = JSON.parse(String(sessionStorage.getItem('appartmentId')));
     }
@@ -159,9 +159,9 @@ export class ConstructionDetailsComponent implements OnInit {
   }
 
   getApartmentData = () => {
-    if (this.projectForm.get('floor_number')?.value == 'PS' && this.floorids.length == 0) {
+    if(this.projectForm.get('floor_number')?.value == 'PS' && this.floorids.length == 0){
       this.apartmentDetails = []
-      return
+    return
     }
 
     this.column = [];
@@ -339,8 +339,6 @@ export class ConstructionDetailsComponent implements OnInit {
 
   selectedRow(index: number) {
     this.selectedRowIndex = index;
-    this.percentageAmount = [];
-    this.bookingAmount = []
     this.wages.get('area')?.setValue(''),
       this.wages.get('unit')?.setValue(''),
       this.wages.get('lab_rate')?.setValue('')
@@ -351,7 +349,7 @@ export class ConstructionDetailsComponent implements OnInit {
       this.message[i] = false;
     }
     event = Number(event.target.value);
-    if (event == 0) {
+    if(event == 0){
       this.showerror[row] = true;
       this.enteredValue = event
     }
@@ -368,33 +366,29 @@ export class ConstructionDetailsComponent implements OnInit {
     }
   }
 
-  getBookingAmount(event: any, rowId: number, col: any) {
+  getBookingAmount(event: any, rowId: number) {
     event = event.target.value;
     this.percentageAmount[rowId] = event;
     this.bookingAmount[rowId] = 0;
     for (let id = 0; id < this.data.length; id++) {
-      if (col == id) {
+      if (rowId == id) {
         for (let record = 0; record < this.data[id].records.length; record++) {
-          if (rowId == record) {
-            for (let sub = 0; sub < this.data[id].records[id].sub_records.length; sub++) {
-              this.bookingAmount[rowId] = this.bookingAmount[rowId] + ((event / 100) * this.data[id].records[record].sub_records[sub].remaining_booking_amount);
-            }
-          }
+          this.bookingAmount[rowId] = this.bookingAmount[rowId] + ((event / 100) * this.data[id].records[record].remaining_booking_amount);
         }
       }
     }
     this.bookingAmount[rowId] = Number(this.bookingAmount[rowId]).toFixed(2)
   }
 
-  addWages = (index: number,row: any) => {
+  addWages = (index: number) => {
     if (this.projectForm.get('wages_number')?.value == 'PS') {
       this.confirm1('Please Select Wages Number !', null);
       return
     }
-    if ((this.appartmentids.length > 0 || this.floorids.length > 0) && this.bookingAmount[row] <= 0)
-      return;
-
-    if (((this.appartmentids.length == 0 && this.floorids.length == 0) ? !this.totalAmount : (!this.percentageAmount[row] || this.percentageAmount[row] > 100)) || this.showerror[row] || this.projectForm.get('wages_number')?.value == 'PS')
+    if((this.appartmentids.length >0 || this.floorids.length >0) && this.bookingAmount[index] <= 0)
+    return;
+    
+    if (((this.appartmentids.length == 0 && this.floorids.length == 0) ? !this.totalAmount : (!this.percentageAmount[index] || this.percentageAmount[index] > 100)) || this.showerror[index] || this.projectForm.get('wages_number')?.value == 'PS')
       return;
 
     this.service.showloader = true;
@@ -405,7 +399,7 @@ export class ConstructionDetailsComponent implements OnInit {
     if (this.appartmentids.length > 0 || this.floorids.length > 0) {
       let i = 0;
       if (this.apartmentDetails.length > 0) {
-        this.appartmentids = this.appartmentids.sort(function (a, b) { return a - b });
+        this.appartmentids = this.appartmentids.sort(function(a, b){return a - b});
         for (let name = 0; name < this.apartmentDetails.length; name++) {
           if (this.appartmentids[i] == this.apartmentDetails[name].id) {
             this.apartmentName[i] = this.apartmentDetails[name].apartment_number;
@@ -415,7 +409,7 @@ export class ConstructionDetailsComponent implements OnInit {
       }
       i = 0;
       if (this.floorids.length > 0) {
-        this.floorids = this.floorids.sort(function (a, b) { return a - b });;
+        this.floorids = this.floorids.sort(function(a, b){return a - b});        ;
         for (let name = 0; name < this.floorDetails.length; name++) {
           if (this.floorids[i] == this.floorDetails[name].id) {
             this.floorName[i] = this.floorDetails[name].floor_name;
@@ -426,31 +420,26 @@ export class ConstructionDetailsComponent implements OnInit {
       for (let i = 0; i < this.data.length; i++) {
         if (index == i) {
           for (let j = 0; j < this.data[i].records.length; j++) {
-            if(row == j){
-            for(let sub= 0;sub< this.data[i].records[j].sub_records.length;sub++){
-            if ((this.data[i].records[j].sub_records[sub].apartment_id == this.appartmentids[sub]) || (this.data[i].records[j].sub_records[sub].floor_id == this.floorids[sub])) {
+            if ((this.data[i].records[j].apartment_id == this.appartmentids[j]) || (this.data[i].records[j].floor_id == this.floorids[j])) {
               this.bookWages.push({
                 "project_id": this.projectForm.get('project_name')?.value,
                 "block_id": this.projectForm.get('block_name')?.value,
                 "pay_to": sessionStorage.getItem('payTo'),
                 "trade": sessionStorage.getItem('trade'),
-                "level": this.floorName[j] ? this.floorName[j] : '',
+                "level":  this.floorName[j] ? this.floorName[j] : '',
                 "apartment_id": this.appartmentids[j],
                 "plot_or_room": this.apartmentName[j] ? this.apartmentName[j] : this.floorName[j],
                 "description_work": this.data[index]?.description_header,
-                "main_description_id": this.data[index]?.records[j]?.sub_records[sub]?.main_description_id,
+                "main_description_id": this.data[index]?.records[j]?.main_description_id,
                 "m2_or_hours": "",
                 "rate": "",
-                "sum": Number(Number((this.percentageAmount[row] / 100) * this.data[index]?.records[j]?.sub_records[sub]?.remaining_booking_amount).toFixed(2)),
+                "sum": Number(Number((this.percentageAmount[index] / 100) * this.data[index]?.records[j]?.remaining_booking_amount).toFixed(2)),
                 "wages": this.projectForm.get('wages_number')?.value,
                 "user_id": sessionStorage.getItem('user_id'),
-                "floor_id": this.data[index]?.records[j]?.floor_id,
-                "sub_description_id": this.data[i]?.records[j]?.sub_records[sub]?.main_description_id
+                "floor_id": this.data[index]?.records[j]?.floor_id
               })
             }
           }
-          }
-        }
         }
       }
     }
@@ -514,9 +503,9 @@ export class ConstructionDetailsComponent implements OnInit {
   }
 
   getConstructionData = (event: any, value: any, type: any) => {
-    this.totalAmount = []
-    this.showerror = []
-    this.bookingAmount = []
+    this.totalAmount= []
+    this.showerror=[]
+    this.bookingAmount=[]
     this.percentageAmount = []
     if (type == 'apartment') {
       this.appartmentids = [];
@@ -529,8 +518,8 @@ export class ConstructionDetailsComponent implements OnInit {
       this.selectedFloorType = 'single';
       this.projectForm.get('floor_number')?.enable();
       this.projectForm.get('apartment_name')?.enable();
-      if (value != 'addWages')
-        this.getApartmentData();
+      if(value != 'addWages')
+      this.getApartmentData();
     }
     // if (value != 'addWages') {
     //   for (let i = 0; i < this.data.length; i++) {
@@ -790,9 +779,9 @@ export class ConstructionDetailsComponent implements OnInit {
   }
 
   getDescription = (value: any, type: any, option: any) => {
-    this.totalAmount = []
-    this.showerror = []
-    this.bookingAmount = []
+    this.totalAmount= []
+    this.showerror=[]
+    this.bookingAmount=[]
     this.percentageAmount = []
     if (option == 'aparment') {
       this.data = [];
@@ -806,8 +795,8 @@ export class ConstructionDetailsComponent implements OnInit {
       this.selectedFloorType = 'multiple';
       this.projectForm.get('floor_number')?.disable();
       this.projectForm.get('apartment_name')?.disable();
-      if (value != 'addWages')
-        this.getApartmentData();
+      if(value != 'addWages')
+      this.getApartmentData();
     }
     // if (type != 'addWages') {
     //   for (let i = 0; i < this.data.length; i++) {
@@ -859,14 +848,6 @@ export class ConstructionDetailsComponent implements OnInit {
     this.service.postRequest("get-description-work", body).subscribe(res => {
       if (res.body.success == true || res.body.code == 1000) {
         this.data = res.body.data.description_work_details;
-        this.nestedcolumns = [];
-        this.nestedcolumns.push(
-          { field: 'sub_description_header', header: 'Booking Description' },
-          { field: 'sub_total', header: 'Total Allowance' },
-          { field: '', header: '% Completed' },
-          { field: '', header: 'Booking Amont' },
-          { field: '', header: '' },
-        )
         this.service.showloader = false;
         if (type == 'addWages')
           this.confirm1('Wages Added Successfully !', null);

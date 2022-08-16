@@ -52,10 +52,6 @@ export class GetWagesComponent implements OnInit {
       header: 'Description'
     })
     this.column.push({
-      field: 'sub_description_header',
-      header: 'Sub Description'
-    })
-    this.column.push({
       field: 'trade',
       header: 'Trade'
     })
