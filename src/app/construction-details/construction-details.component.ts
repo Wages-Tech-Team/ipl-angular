@@ -59,8 +59,8 @@ export class ConstructionDetailsComponent implements OnInit {
       "lab_rate": new FormControl(''),
     })
 
-    this.projectForm?.get('apartment_name')?.disable()
-    this.projectForm?.get('floor_number')?.disable()
+    // this.projectForm?.get('apartment_name')?.disable()
+    // this.projectForm?.get('floor_number')?.disable()
   }
 
   ngOnInit(): void {
@@ -264,8 +264,8 @@ export class ConstructionDetailsComponent implements OnInit {
     else {
       this.projectForm.get('project_name')?.enable();
       this.projectForm.get('block_name')?.enable();
-      // this.projectForm.get('apartment_name')?.enable();
-      // this.projectForm.get('floor_number')?.enable();
+      this.projectForm.get('apartment_name')?.enable();
+      this.projectForm.get('floor_number')?.enable();
       this.selectedFloorType = 'null';
       this.selectionType = 'null';
     }
@@ -283,13 +283,13 @@ export class ConstructionDetailsComponent implements OnInit {
     }
     if (sessionStorage.getItem('apartment_name')) {
       this.selectionType = 'single';
-      // this.projectForm.get('apartment_name')?.enable();
-      // this.projectForm.get('floor_number')?.enable();
+      this.projectForm.get('apartment_name')?.enable();
+      this.projectForm.get('floor_number')?.enable();
     }
     if (sessionStorage.getItem('floor_number')) {
       this.selectedFloorType = 'single';
-      // this.projectForm.get('apartment_name')?.enable();
-      // this.projectForm.get('floor_number')?.enable();
+      this.projectForm.get('apartment_name')?.enable();
+      this.projectForm.get('floor_number')?.enable();
     }
   }
 
@@ -525,14 +525,14 @@ export class ConstructionDetailsComponent implements OnInit {
     if (type == 'apartment') {
       this.appartmentids = [];
       this.selectionType = 'single';
-      // this.projectForm.get('apartment_name')?.enable();
-      // this.projectForm.get('floor_number')?.enable();
+      this.projectForm.get('apartment_name')?.enable();
+      this.projectForm.get('floor_number')?.enable();
     }
     if (type == 'floor') {
       this.floorids = [];
       this.selectedFloorType = 'single';
-      // this.projectForm.get('floor_number')?.enable();
-      // this.projectForm.get('apartment_name')?.enable();
+      this.projectForm.get('floor_number')?.enable();
+      this.projectForm.get('apartment_name')?.enable();
       if (value != 'addWages')
         this.getApartmentData();
     }
@@ -618,8 +618,8 @@ export class ConstructionDetailsComponent implements OnInit {
   getProjectData = () => {
     this.selectionType = 'null';
     this.selectedFloorType = 'null'
-    // this.projectForm.get('apartment_name')?.enable();
-    // this.projectForm.get('floor_number')?.enable();
+    this.projectForm.get('apartment_name')?.enable();
+    this.projectForm.get('floor_number')?.enable();
     this.appartmentids = [];
     this.floorids = [];
     this.column = [];
@@ -665,8 +665,8 @@ export class ConstructionDetailsComponent implements OnInit {
   getBlockData = (event: any) => {
     this.selectionType = 'null';
     this.selectedFloorType = 'null';
-    // this.projectForm.get('apartment_name')?.enable();
-    // this.projectForm.get('floor_number')?.enable();
+    this.projectForm.get('apartment_name')?.enable();
+    this.projectForm.get('floor_number')?.enable();
     this.appartmentids = [];
     this.floorids = [];
     event = event?.target?.value ? event.target.value : event;
@@ -820,11 +820,11 @@ export class ConstructionDetailsComponent implements OnInit {
     // }
     if (this.appartmentids.length == 0 && this.floorids.length == 0) {
       this.selectionType = 'null';
-      // this.projectForm.get('apartment_name')?.enable();
+      this.projectForm.get('apartment_name')?.enable();
       // }
       // if (this.appartmentids.length == 0 && this.floorids.length == 0 && !value && option == 'floor') {
       this.selectedFloorType = 'null';
-      // this.projectForm.get('floor_number')?.enable();
+      this.projectForm.get('floor_number')?.enable();
     }
     if (!value || (this.floorids.length == 0))
       return
