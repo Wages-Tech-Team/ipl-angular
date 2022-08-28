@@ -52,15 +52,11 @@ export class ConstructionDetailsComponent implements OnInit {
       "wages_number": new FormControl('PS'),
       "floor_number": new FormControl('PS')
     })
-
     this.wages = new FormGroup({
       "area": new FormControl(''),
       "unit": new FormControl(''),
       "lab_rate": new FormControl(''),
     })
-
-    // this.projectForm?.get('apartment_name')?.disable()
-    // this.projectForm?.get('floor_number')?.disable()
   }
 
   ngOnInit(): void {
@@ -242,6 +238,7 @@ export class ConstructionDetailsComponent implements OnInit {
   }
   deSelectOption() {
     this.editOption = [false];
+    this.showerror = [false]
   }
 
   deleteOption = () => {
@@ -360,7 +357,7 @@ export class ConstructionDetailsComponent implements OnInit {
       this.enteredValue = event
     }
     if (event) {
-      if (Number((this.data[row].total - this.data[row].total_amount_booked).toFixed(2)) < event) {
+      if (Number((this.data[this.selectedRowIndex].sub_description_records[row].sub_total - this.data[this.selectedRowIndex].sub_description_records[row].sub_total_amount_booked).toFixed(2)) < event) {
         this.showerror[row] = true;
         this.enteredValue = event
       }
@@ -484,7 +481,8 @@ export class ConstructionDetailsComponent implements OnInit {
         "sum": Number(this.totalAmount).toFixed(2),
         "wages": this.projectForm.get('wages_number')?.value,
         "user_id": sessionStorage.getItem('user_id'),
-        "floor_id": this.data[index]?.sub_description_records[0]?.records[0]?.floor_id
+        "floor_id": this.data[index]?.sub_description_records[0]?.records[0]?.floor_id,
+        "sub_description_id": this.data[index]?.sub_description_records[0]?.records[0]?.sub_description_id
       })
     }
 
@@ -818,13 +816,15 @@ export class ConstructionDetailsComponent implements OnInit {
     //     this.message[i] = false;
     //   }
     // }
-    if (this.appartmentids.length == 0 && this.floorids.length == 0) {
+    if (this.appartmentids.length == 0 || this.floorids.length == 0) {
       this.selectionType = 'null';
       this.projectForm.get('apartment_name')?.enable();
       // }
       // if (this.appartmentids.length == 0 && this.floorids.length == 0 && !value && option == 'floor') {
       this.selectedFloorType = 'null';
       this.projectForm.get('floor_number')?.enable();
+      if(this.floorids.length == 0)
+      this.appartmentids=[]
     }
     if (!value || (this.floorids.length == 0))
       return
@@ -838,14 +838,14 @@ export class ConstructionDetailsComponent implements OnInit {
       field: 'total',
       header: 'Total Allowance'
     })
-    // this.column.push({
-    //   field: '',
-    //   header: '% Completed'
-    // })
-    // this.column.push({
-    //   field: '',
-    //   header: 'Booking Amount'
-    // })
+    this.column.push({
+      field: '',
+      header: '% Completed'
+    })
+    this.column.push({
+      field: '',
+      header: 'Booking Amount'
+    })
     this.column.push({
       field: '',
       header: ''
