@@ -134,15 +134,22 @@
                                 <p-table [value]="description.records"
                                     *ngFor="let description of this.data[this.selectedRowIndex].sub_description_records;let i =index">
                                     <ng-template pTemplate="header">
-                        <tr style="display: flex;width:fit-content">
-                            <div class="subHeading p-2" style="width: 256px;">{{i+1}}. {{description?.sub_description}}
-                            </div>
-                             <div class="marginLeft p-2" style="width: 240px;">£ {{(description.sub_total) ?
-                                this.service.formatNumber((description.sub_total).toFixed(2)) : 0.00}}</div>
-                            <div class="marginLeft p-2" style="width: 240px;">£ {{(description.sub_total -
+                        <tr>
+                            <th>Sub Description</th>
+                            <th>Total Allowance</th>
+                            <th>Remaining Booking Amount</th>
+                            <th>Booking Amount</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <th class="subHeading p-2">{{i+1}}. {{description?.sub_description}}
+                            </th>
+                             <th class="marginLeft p-2">£ {{(description.sub_total) ?
+                                this.service.formatNumber((description.sub_total).toFixed(2)) : 0.00}}</th>
+                            <th class="marginLeft p-2">£ {{(description.sub_total -
                                 description.sub_total_amount_booked) ? this.service.formatNumber((description.sub_total -
-                                description.sub_total_amount_booked).toFixed(2)) : 0.00}}</div>
-                            <div style="width: 240px;">
+                                description.sub_total_amount_booked).toFixed(2)) : 0.00}}</th>
+                            <th>
                                 <div class="d-block position-relative"><span class="currency">£</span><input
                                         type="number" value="this.totalAmount" (input)="calculate(i,$event)"
                                         class="paddingLeft">
@@ -152,10 +159,10 @@
                                     <p class="error mb-0" *ngIf="this.showerror[i] && this.enteredValue == 0">
                                         Booking Amount Should be greater than 0.</p>
                                 </div>
-                            </div>
-                            <div style="width: 107px;" class="p-2" (click)="addWages(i,null)"><span class="addWages">Add
+                            </th>
+                            <th class="p-2" (click)="addWages(i,null)"><span class="addWages">Add
                                     Wages</span>
-                            </div>
+                            </th>
                         </tr>
                         <tr>
                             <th class="color-grey" *ngFor="let cols of nestedcolumns; let j = index"

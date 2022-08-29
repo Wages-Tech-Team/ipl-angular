@@ -377,7 +377,7 @@ export class ConstructionDetailsComponent implements OnInit {
       if (col == id) {
         for (let record = 0; record < this.data[id].records.length; record++) {
           if (rowId == record) {
-            for (let sub = 0; sub < this.data[id].records[id].sub_records.length; sub++) {
+            for (let sub = 0; sub < this.data[id].records[rowId].sub_records.length; sub++) {
               this.bookingAmount[rowId] = this.bookingAmount[rowId] + ((event / 100) * this.data[id].records[record].sub_records[sub].remaining_booking_amount);
             }
           }
@@ -446,7 +446,7 @@ export class ConstructionDetailsComponent implements OnInit {
                 "wages": this.projectForm.get('wages_number')?.value,
                 "user_id": sessionStorage.getItem('user_id'),
                 "floor_id": this.data[index]?.records[j]?.floor_id,
-                "sub_description_id": this.data[i]?.records[j]?.sub_records[sub]?.main_description_id
+                "sub_description_id": this.data[i]?.records[j]?.sub_records[sub]?.sub_description_id
               })
             }
           }
@@ -475,14 +475,14 @@ export class ConstructionDetailsComponent implements OnInit {
         "apartment_id": this.projectForm.get('apartment_name')?.value != 'PS' ? this.projectForm.get('apartment_name')?.value : '',
         "plot_or_room": this.apartmentName[0] ? this.apartmentName[0] : this.floorName[0],
         "description_work": this.data[index]?.description_header,
-        "main_description_id": this.data[index]?.sub_description_records[0]?.records[0]?.main_description_id,
+        "main_description_id": this.data[this.selectedRowIndex]?.sub_description_records[index]?.records[0]?.main_description_id,
         "m2_or_hours": "",
         "rate": "",
         "sum": Number(this.totalAmount).toFixed(2),
         "wages": this.projectForm.get('wages_number')?.value,
         "user_id": sessionStorage.getItem('user_id'),
-        "floor_id": this.data[index]?.sub_description_records[0]?.records[0]?.floor_id,
-        "sub_description_id": this.data[index]?.sub_description_records[0]?.records[0]?.sub_description_id
+        "floor_id": this.data[this.selectedRowIndex]?.sub_description_records[index]?.records[0]?.floor_id,
+        "sub_description_id": this.data[this.selectedRowIndex]?.sub_description_records[index]?.records[0]?.sub_description_id
       })
     }
 
@@ -553,15 +553,15 @@ export class ConstructionDetailsComponent implements OnInit {
     })
     this.column.push({
       field: 'total',
-      header: 'Total Allowance'
+      header: ''
     })
     this.column.push({
       field: 'total',
-      header: 'Remaining Booking Amount'
+      header: ''
     })
     this.column.push({
       field: '',
-      header: 'Booking Amount'
+      header: ''
     })
     this.column.push({
       field: '',
