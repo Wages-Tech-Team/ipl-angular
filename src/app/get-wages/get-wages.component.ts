@@ -143,6 +143,7 @@ export class GetWagesComponent implements OnInit {
           "plot_or_room": this.data[i]?.plot_or_room,
           "description_work": this.data[i]?.description_work,
           "main_description_id": this.data[i]?.main_description_id,
+          "sub_description_id": this.data[i]?.sub_description_id,
           "m2_or_hours": this.data[i]?.m2_or_hours,
           "rate": this.data[i]?.rate,
           "old_amount": this.data[i]?.amount,

@@ -474,7 +474,7 @@ export class ConstructionDetailsComponent implements OnInit {
         "level": this.floorName[0] ? this.floorName[0] : '',
         "apartment_id": this.projectForm.get('apartment_name')?.value != 'PS' ? this.projectForm.get('apartment_name')?.value : '',
         "plot_or_room": this.apartmentName[0] ? this.apartmentName[0] : this.floorName[0],
-        "description_work": this.data[index]?.description_header,
+        "description_work": this.data[this.selectedRowIndex]?.description_header,
         "main_description_id": this.data[this.selectedRowIndex]?.sub_description_records[index]?.records[0]?.main_description_id,
         "m2_or_hours": "",
         "rate": "",
