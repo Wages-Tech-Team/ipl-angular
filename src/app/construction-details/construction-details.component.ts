@@ -445,7 +445,7 @@ export class ConstructionDetailsComponent implements OnInit {
                 "sum": Number(Number((this.percentageAmount[row] / 100) * this.data[index]?.records[j]?.sub_records[sub]?.remaining_booking_amount).toFixed(2)),
                 "wages": this.projectForm.get('wages_number')?.value,
                 "user_id": sessionStorage.getItem('user_id'),
-                "floor_id": this.data[index]?.records[j]?.floor_id,
+                "floor_id": this.floorids[sub], 
                 "sub_description_id": this.data[i]?.records[j]?.sub_records[sub]?.sub_description_id
               })
             }
