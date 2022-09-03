@@ -14,7 +14,7 @@
                         <option *ngFor="let detail of this.payTo" value="{{detail?.pay_to_name}}">{{detail?.pay_to_name}}
                         </option>
                     </select> -->
-                        <p-dropdown [options]="payTo" formControlName="project_name" optionLabel="pay_to_name" [filter]="true" filterBy="pay_to_name" [showClear]="true" placeholder="Please Select Pay To" (onChange)="setPayToId(this.projectForm?.get('project_name')?.value)">
+                        <p-dropdown [options]="payTo" filterMatchMode="startsWith" formControlName="project_name" optionLabel="pay_to_name" [filter]="true" filterBy="pay_to_name" [showClear]="true" placeholder="Please Select Pay To" (onChange)="setPayToId(this.projectForm?.get('project_name')?.value)">
                             <ng-template pTemplate="this.projectForm?.get('project_name')?.value">
                                 <div class="country-item country-item-value selectdropdown marginRight width " *ngIf="this.projectForm?.get('project_name')?.value">
                                     <div class="dropdownStyle">{{this.projectForm?.get('project_name')?.value}}</div>
