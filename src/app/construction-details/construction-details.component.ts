@@ -26,7 +26,7 @@ export class ConstructionDetailsComponent implements OnInit {
   message: any = [];
   msgs: Message[] = [];
   imageUrl: string = '';
-  appartmentids = [];
+  appartmentids:Array<any> = [];
   floorids = [];
   percentageAmount: Array<any> = [];
   bookingAmount: Array<any> = [];
@@ -43,6 +43,7 @@ export class ConstructionDetailsComponent implements OnInit {
   floorName: Array<any> = [];
   enteredValue: any;
   stock_hit_time: number = 2 * 60 * 1000;
+  remainingAmount: Array<any> = [];
 
   constructor(private router: Router, public service: CommonService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) {
     this.projectForm = new FormGroup({
@@ -202,6 +203,30 @@ export class ConstructionDetailsComponent implements OnInit {
           this.apartmentDetails = res.body.data.apartment_details;
           // this.floorDetails = res.body.data.floor_details;
           this.service.showloader = false;
+          if (sessionStorage.getItem('appartmentId')) {
+            this.appartmentids = [];
+            let ids= JSON.parse(String(sessionStorage.getItem('appartmentId')));
+            let appartids: Array<any>=[];
+             for (let index = 0; index < this.apartmentDetails.length; index++) {
+              appartids.push(this.apartmentDetails[index].id);
+            }
+            for (let index = 0; index < this.apartmentDetails.length; index++) {
+            if (appartids.indexOf(ids[index]) != -1){
+              this.appartmentids[index]=ids[index];
+            }
+            }
+          }
+          if (sessionStorage.getItem('apartment_name')) {
+            for (let index = 0; index < this.apartmentDetails.length; index++) {
+              if (this.apartmentDetails[index].id == sessionStorage.getItem('apartment_name')){
+                this.projectForm.get('apartment_name')?.setValue(sessionStorage.getItem('apartment_name') ? sessionStorage.getItem('apartment_name') : 'PS');
+              return;
+              }
+                else {
+                this.projectForm.get('apartment_name')?.setValue('PS');
+              }
+            }
+          }
         }
         else {
           this.service.showloader = false;
@@ -341,7 +366,17 @@ export class ConstructionDetailsComponent implements OnInit {
   selectedRow(index: number) {
     this.selectedRowIndex = index;
     this.percentageAmount = [];
-    this.bookingAmount = []
+    this.bookingAmount = [];
+    this.remainingAmount = []
+    for (let index = 0; index < this.data[this.selectedRowIndex].records.length; index++) {
+      this.remainingAmount[index] = 0;
+      //  if(index == this.selectedRowIndex){
+      for (let innerIndex = 0; innerIndex < this.data[this.selectedRowIndex].records[index].sub_records.length; innerIndex++) {
+        this.remainingAmount[index] += Number(this.data[this.selectedRowIndex].records[index].sub_records[innerIndex].remaining_booking_amount);
+      }
+      //  }
+    }
+
     this.wages.get('area')?.setValue(''),
       this.wages.get('unit')?.setValue(''),
       this.wages.get('lab_rate')?.setValue('')
@@ -387,7 +422,7 @@ export class ConstructionDetailsComponent implements OnInit {
     this.bookingAmount[rowId] = Number(this.bookingAmount[rowId]).toFixed(2)
   }
 
-  addWages = (index: number,row: any) => {
+  addWages = (index: number, row: any) => {
     if (this.projectForm.get('wages_number')?.value == 'PS') {
       this.confirm1('Please Select Wages Number !', null);
       return
@@ -427,31 +462,31 @@ export class ConstructionDetailsComponent implements OnInit {
       for (let i = 0; i < this.data.length; i++) {
         if (index == i) {
           for (let j = 0; j < this.data[i].records.length; j++) {
-            if(row == j){
-            for(let sub= 0;sub< this.data[i].records[j].sub_records.length;sub++){
-            if ((this.data[i].records[j].sub_records[sub].apartment_id == this.appartmentids[sub]) || (this.data[i].records[j].sub_records[sub].floor_id == this.floorids[sub])) {
-              this.bookWages.push({
-                "project_id": this.projectForm.get('project_name')?.value,
-                "block_id": this.projectForm.get('block_name')?.value,
-                "pay_to": sessionStorage.getItem('payTo'),
-                "trade": sessionStorage.getItem('trade'),
-                "level": this.floorName[sub] ? this.floorName[sub] : '',
-                "apartment_id": this.appartmentids[sub],
-                "plot_or_room": this.apartmentName[sub] ? this.apartmentName[sub] : this.floorName[sub],
-                "description_work": this.data[index]?.description_header,
-                "main_description_id": this.data[index]?.records[j]?.sub_records[sub]?.main_description_id,
-                "m2_or_hours": "",
-                "rate": "",
-                "sum": Number(Number((this.percentageAmount[row] / 100) * this.data[index]?.records[j]?.sub_records[sub]?.remaining_booking_amount).toFixed(2)),
-                "wages": this.projectForm.get('wages_number')?.value,
-                "user_id": sessionStorage.getItem('user_id'),
-                "floor_id": this.floorids[sub], 
-                "sub_description_id": this.data[i]?.records[j]?.sub_records[sub]?.sub_description_id
-              })
+            if (row == j) {
+              for (let sub = 0; sub < this.data[i].records[j].sub_records.length; sub++) {
+                if ((this.data[i].records[j].sub_records[sub].apartment_id == this.appartmentids[sub]) || (this.data[i].records[j].sub_records[sub].floor_id == this.floorids[sub])) {
+                  this.bookWages.push({
+                    "project_id": this.projectForm.get('project_name')?.value,
+                    "block_id": this.projectForm.get('block_name')?.value,
+                    "pay_to": sessionStorage.getItem('payTo'),
+                    "trade": sessionStorage.getItem('trade'),
+                    "level": this.floorName[sub] ? this.floorName[sub] : '',
+                    "apartment_id": this.appartmentids[sub],
+                    "plot_or_room": this.apartmentName[sub] ? this.apartmentName[sub] : this.floorName[sub],
+                    "description_work": this.data[index]?.description_header,
+                    "main_description_id": this.data[index]?.records[j]?.sub_records[sub]?.main_description_id,
+                    "m2_or_hours": "",
+                    "rate": "",
+                    "sum": Number(Number((this.percentageAmount[row] / 100) * this.data[index]?.records[j]?.sub_records[sub]?.remaining_booking_amount).toFixed(2)),
+                    "wages": this.projectForm.get('wages_number')?.value,
+                    "user_id": sessionStorage.getItem('user_id'),
+                    "floor_id": this.data[index]?.records[j]?.floor_id,
+                    "sub_description_id": this.data[i]?.records[j]?.sub_records[sub]?.sub_description_id
+                  })
+                }
+              }
             }
           }
-          }
-        }
         }
       }
     }
@@ -533,6 +568,10 @@ export class ConstructionDetailsComponent implements OnInit {
       this.projectForm.get('apartment_name')?.enable();
       if (value != 'addWages')
         this.getApartmentData();
+      if (sessionStorage.getItem('apartment_name'))
+        this.projectForm.get('apartment_name')?.setValue(sessionStorage.getItem('apartment_name') ? sessionStorage.getItem('apartment_name') : 'PS');
+
+
     }
     // if (value != 'addWages') {
     //   for (let i = 0; i < this.data.length; i++) {
@@ -810,6 +849,8 @@ export class ConstructionDetailsComponent implements OnInit {
       this.projectForm.get('apartment_name')?.disable();
       if (value != 'addWages')
         this.getApartmentData();
+      if(sessionStorage.getItem('appartmentId'))
+      this.appartmentids = JSON.parse(String(sessionStorage.getItem('appartmentId')));
     }
     // if (type != 'addWages') {
     //   for (let i = 0; i < this.data.length; i++) {
@@ -823,8 +864,8 @@ export class ConstructionDetailsComponent implements OnInit {
       // if (this.appartmentids.length == 0 && this.floorids.length == 0 && !value && option == 'floor') {
       this.selectedFloorType = 'null';
       this.projectForm.get('floor_number')?.enable();
-      if(this.floorids.length == 0)
-      this.appartmentids=[]
+      if (this.floorids.length == 0)
+        this.appartmentids = []
     }
     if (!value || (this.floorids.length == 0))
       return
@@ -837,7 +878,11 @@ export class ConstructionDetailsComponent implements OnInit {
     this.column.push({
       field: 'total',
       header: 'Total Allowance'
-    })
+    }),
+      this.column.push({
+        field: 'total',
+        header: 'Remaining Allowance'
+      })
     this.column.push({
       field: '',
       header: '% Completed'
@@ -867,6 +912,7 @@ export class ConstructionDetailsComponent implements OnInit {
         this.nestedcolumns.push(
           { field: 'sub_description_header', header: 'Booking Description' },
           { field: 'sub_total', header: 'Total Allowance' },
+          { field: '', header: 'Remaining Allowance' },
           { field: '', header: '% Completed' },
           { field: '', header: 'Booking Amont' },
           { field: '', header: '' },

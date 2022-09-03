@@ -263,8 +263,7 @@
                                 <p-table [value]="this.data[this.selectedRowIndex].records">
                                     <ng-template pTemplate="header">
                         <tr>
-                            <th class="color-grey" *ngFor="let cols of nestedcolumns; let j = index"
-                                [ngClass]="{'w-20' : j == 0,'w-10' : j!=0}">
+                            <th class="color-grey w-15" *ngFor="let cols of nestedcolumns; let j = index">
                                 {{cols.header}}
                             </th>
                         </tr>
@@ -275,16 +274,17 @@
                                 <span *ngIf="j==0">{{rowData[cols.field]}}</span>
                                 <span *ngIf="j==1">£ {{rowData[cols.field] ?
                                     this.service.formatNumber(rowData[cols.field]) : 0.00}}</span>
-                                <span class="cursor-pointer" *ngIf="j == 2"><input type="number"
+                                <span *ngIf="j==2">£ {{this.remainingAmount[row] ? this.service.formatNumber(this.remainingAmount[row].toFixed(2)) : 0.00}}</span>
+                                <span class="cursor-pointer" *ngIf="j == 3"><input type="number"
                                         value="{{percentageAmount[row]}}" (input)="getBookingAmount($event,row,this.selectedRowIndex)">
                                     <p class="error mb-0"
                                         *ngIf="percentageAmount[row] && (percentageAmount[row] > 100)">% Completed can't
                                         be greater than 100.</p>
                                 </span>
-                                <span class="cursor-pointer position-relative" *ngIf="j == 3"><span class="currency">£</span><input type="number" value="{{bookingAmount[row]}}" class="paddingLeft" [disabled] = "true">
+                                <span class="cursor-pointer position-relative" *ngIf="j == 4"><span class="currency">£</span><input type="number" value="{{bookingAmount[row]}}" class="paddingLeft" [disabled] = "true">
                                     <p class="error mb-0" *ngIf="bookingAmount[row] && (bookingAmount[row] <= 0)">Booking Amount can't be smaller than 0.</p>
                                 </span>
-                                <div *ngIf="j==4" (click)="addWages(this.selectedRowIndex,row)" class="cursor-pointer paddingLeft"><span class="addWages">Add Wages</span></div>
+                                <div *ngIf="j==5" (click)="addWages(this.selectedRowIndex,row)" class="cursor-pointer paddingLeft"><span class="addWages">Add Wages</span></div>
                             </td>
                         </tr>
                     </ng-template>
