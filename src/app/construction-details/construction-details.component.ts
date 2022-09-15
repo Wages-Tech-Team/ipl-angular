@@ -387,7 +387,7 @@ export class ConstructionDetailsComponent implements OnInit {
       this.message[i] = false;
     }
     event = Number(event.target.value);
-    if (event == 0) {
+    if (event <= 0) {
       this.showerror[row] = true;
       this.enteredValue = event
     }
@@ -401,6 +401,10 @@ export class ConstructionDetailsComponent implements OnInit {
         this.showerror[row] = false;
         this.enteredValue = event
       }
+    }
+    if (event <= 0) {
+      this.showerror[row] = true;
+      this.enteredValue = event
     }
   }
 
@@ -432,6 +436,10 @@ export class ConstructionDetailsComponent implements OnInit {
 
     if (((this.appartmentids.length == 0 && this.floorids.length == 0) ? !this.totalAmount : (!this.percentageAmount[row] || this.percentageAmount[row] > 100)) || this.showerror[row] || this.projectForm.get('wages_number')?.value == 'PS')
       return;
+
+      if( (this.showerror[index] && this.enteredValue) || (this.enteredValue == 0 || this.enteredValue < 0)){
+        return;
+      }
 
     this.service.showloader = true;
     this.bookWages = []
@@ -917,6 +925,14 @@ export class ConstructionDetailsComponent implements OnInit {
           { field: '', header: 'Booking Amont' },
           { field: '', header: '' },
         )
+        for (let index = 0; index < this.data[this.selectedRowIndex].records.length; index++) {
+          this.remainingAmount[index] = 0;
+          //  if(index == this.selectedRowIndex){
+          for (let innerIndex = 0; innerIndex < this.data[this.selectedRowIndex].records[index].sub_records.length; innerIndex++) {
+            this.remainingAmount[index] += Number(this.data[this.selectedRowIndex].records[index].sub_records[innerIndex].remaining_booking_amount);
+          }
+          //  }
+        }
         this.service.showloader = false;
         if (type == 'addWages')
           this.confirm1('Wages Added Successfully !', null);

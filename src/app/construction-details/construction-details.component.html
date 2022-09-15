@@ -153,10 +153,10 @@
                                 <div class="d-block position-relative"><span class="currency">£</span><input
                                         type="number" value="this.totalAmount" (input)="calculate(i,$event)"
                                         class="paddingLeft">
-                                    <p class="error mb-0" *ngIf="this.showerror[i] && this.enteredValue != 0">
+                                    <p class="error mb-0" *ngIf="this.showerror[i] && this.enteredValue && this.enteredValue >= 0  ">
                                         Booking Amount Should be less
                                         than total Amount.</p>
-                                    <p class="error mb-0" *ngIf="this.showerror[i] && this.enteredValue == 0">
+                                    <p class="error mb-0" *ngIf="this.showerror[i] && this.enteredValue && this.enteredValue <= 0">
                                         Booking Amount Should be greater than 0.</p>
                                 </div>
                             </th>
