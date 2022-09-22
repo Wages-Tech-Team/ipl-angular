@@ -130,6 +130,8 @@ export class ConstructionDetailsComponent implements OnInit {
       header: ''
     })
     this.service.showloader = true;
+    this.appartmentids = [];
+    this.floorids = [];
     this.projectForm.get('apartment_name')?.setValue('PS');
     this.apartmentDetails = []
     this.data = [];
@@ -568,6 +570,9 @@ export class ConstructionDetailsComponent implements OnInit {
       this.selectionType = 'single';
       this.projectForm.get('apartment_name')?.enable();
       this.projectForm.get('floor_number')?.enable();
+      if (sessionStorage.getItem('apartment_name'))
+      this.projectForm.get('apartment_name')?.setValue(sessionStorage.getItem('apartment_name') ? sessionStorage.getItem('apartment_name') : 'PS');
+
     }
     if (type == 'floor') {
       this.floorids = [];
@@ -714,6 +719,7 @@ export class ConstructionDetailsComponent implements OnInit {
     this.projectForm.get('floor_number')?.enable();
     this.appartmentids = [];
     this.floorids = [];
+    this.data = [];
     event = event?.target?.value ? event.target.value : event;
     if (event == 'PS')
       return;
@@ -729,6 +735,8 @@ export class ConstructionDetailsComponent implements OnInit {
       if (res.body.success == true || res.body.code == 1000) {
         this.blockDetails = res.body.data.block_details;
         this.service.showloader = false;
+        if(sessionStorage.getItem('apartment_name'))
+        sessionStorage.removeItem('apartment_name');
       }
       else {
         this.service.showloader = false;
