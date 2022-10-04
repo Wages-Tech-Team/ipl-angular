@@ -41,6 +41,7 @@ export class ConstructionDetailsComponent implements OnInit {
   wages: FormGroup;
   floorDetails: any;
   floorName: Array<any> = [];
+  floorNameId: Array<any> = [];
   enteredValue: any;
   stock_hit_time: number = 2 * 60 * 1000;
   remainingAmount: Array<any> = [];
@@ -465,6 +466,7 @@ export class ConstructionDetailsComponent implements OnInit {
         for (let name = 0; name < this.floorDetails.length; name++) {
           if (this.floorids[i] == this.floorDetails[name].id) {
             this.floorName[i] = this.floorDetails[name].floor_name;
+            this.floorNameId[this.floorDetails[name].id] = this.floorDetails[name].floor_name;
             i++
           }
         }
@@ -480,7 +482,7 @@ export class ConstructionDetailsComponent implements OnInit {
                     "block_id": this.projectForm.get('block_name')?.value,
                     "pay_to": sessionStorage.getItem('payTo'),
                     "trade": sessionStorage.getItem('trade'),
-                    "level": this.floorName[sub] ? this.floorName[sub] : '',
+                    "level": this.floorNameId[this.data[i]?.records[j]?.sub_records[sub]?.floor_id] ? this.floorNameId[this.data[i]?.records[j]?.sub_records[sub]?.floor_id]  : '',
                     "apartment_id": this.appartmentids[sub],
                     "plot_or_room": this.apartmentName[sub] ? this.apartmentName[sub] : this.floorName[sub],
                     "description_work": this.data[index]?.description_header,
@@ -490,7 +492,7 @@ export class ConstructionDetailsComponent implements OnInit {
                     "sum": Number(Number((this.percentageAmount[row] / 100) * this.data[index]?.records[j]?.sub_records[sub]?.remaining_booking_amount).toFixed(2)),
                     "wages": this.projectForm.get('wages_number')?.value,
                     "user_id": sessionStorage.getItem('user_id'),
-                    "floor_id": this.floorids[sub],
+                    "floor_id": this.data[i]?.records[j]?.sub_records[sub]?.floor_id,
                     "sub_description_id": this.data[i]?.records[j]?.sub_records[sub]?.sub_description_id
                   })
                 }
