@@ -17,6 +17,7 @@ export class GetWagesComponent implements OnInit {
   editForm: FormGroup;
   first = 0;
   totalRecords = 0;
+  subTotal = 0;
   modalHeading: any;
   msgs: any;
   selectedRowIndexDelete: any;
@@ -89,6 +90,7 @@ export class GetWagesComponent implements OnInit {
       if (res.body.success == true  || res.body.code == 1000) {
         this.data = res.body.data.wages_details;
         this.totalRecords = this.data.length;
+        this.subTotal = res.body.data.total_booking.toFixed(2);
         this.service.showloader = false;
       }
       else {
