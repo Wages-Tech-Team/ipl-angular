@@ -2,69 +2,33 @@
     <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
         <ng-template pTemplate="footer">
             <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="reject()"></button>
-            <button type="button" pButton icon="pi pi-check" label="Yes" (click)="accept()"
-                *ngIf="this.heading=='Delete Detail' || this.heading=='Upload Project'"></button>
+            <!-- <button type="button" pButton icon="pi pi-check" label="Yes" (click)="accept()"></button> -->
         </ng-template>
     </p-confirmDialog>
     <div class="d-flex justify-content-center align-items-center mt-4">
-        <div class="projectHeading">Upload / Delete Pay To</div>
+        <div class="projectHeading">Add Pay To</div>
     </div>
     <div class="d-flex justify-content-center align-items-center mt-4">
         <div class="boxStyle mt-4" [formGroup]="this.addpayTo">
             <div class="d-block mt-4">
                 <div class="d-flex mt-4">
-                    <div class="width">
-                        <p-dropdown [options]="payTo" filterMatchMode="startsWith" formControlName="pay_to"
-                            optionLabel="pay_to_name" [filter]="true" filterBy="pay_to_name" [showClear]="true"
-                            placeholder="Please Select Pay To"
-                            (onChange)="setPayToId(this.addpayTo?.get('pay_to')?.value)">
-                            <ng-template pTemplate="this.addpayTo?.get('pay_to')?.value">
-                                <div class="country-item country-item-value selectdropdown marginRight"
-                                    *ngIf="this.addpayTo?.get('pay_to')?.value">
-                                    <div class="dropdownStyle">{{this.addpayTo?.get('pay_to')?.value}}</div>
-                                </div>
-                            </ng-template>
-                            <ng-template let-detail pTemplate="item">
-                                <div class="country-item">
-                                    <div class="dropdownStyle">{{detail.pay_to_name}}</div>
-                                </div>
-                            </ng-template>
-                        </p-dropdown>
+                    <div>
+                        <input type="text" class="selectdropdown marginRight" placeholder="Enter Pay To" formControlName="pay_to">
                         <p *ngIf="this.submitted && !this.addpayTo?.get('pay_to')?.value" class="error">
                             Pay To is required</p>
                     </div>
                     <div>
-                        <input type="text" class="selectdropdown marginleft" placeholder="Enter Pay To Code"
-                            formControlName="pay_to_code">
+                        <input type="text" class="selectdropdown marginleft" placeholder="Enter Pay To Code" formControlName="pay_to_code">
                         <p *ngIf="this.submitted && !this.addpayTo?.get('pay_to_code')?.value" class="error marginleft">
                             Pay To Code is required</p>
                     </div>
                 </div>
                 <div class="mt-4">
-                    <button class="mt-4 upload-btn"
-                        (click)="this.confirm('Are you sure you want to delete the detail ?','Delete Detail')">Delete</button>
+                    <button class="mt-4 upload-btn" (click)="submitPayTo()">Submit</button>
                 </div>
             </div>
-            <div class="inputLabel mt-4 cursor-pointor" (click)="navigatedToSignUp()">Don't have an Account? <span
-                    class="spanColor cursor-pointor">Sign Up</span></div>
+            <div class="inputLabel mt-4 cursor-pointor" (click)="navigatedToSignUp()">Don't have an Account? <span class="spanColor cursor-pointor">Sign Up</span></div>
             <div class="spanColor cursor-pointor mt-4" (click)="navigatedToAccount()">Manage User Accounts</div>
-        </div>
-    </div>
-    <div class="d-flex justify-content-center align-items-center mt-4">
-        <div class="boxStyle mt-4 wid-btn">
-            <button class="btnStyle w-100"><label class="cursor-pointer m-0 upload-btn" for="upload-doc">Upload PayTo</label></button>
-            <input #documentInput (change)="this.handleFileUpload($event)" type="file" id="upload-doc" class="d-none" name="avatar">
-            <p *ngIf="this.errorMessage && !this.filename" class="error">{{this.errorMessage}}</p>
-            <div class="d-flex mt-4 justify-content-between" *ngIf="this.filename">
-                <div class="mt-4 box-container">
-                    <div class="spanStyle">
-                        <span><img src="./../../assets/image_icon_document_pic_512x512.png" width="20px" class="mr"></span>{{this.filename}}</div>
-                    <div class="textStyle cursor-pointer" (click)="delete()">X</div>
-                </div>
-                <div class="d-flex mt-4">
-                    <button class="uploadFile" disable="!this.filename" (click)="confirm('Are you sure you want to upload the project ?','Upload Project')">Upload</button>
-                </div>
-            </div>
         </div>
     </div>
 </div>
