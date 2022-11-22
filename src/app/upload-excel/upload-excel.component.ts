@@ -213,7 +213,7 @@ export class UploadExcelComponent implements OnInit {
     // }
     this.service.showloader = true;
     let body = {
-      "project_id": this.selectedId,
+      "project_id": this.selectedId
       // "part": this.downloadPart
     }
     this.service.postRequest("download-construction-details", body).subscribe(res => {
