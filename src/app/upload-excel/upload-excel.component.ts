@@ -20,7 +20,6 @@ export class UploadExcelComponent implements OnInit {
   errorMessage: string = '';
   stock_hit_time: number = 1 * 60 * 1000;
   filePath: any;
-  downloadPart: any;
   selectPart: boolean= false;
   constructor(private router: Router, public service: CommonService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) { }
 
@@ -128,9 +127,9 @@ export class UploadExcelComponent implements OnInit {
     )
   }
 
-  getPart(part : any){
-    this.downloadPart = part;
-  }
+  // getPart(part : any){
+  //   this.downloadPart = part;
+  // }
 
 
   confirm(message: any, heading: any) {
@@ -143,10 +142,10 @@ export class UploadExcelComponent implements OnInit {
       this.errorMessage = "Please Upload the file."
       return
     }
-    if(!this.downloadPart && this.modalHeading == 'Download Project'){
-      this.selectPart = true;
-      return;
-    }
+    // if(!this.downloadPart && this.modalHeading == 'Download Project'){
+    //   this.selectPart = true;
+    //   return;
+    // }
     else{
       this.selectPart = false
     }
@@ -208,14 +207,14 @@ export class UploadExcelComponent implements OnInit {
       this.submitted = true;
       return;
     }
-    if(!this.downloadPart){
-      this.selectPart = true;
-      return;
-    }
+    // if(!this.downloadPart){
+    //   this.selectPart = true;
+    //   return;
+    // }
     this.service.showloader = true;
     let body = {
       "project_id": this.selectedId,
-      "part": this.downloadPart
+      // "part": this.downloadPart
     }
     this.service.postRequest("download-construction-details", body).subscribe(res => {
       if (res.body.success == true || res.body.code == 1000) {
