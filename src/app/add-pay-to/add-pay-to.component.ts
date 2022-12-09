@@ -16,8 +16,10 @@ export class AddPayToComponent implements OnInit {
   payTo: any = [];
   heading: any;
   filename: any;
+  filenameDescription: any;
   errorMessage: string ='';
   uploadedFile: any;
+  uploadedFileDescription: any;
 
   constructor(private router: Router, public service: CommonService,private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) {
     this.addpayTo = new FormGroup({
@@ -96,6 +98,8 @@ export class AddPayToComponent implements OnInit {
     this.deletePayTo(this.addpayTo?.get('pay_to')?.value);
     if(this.heading=='Upload Project')
     this.upload();
+    if(this.heading=='Upload Project Description')
+    this.upload_description();
     
   }
 
@@ -104,6 +108,11 @@ export class AddPayToComponent implements OnInit {
     this.submitted = true;
 
     if (!this.filename && heading == 'Upload Project') {
+      this.errorMessage = "Please Upload the file."
+      return
+    }
+
+    if (!this.filenameDescription && heading == 'Upload Project Description') {
       this.errorMessage = "Please Upload the file."
       return
     }
@@ -121,11 +130,21 @@ export class AddPayToComponent implements OnInit {
   delete() {
     this.filename = ''
   }
+
+  deleteDescription() {
+    this.filenameDescription = ''
+  }
   
   handleFileUpload(event: any) {
     let files = event.target.files;
     this.uploadedFile = files[0]
     this.filename = files[0].name;
+  }
+
+  handleFileUploadDescription(event_1: any) {
+    let filesDescription = event_1.target.files;
+    this.uploadedFileDescription = filesDescription[0]
+    this.filenameDescription = filesDescription[0].name;
   }
 
   upload = () => {
@@ -136,6 +155,24 @@ export class AddPayToComponent implements OnInit {
     let data = new FormData();
     data.append("request[file]", this.uploadedFile);
     this.service.postRequestForUpload("upload-pay-details", data).subscribe(res => {
+      if (res.body.success == true || res.body.code == 1000) {
+        this.service.showloader = false;
+      }
+      else {
+        this.service.showloader = false;
+        this.confirm(res.body.message, 'Error');
+      }
+    })
+  }
+
+  upload_description = () => {
+    if (!this.uploadedFileDescription)
+      return;
+
+    this.service.showloader = true;
+    let data = new FormData();
+    data.append("request[file]", this.uploadedFileDescription);
+    this.service.postRequestForUpload("import-main-excel", data).subscribe(res => {
       if (res.body.success == true || res.body.code == 1000) {
         this.service.showloader = false;
       }
