@@ -3,7 +3,7 @@
         <ng-template pTemplate="footer">
             <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="reject()"></button>
             <button type="button" pButton icon="pi pi-check" label="Yes" (click)="accept()"
-                *ngIf="this.heading=='Delete Detail' || this.heading=='Upload Project'"></button>
+                *ngIf="this.heading=='Delete Detail' || this.heading=='Upload Project' || this.heading=='Upload Project Description'"></button>
         </ng-template>
     </p-confirmDialog>
     <div class="d-flex justify-content-center align-items-center mt-4">
@@ -63,6 +63,23 @@
                 </div>
                 <div class="d-flex mt-4">
                     <button class="uploadFile" disable="!this.filename" (click)="confirm('Are you sure you want to upload the project ?','Upload Project')">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center align-items-center mt-4">
+        <div class="boxStyle mt-4 wid-btn">
+            <button class="btnStyle w-100"><label class="cursor-pointer m-0 upload-btn" for="upload-doc-description">Upload Main Description & Sub Description</label></button>
+            <input #documentInput (change)="this.handleFileUploadDescription($event)" type="file" id="upload-doc-description" class="d-none" name="avatar">
+            <p *ngIf="this.errorMessage && !this.filenameDescription" class="error">{{this.errorMessage}}</p>
+            <div class="d-flex mt-4 justify-content-between" *ngIf="this.filenameDescription">
+                <div class="mt-4 box-container">
+                    <div class="spanStyle">
+                        <span><img src="./../../assets/image_icon_document_pic_512x512.png" width="20px" class="mr"></span>{{this.filenameDescription}}</div>
+                    <div class="textStyle cursor-pointer" (click)="deleteDescription()">X</div>
+                </div>
+                <div class="d-flex mt-4">
+                    <button class="uploadFile" disable="!this.filenameDescription" (click)="confirm('Are you sure you want to upload the Description ?','Upload Project Description')">Upload</button>
                 </div>
             </div>
         </div>
