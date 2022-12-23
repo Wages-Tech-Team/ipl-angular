@@ -859,6 +859,8 @@ export class ConstructionDetailsComponent implements OnInit {
       this.selectionType = 'multiple';
       this.projectForm.get('floor_number')?.disable();
       this.projectForm.get('apartment_name')?.disable();
+      if(sessionStorage.getItem('appartmentId'))
+      sessionStorage.setItem('appartmentId',JSON.stringify(this.appartmentids));
     }
     if (option == 'floor') {
       this.data = [];
