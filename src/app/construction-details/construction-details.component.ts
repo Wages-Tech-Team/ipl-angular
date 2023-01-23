@@ -71,8 +71,24 @@ export class ConstructionDetailsComponent implements OnInit {
   }
 
   getWagesNumber = () => {
-    for (let i = 199; i <= 1000; i++)
-      this.wagesNumber.push(i);
+    
+    this.service.getRequest("get-lookup-value").subscribe(res => {
+      if (res.body.success == true || res.body.code == 1000) {
+        this.service.showloader = false;
+        for (let list of res.body.data.look_up) {
+          if (list.type == 'wage-number') {
+            this.wagesNumber.push(list.text)
+          }
+        }
+      }
+      else {
+        this.service.showloader = false;
+        this.confirm1(res.body.message, 'Error');
+      }
+    })
+
+    // for (let i = 199; i <= 1000; i++)
+    //   this.wagesNumber.push(i);
   }
 
   saveFlow() {
