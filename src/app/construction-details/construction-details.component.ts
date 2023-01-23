@@ -470,21 +470,23 @@ export class ConstructionDetailsComponent implements OnInit {
       if (this.apartmentDetails.length > 0) {
         this.appartmentids = this.appartmentids.sort(function (a, b) { return a - b });
         for (let name = 0; name < this.apartmentDetails.length; name++) {
-          if (this.appartmentids[i] == this.apartmentDetails[name].id) {
-            this.apartmentName[i] = this.apartmentDetails[name].apartment_number;
-            i++
-          }
+          this.apartmentName[this.apartmentDetails[name].id]=this.apartmentDetails[name].apartment_number;
+          // if (this.appartmentids[i] == this.apartmentDetails[name].id) {
+          //   this.apartmentName[i] = this.apartmentDetails[name].apartment_number;
+          //   i++
+          // }
         }
       }
       i = 0;
       if (this.floorids.length > 0) {
         this.floorids = this.floorids.sort(function (a, b) { return a - b });;
         for (let name = 0; name < this.floorDetails.length; name++) {
-          if (this.floorids[i] == this.floorDetails[name].id) {
-            this.floorName[i] = this.floorDetails[name].floor_name;
-            this.floorNameId[this.floorDetails[name].id] = this.floorDetails[name].floor_name;
-            i++
-          }
+          this.floorName[this.floorDetails[name].id] = this.floorDetails[name].floor_name;
+          // if (this.floorids[i] == this.floorDetails[name].id) {
+          //   this.floorName[i] = this.floorDetails[name].floor_name;
+          //   this.floorNameId[this.floorDetails[name].id] = this.floorDetails[name].floor_name;
+          //   i++
+          // }
         }
       }
       for (let i = 0; i < this.data.length; i++) {
@@ -492,15 +494,15 @@ export class ConstructionDetailsComponent implements OnInit {
           for (let j = 0; j < this.data[i].records.length; j++) {
             if (row == j) {
               for (let sub = 0; sub < this.data[i].records[j].sub_records.length; sub++) {
-                if ((this.data[i].records[j].sub_records[sub].apartment_id == this.appartmentids[sub]) || (this.data[i].records[j].sub_records[sub].floor_id == this.floorids[sub])) {
+                if (this.data[i].records[j].sub_records[sub].remaining_booking_amount>0) {
                   this.bookWages.push({
                     "project_id": this.projectForm.get('project_name')?.value,
                     "block_id": this.projectForm.get('block_name')?.value,
                     "pay_to": sessionStorage.getItem('payTo'),
                     "trade": sessionStorage.getItem('trade'),
-                    "level": this.floorNameId[this.data[i]?.records[j]?.sub_records[sub]?.floor_id] ? this.floorNameId[this.data[i]?.records[j]?.sub_records[sub]?.floor_id]  : '',
-                    "apartment_id": this.appartmentids[sub],
-                    "plot_or_room": this.apartmentName[sub] ? this.apartmentName[sub] : this.floorName[sub],
+                    "level": this.floorName[this.data[i]?.records[j]?.sub_records[sub]?.floor_id] ? this.floorName[this.data[i]?.records[j]?.sub_records[sub]?.floor_id]  : '',
+                    "apartment_id": this.data[i]?.records[j]?.sub_records[sub]?.apartment_id ? this.data[i]?.records[j]?.sub_records[sub]?.apartment_id:null,
+                    "plot_or_room": this.apartmentName[this.data[i]?.records[j]?.sub_records[sub]?.apartment_id] ? this.apartmentName[this.data[i]?.records[j]?.sub_records[sub]?.apartment_id] : this.floorName[this.data[i]?.records[j]?.sub_records[sub]?.floor_id],
                     "description_work": this.data[index]?.description_header,
                     "main_description_id": this.data[index]?.records[j]?.sub_records[sub]?.main_description_id,
                     "m2_or_hours": "",
@@ -513,6 +515,7 @@ export class ConstructionDetailsComponent implements OnInit {
                   })
                 }
               }
+              
             }
           }
         }
@@ -552,6 +555,7 @@ export class ConstructionDetailsComponent implements OnInit {
     let body = {
       "book_wages": this.bookWages
     }
+
     this.service.postRequest("book-wages", body).subscribe(res => {
       if (res.body.success == true || res.body.code == 1000) {
         this.message[index] = true;
