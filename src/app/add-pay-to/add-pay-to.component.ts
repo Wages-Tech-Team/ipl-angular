@@ -14,23 +14,31 @@ export class AddPayToComponent implements OnInit {
   submitted: boolean = false;
   msgs: any;
   payTo: any = [];
+  editForm: FormGroup;
   heading: any;
   filename: any;
   filenameDescription: any;
   errorMessage: string ='';
   uploadedFile: any;
   uploadedFileDescription: any;
+  WageNumber: any = [];
+  wages_submitted: boolean = false;
 
   constructor(private router: Router, public service: CommonService,private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) {
     this.addpayTo = new FormGroup({
       "pay_to": new FormControl('', Validators.required),
       "pay_to_code": new FormControl('', Validators.required)
     })
+    this.editForm = new FormGroup({
+      "wage-number": new FormControl('', Validators.required),
+      "wages-no" : new FormControl('', Validators.required)
+    })
   }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
     this.getPayToDropdown();
+    this.getWagesNumber()
   }
   navigatedToSignUp() {
     this.router.navigateByUrl('/sign-up');
@@ -100,6 +108,8 @@ export class AddPayToComponent implements OnInit {
     this.upload();
     if(this.heading=='Upload Project Description')
     this.upload_description();
+    if(this.heading=='Update Wages')
+    this.addWages(this.editForm?.get('wage-number')?.value);
     
   }
 
@@ -116,6 +126,9 @@ export class AddPayToComponent implements OnInit {
       this.errorMessage = "Please Upload the file."
       return
     }
+
+    if(heading=='Update Wages')
+    this.wages_submitted = true;
 
     if(heading=='Delete Detail' && this.addpayTo?.invalid)
     return;
@@ -182,4 +195,43 @@ export class AddPayToComponent implements OnInit {
       }
     })
   }
+
+  addWages(value: any){
+    this.service.showloader = true;
+    let body: any;
+        body = {
+          "wages_number": this.editForm?.get('wage-number')?.value,
+        }
+    this.service.postRequest("add-wages-number", body).subscribe(res => {
+      if (res.body.success == true  || res.body.code == 1000) {
+        this.service.showloader = false;
+        this.getWagesNumber();
+        this.editForm?.get('wage-number')?.setValue('');
+        this.confirm('Successfully Added !', '');
+      }
+      else {
+        this.service.showloader = false;
+        this.confirm(res.body.message, 'Error');
+      }
+    })
+  }
+
+  getWagesNumber(){
+    this.service.getRequest("get-lookup-value").subscribe(res => {
+      if (res.body.success == true || res.body.code == 1000) {
+        this.service.showloader = false;
+        for (let list of res.body.data.look_up) {
+          if (list.type == 'wage-number') {
+            this.editForm?.get('wages-no')?.setValue(list.text)
+          }
+        }
+      }
+      else {
+        this.service.showloader = false;
+        this.confirm(res.body.message, 'Error');
+      }
+    })
+
+  }
+
 }
