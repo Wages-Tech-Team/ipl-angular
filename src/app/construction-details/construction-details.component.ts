@@ -836,7 +836,7 @@ export class ConstructionDetailsComponent implements OnInit {
     }
     this.service.showloader = true;
     let body = {
-      "no_of_records": 10000,
+      "no_of_records": 1000000,
       "page_no": 1,
       "project_id": this.projectForm.get('project_name')?.value,
       // "block_id": this.projectForm.get('block_name')?.value,
