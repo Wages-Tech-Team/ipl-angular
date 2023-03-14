@@ -42,6 +42,10 @@ export class UploadExcelComponent implements OnInit {
     this.router.navigateByUrl('/add-payto');
   }
 
+  navigatedToProjectManagementScreen() {
+    this.router.navigateByUrl('/add-project');
+  }
+
   delete() {
     this.filename = ''
   }
