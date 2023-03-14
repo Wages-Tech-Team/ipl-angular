@@ -29,7 +29,8 @@
                                 <span *ngIf="i==0"> {{rowData[col.field] ? rowData[col.field] : "-"}} </span>
                             </span>
                             <span *ngIf="i==1"> {{rowData[col.field] ? rowData[col.field] : "-"}} </span>
-                            <span *ngIf="i==2">
+                            <span *ngIf="i==2"> {{rowData[col.field] ? rowData[col.field] : "-"}} </span>
+                            <span *ngIf="i==3">
                                 <select class="selectdropdown1 mt-2 widthSelect" (change)="changeProjectName($event)">
                                     <option value="PS">Select Project</option>
                                     <option *ngFor="let detail of this.projectDetails" value="{{detail?.id}}">
@@ -37,7 +38,7 @@
                                     </option>
                                 </select>
                             </span>
-                            <span *ngIf="i==3">
+                            <span *ngIf="i==4">
                                 <button class="addButton" (click)="confirm('Are you sure you want to add this project ?','Add Project',null,rowData.id,'null')">Add Project</button>
                             </span>
                         </td>

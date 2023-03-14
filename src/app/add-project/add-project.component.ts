@@ -30,6 +30,10 @@ export class AddProjectComponent implements OnInit {
       field: 'user_name',
       header: 'User Name'
     }),
+    this.column.push({
+      field: 'email',
+      header: 'User Email'
+    }),
       this.column.push({
         field: 'user_role',
         header: 'User role'
