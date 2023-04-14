@@ -14,13 +14,13 @@
     transform: rotateZ(0);
     /* min-width: 14em; */
     min-height: 1.71428571em;
-    background: #fff;
+    background: #ffffff;
     display: inline-block;
     padding: .38571429em 0.1em .38571429em 0.5em;
-    color:#7993A8;
+    color:#000000;
     -webkit-box-shadow: none;
     box-shadow: none;
-    border: 1px solid rgba(34, 36, 38, .15);
+    border: 3px solid rgba(0, 2, 4, 0.15);
     border-radius: .28571429rem;
     -webkit-transition: width .1s ease, -webkit-box-shadow .1s ease;
     transition: width .1s ease, -webkit-box-shadow .1s ease;
@@ -40,12 +40,14 @@
 }
 
 .removeText{
+    cursor: pointer;
     color: red;
     font-weight: 600;
+    margin-right: 7em;
 }
 
 .addButton{
-    color: #096ead;
+    color: rgb(105, 156, 228);
     background: white;
     font-weight: 600;
     border: 2px solid;

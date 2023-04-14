@@ -82,24 +82,27 @@ export class UploadExcelComponent implements OnInit {
     let body = {
       "file_path": file,
     }
-    this.service.postRequest("import-excel-job", body).subscribe(res => {
-      if (res.body.success == true || res.body.code == 1000) {
-        // this.service.showloader = false;
-        this.getProjectId();
+      this.service.postRequest("import-excel-job", body).subscribe((res) => {
+        debugger;
+        if (res.body.success == true || res.body.code == 1000) {
+          // this.service.showloader = false;
+          this.getProjectId();
+        }
+        else {
+          this.service.showloader = false;
+          this.confirm(res, 'Error');
+        }
       }
-      else {
-        this.service.showloader = false;
-        this.confirm(res.body.message, 'Error');
-      }
-    }
-    )
+      )
+   
   }
 
   getProjectId = () => {
     this.service.showloader = true;
     let body = {
       "no_of_records": 100,
-      "page_no": 1
+      "page_no": 1,
+      "user_id": sessionStorage.getItem('user_id'),
     }
     this.service.postRequest("get-project-details", body).subscribe(res => {
       if (res.body.success == true || res.body.code == 1000) {

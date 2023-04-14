@@ -74,7 +74,7 @@ export class AddProjectComponent implements OnInit {
       "no_of_records": 100,
       "page_no": 1
     }
-    this.service.postRequest("get-project-details", body).subscribe(res => {
+    this.service.getRequest("get-project").subscribe(res => {
       if (res.body.success == true || res.body.code == 1000) {
         this.projectDetails = res.body.data.project_details;
         this.service.showloader = false;
