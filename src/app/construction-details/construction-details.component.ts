@@ -23,6 +23,8 @@ export class ConstructionDetailsComponent implements OnInit {
   projectDetails: any;
   showerror: Array<boolean> = [];
   totalAmount: any;
+  totalProjectAmount: any;
+  totalBookedAmount: any;
   message: any = [];
   msgs: Message[] = [];
   imageUrl: string = '';
@@ -86,15 +88,37 @@ export class ConstructionDetailsComponent implements OnInit {
         this.confirm1(res.body.message, 'Error');
       }
     })
-
     // for (let i = 199; i <= 1000; i++)
     //   this.wagesNumber.push(i);
+  }
+
+  getProjectTotal = (event: any) => {
+    event = event?.target?.value ? event.target.value : event;
+    if (event == 'PS')
+      return;
+    let body = {
+      "project_id": event
+    }
+
+    this.service.postRequest("total-construction-details",body).subscribe(res => {
+      if (res.body.success == true || res.body.code == 1000) {
+        this.service.showloader = false;
+        this.totalProjectAmount = res.body.data.total_amount;
+        this.totalBookedAmount = res.body.data.booked_amount;
+      }
+      else {
+        this.service.showloader = false;
+        this.confirm1(res.body.message, 'Error');
+      }
+    })
+
   }
 
   saveFlow() {
     this.projectForm.get('project_name')?.setValue(sessionStorage.getItem('project_id') ? sessionStorage.getItem('project_id') : 'PS');
     if (this.projectForm.get('project_name')?.value)
       this.getBlockData(this.projectForm.get('project_name')?.value);
+      this.getProjectTotal(this.projectForm.get('project_name')?.value);
     this.projectForm.get('block_name')?.setValue(sessionStorage.getItem('block_id') ? sessionStorage.getItem('block_id') : 'PS');
     this.projectForm.get('wages_number')?.setValue(sessionStorage.getItem('wages_number') ? sessionStorage.getItem('wages_number') : 'PS');
     if (this.projectForm.get('block_name')?.value)
@@ -718,7 +742,8 @@ export class ConstructionDetailsComponent implements OnInit {
     this.service.showloader = true;
     let body = {
       "no_of_records": 100,
-      "page_no": 1
+      "page_no": 1,
+      "user_id": sessionStorage.getItem('user_id'),
     }
     this.service.postRequest("get-project-details", body).subscribe(res => {
       if (res.body.success == true || res.body.code == 1000) {

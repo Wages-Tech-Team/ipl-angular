@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { BaseServiceService } from './base-service.service';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError , retry} from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,16 @@ export class CommonService extends BaseServiceService {
     const header: HttpHeaders = new HttpHeaders((url == 'register' || url == 'login') ? { 'ClientVersion': 'WEB:1' } : { 'authorization': "Bearer " + this.getToken() });
     const body = { request: baseRequest };
     return super
-      .makePostRequest(this.baseUrl + url, body, header)
+        .makePostRequest(this.baseUrl + url, body, header)
+        .pipe(
+          retry(0),
+          catchError( (error: HttpErrorResponse) => {
+            this.showloader = false;
+            return throwError(
+               alert(`Something Went Wrong. The server is temporarily unable to service your request due to capacity problems. Please try again later or contact to website manager.`)
+            );
+          })
+        );
   }
 
   public getRequest(url: any): Observable<any> {

@@ -146,6 +146,21 @@
     color: #096ead;
 }
 
+.totalHeading {
+    font-size: 17px;
+    font-weight: bold;
+    color: #ad0909;
+    margin-right: 1em;
+}
+
+.totalHeadingSecond {
+    font-size: 17px;
+    font-weight: bold;
+    color: #ad0909;
+   margin-left: 1em;
+   margin-right: 2.2em;
+}
+
 .boxShadow {
     box-shadow: 0 0 10px #ccc;
     padding: 15px;

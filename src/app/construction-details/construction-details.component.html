@@ -3,6 +3,10 @@
     <div class="d-flex justify-content-center align-item-center tableColor">
         <span class="projectHeading">IPL</span>
     </div>
+    <div class="d-flex justify-content-end align-item-right tableColor">
+        <span class="totalHeading"> LT Total : {{this.totalProjectAmount}}</span>
+        <span class="totalHeadingSecond">LT Booked Total :{{this.totalBookedAmount}}</span>
+    </div>
     <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
         <ng-template pTemplate="footer">
             <button type="button" pButton icon="pi pi-times" label="No" (click)="reject()"
@@ -31,7 +35,7 @@
             </div>
             <div class="d-block">
                 <div class="font15">Project Name</div>
-                <select (change)="getBlockData($event)" class="selectdropdown1 mt-2 widthSelect"
+                <select (change)="getProjectTotal($event)" (change)="getBlockData($event)"  class="selectdropdown1 mt-2 widthSelect"
                     formControlName="project_name">
                     <option value="PS">Select Project Name</option>
                     <option *ngFor="let detail of this.projectDetails" value="{{detail?.id}}">{{detail?.project_name}}
