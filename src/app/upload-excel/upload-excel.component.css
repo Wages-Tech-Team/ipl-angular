@@ -1,10 +1,11 @@
 .upload-btn {
-    width: 400px;
+    width: 440px;
     color: white;
     background-color: #096ead;
     border: none;
     padding: 0.7em;
     font-size: 18px;
+    border-radius: 12px;
     font-weight: 600;
 }
 
@@ -12,6 +13,7 @@
     background-color: red !important;
     border: none;
 }
+
 
 .width {
     width: 400px;
@@ -32,6 +34,20 @@
     font-size: 3rem;
     font-weight: bold;
     color: #096ead;
+}
+
+.uploadHeading {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #096ead;
+    margin-left: 8em;
+}
+
+.downloadHeading {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #096ead;
+    margin-left: 7em;
 }
 
 .spacingBtn {
@@ -60,6 +76,29 @@
     padding: 4px;
     font-size: 16px;
     font-weight: 600;
+    border-radius: 12px;
+}
+
+.systemManagement_1 {
+    width: 190px;
+    color: white;
+    background-color: #096ead;
+    border: none;
+    font-size: 18px;
+    padding: 4px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.systemManagement_2 {
+    width: 225px;
+    color: white;
+    background-color: #096ead;
+    border: none;
+    font-size: 18px;
+    padding: 4px;
+    border-radius: 12px;
+    font-weight: 600;
 }
 
 .textStyle {
@@ -68,11 +107,36 @@
 
 .boxStyle {
     box-shadow: 0 0 10px #ccc;
-    padding: 2em
+    padding: 0.5em;
+    border-radius: 25px;
+    border: 2px solid #357ace;
+    width: 475px;
+    height: 297px;
+    background-color: rgb(255, 255, 255);
 }
 
 .spanStyle {
     color: #7993A8;
+}
+
+.uploadSpan {
+    margin-left: 8em;
+
+}
+
+.managementSpan {
+    margin-left: 6em;
+
+}
+
+.downloadSpan {
+    margin-left: 11em;
+    margin-bottom: 1em;
+}
+
+.book-wagesSpan {
+    margin-left: 7.5em;
+    margin-bottom: 1em;
 }
 
 .mr {

@@ -9,20 +9,24 @@
 
 .inputLabel {
     font-size: 1vw;
-    color: #7993a8;
+    color: #096ead;
+    /* color: #7993a8; */
     font-weight: 600;
-    margin-bottom: 0!important;
+    /* margin-bottom: 0!important; */
 }
 
 .signIn {
     background-color: #096ead;
     border: none;
+    border-radius: 12px;
     padding: 0.6vw 0;
     font-size: 1.2vw;
     color: white;
 }
 
 .headingSihnIn {
+    margin-left: 4em;
+    color: #096ead;
     font-size: 24px;
     font-weight: bold;
 }
@@ -33,9 +37,16 @@
 
 .cardStylingsignIn {
     box-shadow: 0 0 10px #ccc;
-    padding: 6em 5em !important;
+    padding: 2em 5em !important;
+    border-radius: 25px;
+    border: 2px solid #357ace;
     /* background: #096ead; */
     background: white;
+}
+
+.signInCardSpan {
+    margin-left: 2em;
+    padding: 1em;
 }
 
 .widthField {
