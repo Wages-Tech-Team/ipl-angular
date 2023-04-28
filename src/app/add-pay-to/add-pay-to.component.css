@@ -1,12 +1,157 @@
 .projectHeading {
     font-size: 2rem;
     font-weight: bold;
-    color: #096ead;
+    color: #fffdfd;
+    text-decoration: underline;
 }
 
-.boxStyle {
+.payToBoxStyle {
     box-shadow: 0 0 10px #ccc;
-    padding: 2em
+    padding: 0.5em;
+    width: 592px;
+    height: 340px;
+    border-radius: 25px;
+    border: 2px solid #357ace;
+    background-color: rgb(255, 255, 255);
+}
+
+.deletePayToSpan {
+    margin-left: 15em;
+
+}
+
+.deletePayToHeading {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #096ead;
+    margin-left: 12em;
+}
+
+.deletePayTo-btn {
+    width: 95%;
+    color: white;
+    border-radius: 12px;
+    background-color: #096ead;
+    border: none;
+    padding: 0.5em;
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 1em;
+}
+
+.wagesNumberBoxStyle {
+    box-shadow: 0 0 10px #ccc;
+    padding: 0.5em;
+    width: 592px;
+    height: 340px;
+    border-radius: 25px;
+    border: 2px solid #357ace;
+    background-color: rgb(255, 255, 255);
+}
+
+mark{
+    background-color: yellow;
+    color: #357ace;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+.wagesNumberSpan {
+    margin-left: 16em;
+
+}
+
+.wagesText{
+    font-size: 1rem;
+    font-weight: bold;
+    color: #080808;
+}
+
+.wagesNumberHeading {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #096ead;
+    margin-left: 10em;
+}
+
+.wagesNumber-btn {
+    width: 95%;
+    color: white;
+    border-radius: 12px;
+    background-color: #096ead;
+    border: none;
+    padding: 0.5em;
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 1em;
+}
+
+
+.uploadPayToBoxStyle {
+    box-shadow: 0 0 10px #ccc;
+    padding: 0.5em;
+    width: 592px;
+    height: 340px;
+    border-radius: 25px;
+    border: 2px solid #357ace;
+    background-color: rgb(255, 255, 255);
+}
+
+.uploadPayToSpan {
+    margin-left: 9em;
+
+}
+
+.uploadPayToHeading {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #096ead;
+    margin-left: 10em;
+}
+
+.uploadPayTo-btn {
+    width: 95%;
+    color: white;
+    border-radius: 12px;
+    background-color: #096ead;
+    border: none;
+    padding: 0.5em;
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 1em;
+}
+
+.descriptionBoxStyle {
+    box-shadow: 0 0 10px #ccc;
+    padding: 0.5em;
+    width: 592px;
+    height: 340px;
+    border-radius: 25px;
+    border: 2px solid #357ace;
+    background-color: rgb(255, 255, 255);
+}
+
+.descriptionSpan {
+    margin-left: 9em;
+
+}
+
+.descriptionHeading {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #096ead;
+    margin-left: 9em;
+}
+
+.rightBox {
+    margin-left: 27em;
+}
+
+.leftBox {
+    margin-left: 3em;
+}
+
+.spacingBtn {
+    padding: 4em 6em;
 }
 
 .cursor-pointor {

@@ -22,6 +22,8 @@ import { GetWagesComponent } from './get-wages/get-wages.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { AddProjectComponent } from './add-project/add-project.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { AddProjectComponent } from './add-project/add-project.component';
     AddPayToComponent,
     GetWagesComponent,
     UserDetailsComponent,
-    AddProjectComponent
+    AddProjectComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

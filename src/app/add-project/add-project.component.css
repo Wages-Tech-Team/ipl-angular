@@ -1,6 +1,15 @@
 .inner-card {
     padding: 30px 35px 35px 30px;
-    box-shadow: 0 0 10px #ccc
+    box-shadow: 0 0 10px #ccc;
+    border-radius: 25px;
+    border: 2px solid #fbf8f8;
+    background-color: rgb(255, 255, 255);
+}
+
+.page {
+    background-color: rgba(203,227,254,255);
+    width: 1900px;
+    height: 847px;
 }
 
 .selectdropdown1 {
@@ -37,6 +46,7 @@
     font-size: 2rem;
     font-weight: bold;
     color: #096ead;
+    text-decoration: underline;
 }
 
 .removeText{
@@ -50,6 +60,7 @@
     color: rgb(105, 156, 228);
     background: white;
     font-weight: 600;
+    border-radius: 12px;
     border: 2px solid;
 }
 

@@ -13,6 +13,7 @@ export class AppComponent {
   projectDetails: any;
   blockDetails: any;
   showoptions: boolean = true;
+  toggleNav: boolean = false;
   projectForm: FormGroup;
   submitted: boolean = false;
   constructor(private router: Router, public service: CommonService) {
@@ -74,5 +75,9 @@ export class AppComponent {
 
   navigatedTo() {
     this.router.navigateByUrl('/sign-in');
+  }
+
+  toggleNavbar = () => {
+    this.toggleNav = !this.toggleNav;
   }
 }

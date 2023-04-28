@@ -1,0 +1,20 @@
+.header-container {
+    width: 100%;
+    height: 8vh;
+    background-color: white;
+}
+
+.header-parent {
+    position: fixed;
+    width: 100%;
+    flex-direction: column;
+    z-index: 6;
+}
+
+.mainLogo {
+    margin-left: 0.5em;
+}
+
+.headerSocial {
+    margin-left: 8em;
+}

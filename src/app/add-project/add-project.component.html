@@ -1,4 +1,4 @@
-<div [ngClass]="{'loading-css' : this.service.showloader}">
+<div [ngClass]="{'loading-css' : this.service.showloader}"  class="page">
     <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
         <ng-template pTemplate="footer">
             <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="reject()"></button>

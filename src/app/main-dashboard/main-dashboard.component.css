@@ -5,6 +5,7 @@
     border: none;
     margin-top: 3em;
     padding: 10px;
+    border-radius: 12px;
     font-size: 16px;
     font-weight: 600;
 }
@@ -25,9 +26,24 @@
 
 .cardStyling {
     box-shadow: 0 0 10px #ccc;
-    padding: 10em 5em !important;
+    padding: 2.5em 5em !important;
+    border-radius: 25px;
+    border: 2px solid #357ace;
     /* background: #096ead; */
     background: white;
+}
+
+.selectPayToHeading {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #096ead;
+    margin-left: 0.5em;
+    text-decoration: underline;
+}
+
+.selectPayToSpan {
+    margin-left: 9em;
+
 }
 
 .inputLabel {
