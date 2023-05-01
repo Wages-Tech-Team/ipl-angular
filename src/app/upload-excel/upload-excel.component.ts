@@ -90,7 +90,7 @@ export class UploadExcelComponent implements OnInit {
         }
         else {
           this.service.showloader = false;
-          this.confirm(res, 'Error');
+          this.confirm(res.body.message, 'Error');
         }
       }
       )
