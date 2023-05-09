@@ -18,6 +18,7 @@ export class GetWagesComponent implements OnInit {
   first = 0;
   totalRecords = 0;
   subTotal = 0;
+  editAndDeletePermission = 0;
   modalHeading: any;
   msgs: any;
   selectedRowIndexDelete: any;
@@ -90,6 +91,7 @@ export class GetWagesComponent implements OnInit {
       if (res.body.success == true  || res.body.code == 1000) {
         this.data = res.body.data.wages_details;
         this.totalRecords = this.data.length;
+        this.editAndDeletePermission = res.body.data.edit_and_delete_permission;
         this.subTotal = res.body.data.total_booking.toFixed(2);
         this.service.showloader = false;
       }

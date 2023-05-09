@@ -27,7 +27,7 @@ export class CommonService extends BaseServiceService {
           catchError( (error: HttpErrorResponse) => {
             this.showloader = false;
             return throwError(
-               alert(`Something Went Wrong. The server is temporarily unable to service your request due to capacity problems. Please try again later or contact to website manager.`)
+               alert(`Something Went Wrong. The server is temporarily unable to service your request due to some technical problems. Please try again later or contact to website manager.`)
             );
           })
         );
