@@ -31,7 +31,7 @@
                                 <span *ngIf="i==8 && !this.editOption[row]">£ {{this.service.formatNumber(number(rowData[col.field])?.toFixed(2))}}</span>
                                 <span *ngIf="i==8 && this.editOption[row]"><input type="text" class="w-100" formControlName="amount" (input)="amountCheck(row)"></span>
                                 <p *ngIf="i==8 && this.editOption[row] && this.errorMessage[row]" class="error mb-0 font11">Amount Should be less than Remaining Amount.</p>
-                                <div *ngIf="i==9" class="d-flex boxStyle">
+                                <div *ngIf="i==9 && this.editAndDeletePermission == 1" class="d-flex boxStyle">
                                 <button class="editOption" *ngIf="!this.editOption[row]" (click)="editDetail(row)">Edit</button>
                                 <button class="delete mt-2" *ngIf="!this.editOption[row]" (click)="confirm('Are you sure you want to delete the wage ?','Delete Wages',row)">Delete</button>
                                 <button class="editOption" *ngIf="this.editOption[row]" (click)="confirm('Are you sure you want to save the wage ?','Save Wages',null)">Save</button>
