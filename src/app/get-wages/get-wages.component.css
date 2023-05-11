@@ -76,6 +76,17 @@
     font-weight: 600;
 }
 
+.finalSubmitSecond {
+    background: white;
+    border: 2px solid #096ead;
+    width: 220px;
+    height: 2.2em;
+    color: #096ead;
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 1em;
+}
+
 .sub-total {
     color: black;
     font-weight: bold;

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { Column } from 'src/column.model';
 import { CommonService } from '../common.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-get-wages',
@@ -18,6 +19,7 @@ export class GetWagesComponent implements OnInit {
   first = 0;
   totalRecords = 0;
   subTotal = 0;
+  downloadWages:boolean = false
   editAndDeletePermission = 0;
   modalHeading: any;
   msgs: any;
@@ -25,7 +27,7 @@ export class GetWagesComponent implements OnInit {
   errorMessage: Array<boolean> = [];
   imageUrl: any;
 
-  constructor(public service: CommonService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) {
+  constructor(public service: CommonService, private confirmationService: ConfirmationService,  private modal: NgbModal, private primengConfig: PrimeNGConfig) {
     this.editForm = new FormGroup({
       "amount": new FormControl('', Validators.required)
     })
