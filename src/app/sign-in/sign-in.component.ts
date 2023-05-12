@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { CommonService } from '../common.service';
@@ -10,14 +10,14 @@ import { CommonService } from '../common.service';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent implements OnInit {
-  signIn: FormGroup;
+  signIn: UntypedFormGroup;
   submitted: boolean = false;
   msgs: any;
 
   constructor(private router: Router, public service: CommonService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) {
-    this.signIn = new FormGroup({
-      "name": new FormControl('', [Validators.required, Validators.pattern(this.service.emailPattern)]),
-      "password": new FormControl('', [Validators.required, Validators.pattern(this.service.password)])
+    this.signIn = new UntypedFormGroup({
+      "name": new UntypedFormControl('', [Validators.required, Validators.pattern(this.service.emailPattern)]),
+      "password": new UntypedFormControl('', [Validators.required, Validators.pattern(this.service.password)])
     })
   }
 

@@ -73,4 +73,15 @@ export class CommonService extends BaseServiceService {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
   }
 
+  
+  dateToUTC(value: any) {
+    let date = new Date(value);
+    if (date) {
+      return new Date(
+        Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+      );
+    }
+    return null;
+  }
+
 }

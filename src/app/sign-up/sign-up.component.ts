@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { CommonService } from '../common.service';
@@ -10,18 +10,18 @@ import { CommonService } from '../common.service';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-  signUp: FormGroup;
+  signUp: UntypedFormGroup;
   submitted: boolean = false;
   msgs: any;
 
   constructor(private router: Router, public service: CommonService,private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) {
-    this.signUp = new FormGroup({
-      "email": new FormControl('', [Validators.required, Validators.pattern(this.service.emailPattern)]),
-      "firstName": new FormControl('', [Validators.required, Validators.minLength(2)]),
-      "lastName": new FormControl('', [Validators.required, Validators.minLength(2)]),
-      "password": new FormControl('', [Validators.required, Validators.pattern(this.service.password)]),
-      "confirmPassword": new FormControl('', [Validators.required, Validators.pattern(this.service.password)]),
-      "user_role": new FormControl('')
+    this.signUp = new UntypedFormGroup({
+      "email": new UntypedFormControl('', [Validators.required, Validators.pattern(this.service.emailPattern)]),
+      "firstName": new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
+      "lastName": new UntypedFormControl('', [Validators.required, Validators.minLength(2)]),
+      "password": new UntypedFormControl('', [Validators.required, Validators.pattern(this.service.password)]),
+      "confirmPassword": new UntypedFormControl('', [Validators.required, Validators.pattern(this.service.password)]),
+      "user_role": new UntypedFormControl('')
     })
   }
 

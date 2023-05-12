@@ -9,6 +9,72 @@
     color: #096ead;
 }
 
+.modalBg {
+    background: white;
+    width: 450px;
+    height: 250px;
+    border-radius: 25px;
+}
+
+.id_head {
+     padding: 0.5vw; 
+}
+
+.butSpecs {
+    width: 80%;
+    margin-left: 65px;
+}
+
+.cancel_grey {
+    border: 1px solid #7993A8;
+    background-color: #7993A8;
+    color: white;
+    width: 45%;
+}
+
+.submitProcess {
+    border: 1px solid #319EE2;
+    background-color: #319EE2;
+    color: white;
+    width: 60%;
+}
+
+.id_heading {
+    font-weight: bold;
+    font-size: 20px;
+    color: #096ead;
+    margin-left: 7.5em;
+}
+
+.wagesDate {
+    font-weight: bold;
+    font-size: 20px;
+    color: #000000;
+    padding: 3.5vw; 
+}
+
+
+.input-legend {
+    background: #fff;
+    position: relative;
+    font-size: 13px;
+    width: fit-content;
+    display: inline-table;
+    padding: 0 5px 0 5px;
+    z-index: 1;
+}
+
+.p-calendar{
+    top :145px
+}
+
+.outlineModal {
+    border: 2px solid #96A3AA;
+    width: 450px;
+    height: 225px;
+    border-radius: 0.25rem;
+}
+
 .borderBox {
     border: 1px solid #a8a7a78c;
 }
@@ -100,3 +166,8 @@
     padding: 10px;
     margin-right: 12em;
 }
+
+/* :host ::ng-deep .p-calendar .p-datepicker {
+    min-width: 100%;
+    top: 45px;
+} */
