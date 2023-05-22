@@ -2,6 +2,7 @@
 
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "./../node_modules/primeng/resources/themes/saga-blue/theme.css";
+
 tr>th {
     padding: 0.571em 0.857em;
     border: 0px solid var(--light-grey) !important;
@@ -208,4 +209,55 @@ tr>td {
 #pr_id_2 .p-datatable-thead>tr>th>.visible,
 #pr_id_2 .p-datatable-tfoot>tr>td>.visible {
     display: block !important;
+}
+
+body .p-datepicker:not(.p-datepicker-inline) {
+    top: 45px !important
+}
+
+body .p-datepicker table td>a.p-state-active, body .p-datepicker table td>span.p-state-active {
+    color: #fff;
+    background-color: #007ad9;
+}
+
+
+body .p-datepicker table td > span.p-highlight {
+    color: #fff;
+    background-color: #007ad9;
+
+}
+
+body .p-datepicker table td > span {
+    width: 2rem;
+    height: 1.5rem;
+    border-radius: 15%;
+    transition: box-shadow 0.5s;
+    border: 1px solid transparent;
+}
+
+body .p-datepicker .p-datepicker-header {
+    padding: 0.2rem;
+    color: #205d9b;
+    background: #ffffff;
+    font-weight: 600;
+    margin: 0;
+    border-bottom: 1px solid #dee2e6;
+    border-top-right-radius: 1px;
+    border-top-left-radius: 1px;
+}
+
+body .tr>th {
+    padding: 0.571em 0.857em;
+    border: 0px solid var(--light-grey) !important;
+    font-weight: 450 !important;
+    color: var(--asset-text-color);
+    background-color: #f5f6f7;
+    box-shadow: none !important;
+    font-family: "SF UI Display Bold";
+    height: 35px;
+}
+
+body .p-datepicker table td.p-datepicker-today > span.p-highlight {
+    color: #fff;
+    background-color: #007ad9;
 }

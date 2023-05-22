@@ -7,9 +7,12 @@
     <div class="d-flex justify-content-center align-item-center">
         <div class="d-flex flex-column cardStylingsignIn" [formGroup]="this.signIn">
             <div class="headingSihnIn">Sign In</div>
+            <div class="signInCardSpan">
+                <span><img src="./../../assets/sign-in.png" width="220px" class="mr"></span>
+            </div>
             <div class="d-flex mt-4 w-100">
                 <div class="d-block  w-100">
-                    <div class="inputLabel">UserName :</div>
+                    <div class="inputLabel">UserName</div>
                     <input type="text" class="inputStyling mt-2 widthField" placeholder="Enter UserName" formControlName="name">
                     <p *ngIf="this.submitted && !this.signIn?.get('name')?.value" class="error">
                         UserName is required</p>
@@ -19,7 +22,7 @@
             </div>
             <div class="d-flex mt-4 w-100">
                 <div class="d-block w-100">
-                    <div class="inputLabel">Password :</div>
+                    <div class="inputLabel">Password</div>
                     <input type="password" class="inputStyling mt-2 widthField" placeholder="Enter Password" formControlName="password">
                     <p *ngIf="this.submitted && !this.signIn?.get('password')?.value" class="error">
                         Password is required</p>

@@ -1,4 +1,4 @@
-<div [ngClass]="{'loading-css' : this.service.showloader}" class="backGround">
+<div [ngClass]="{'loading-css' : this.service.showloader}" class="backGround" [ngStyle]="{'background' : 'url(./assets/Admin.png)'}" >
     <div class="d-flex justify-content-center align-items-center tableColor">
         <span class="projectHeading">IPL</span>
     </div>
@@ -12,21 +12,29 @@
     <div class="spacingBtn">
         <div class="d-flex justify-content-between align-items-center mt-4">
             <div class="boxStyle">
+                <span class = "uploadHeading">Project Upload</span>
+                <div class="uploadSpan">
+                    <span><img src="./../../assets/upload-file.png" width="180px" class="mr"></span>
+                </div>
                 <button class="btnStyle"><label class="cursor-pointer m-0 upload-btn" for="upload-doc">Browse Excel</label></button>
                 <input #documentInput (change)="this.handleFileUpload($event)" type="file" id="upload-doc" class="d-none" name="avatar">
                 <p *ngIf="this.errorMessage && !this.filename" class="error">{{this.errorMessage}}</p>
-                <div class="d-flex mt-4" *ngIf="this.filename">
-                    <div class="mt-4 box-container">
+                <div class="d-flex mt-2" *ngIf="this.filename">
+                    <div class="mt-1 box-container">
                         <div class="spanStyle">
                             <span><img src="./../../assets/image_icon_document_pic_512x512.png" width="20px" class="mr"></span>{{this.filename}}</div>
                         <div class="textStyle cursor-pointer" (click)="delete()">X</div>
                     </div>
                 </div>
-                <div class="d-flex mt-4">
+                <div class="d-flex mt-2">
                     <button class="uploadFile" disable="!this.filename" (click)="confirm('Are you sure you want to upload the project ?','Upload Project')">Upload</button>
                 </div>
             </div>
             <div class="boxStyle">
+                <span class = "downloadHeading">Download Project</span>
+                <div class="downloadSpan">
+                    <span><img src="./../../assets/Download-Project.png" width="100px" class="mr"></span>
+                </div>
                 <div>
                     <select class="selectdropdown width" (change)="setProjectId($event)">
                 <option value="PS">Please Select Project Name</option>
@@ -51,12 +59,20 @@
         </div>
         <div class="d-flex justify-content-between align-items-center mt-4">
             <div class="boxStyle">
-                <div class="p-1">
-                    <button class="upload-btn" (click)="navigatedToPaytoScreen()">Management System</button><br>
-                    <button class="upload-btn mt-4" (click)="navigatedToProjectManagementScreen()">User Project Management</button>
+                <span class = "downloadHeading">Project Management</span>
+                <div class="managementSpan">
+                    <span><img src="./../../assets/Management-System.png" width="220px" class="mr"></span>
+                </div>
+                <div class="mt-4 d-flex justify-content-between">
+                    <button class="systemManagement_1" (click)="navigatedToPaytoScreen()">Management System</button><br>
+                    <button class="systemManagement_2 " (click)="navigatedToProjectManagementScreen()">User Project Management</button>
                 </div>
             </div>
             <div class="boxStyle">
+                <span class = "uploadHeading">Book Wages</span>
+                <div class="book-wagesSpan">
+                    <span><img src="./../../assets/Wages-Booking-Photo.png" width="200px" class="mr"></span>
+                </div>
                 <button class="upload-btn" (click)="navigatedTo()">Go To Wages Portal</button>
             </div>
         </div>

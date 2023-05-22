@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonService } from '../common.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 @Component({
   selector: 'app-main-dashboard',
@@ -9,7 +9,7 @@ import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
   styleUrls: ['./main-dashboard.component.css']
 })
 export class MainDashboardComponent implements OnInit {
-  projectForm: FormGroup;
+  projectForm: UntypedFormGroup;
   submitted: boolean = false;
   payTo: any = [];
   payToCode: any;
@@ -17,9 +17,9 @@ export class MainDashboardComponent implements OnInit {
   tradeList: any = [];
 
   constructor(private router: Router, public service: CommonService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) {
-    this.projectForm = new FormGroup({
-      "project_name": new FormControl('PS', Validators.required),
-      "block_name": new FormControl('PS', Validators.required)
+    this.projectForm = new UntypedFormGroup({
+      "project_name": new UntypedFormControl('PS', Validators.required),
+      "block_name": new UntypedFormControl('PS', Validators.required)
     })
   }
 

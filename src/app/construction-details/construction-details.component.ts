@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConfirmationService, Message, PrimeNGConfig } from 'primeng/api';
 import { Column } from 'src/column.model';
@@ -19,7 +19,7 @@ export class ConstructionDetailsComponent implements OnInit {
   apartmentDetails: any;
   selectedRowIndex: number = 0;
   blockDetails: any;
-  projectForm: FormGroup;
+  projectForm: UntypedFormGroup;
   projectDetails: any;
   showerror: Array<boolean> = [];
   totalAmount: any;
@@ -40,7 +40,7 @@ export class ConstructionDetailsComponent implements OnInit {
   editOption: Array<boolean> = [];
   editedRowId: any;
   selectedTable: any;
-  wages: FormGroup;
+  wages: UntypedFormGroup;
   floorDetails: any;
   floorName: Array<any> = [];
   floorNameId: Array<any> = [];
@@ -49,17 +49,17 @@ export class ConstructionDetailsComponent implements OnInit {
   remainingAmount: Array<any> = [];
 
   constructor(private router: Router, public service: CommonService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) {
-    this.projectForm = new FormGroup({
-      "project_name": new FormControl('PS'),
-      "block_name": new FormControl('PS'),
-      "apartment_name": new FormControl('PS'),
-      "wages_number": new FormControl('PS'),
-      "floor_number": new FormControl('PS')
+    this.projectForm = new UntypedFormGroup({
+      "project_name": new UntypedFormControl('PS'),
+      "block_name": new UntypedFormControl('PS'),
+      "apartment_name": new UntypedFormControl('PS'),
+      "wages_number": new UntypedFormControl('PS'),
+      "floor_number": new UntypedFormControl('PS')
     })
-    this.wages = new FormGroup({
-      "area": new FormControl(''),
-      "unit": new FormControl(''),
-      "lab_rate": new FormControl(''),
+    this.wages = new UntypedFormGroup({
+      "area": new UntypedFormControl(''),
+      "unit": new UntypedFormControl(''),
+      "lab_rate": new UntypedFormControl(''),
     })
   }
 

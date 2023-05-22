@@ -49,3 +49,8 @@
         stroke-dashoffset: -124px;
     }
 }
+
+/* :host ::ng-deep .p-calendar .p-datepicker {
+    min-width: 100%;
+    top: 45px;
+} */

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FrozenColumn } from 'primeng/table';
 import { CommonService } from './common.service';
@@ -12,13 +12,14 @@ import { CommonService } from './common.service';
 export class AppComponent {
   projectDetails: any;
   blockDetails: any;
+  showloader: boolean = false;
   showoptions: boolean = true;
-  projectForm: FormGroup;
+  projectForm: UntypedFormGroup;
   submitted: boolean = false;
   constructor(private router: Router, public service: CommonService) {
-    this.projectForm = new FormGroup({
-      "project_name": new FormControl('PS', Validators.required),
-      "block_name": new FormControl('PS', Validators.required)
+    this.projectForm = new UntypedFormGroup({
+      "project_name": new UntypedFormControl('PS', Validators.required),
+      "block_name": new UntypedFormControl('PS', Validators.required)
     })
   }
 

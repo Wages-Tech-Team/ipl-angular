@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { Column } from 'src/column.model';
 import { CommonService } from '../common.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-get-wages',
@@ -14,21 +15,29 @@ export class GetWagesComponent implements OnInit {
   data: any = [];
   editOption: Array<boolean> = [];
   selectedRowIndex: any;
-  editForm: FormGroup;
+  editForm: UntypedFormGroup;
+  downloadWagesForm: UntypedFormGroup;
   first = 0;
   totalRecords = 0;
   subTotal = 0;
+  dobminDate: Date = new Date(2022, 12, 1);
+  downloadWages:boolean = false
   editAndDeletePermission = 0;
   modalHeading: any;
   msgs: any;
+  submitted:boolean = false;
+  today : Date = new Date();
+  currentDate: any;
   selectedRowIndexDelete: any;
   errorMessage: Array<boolean> = [];
   imageUrl: any;
+  testDate: any;
 
-  constructor(public service: CommonService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) {
-    this.editForm = new FormGroup({
-      "amount": new FormControl('', Validators.required)
-    })
+  constructor(public service: CommonService, private confirmationService: ConfirmationService,  private modal: NgbModal, private primengConfig: PrimeNGConfig) {
+    this.editForm = new UntypedFormGroup({
+      "amount": new UntypedFormControl('', Validators.required)
+    }),
+    this.downloadWagesForm = new UntypedFormGroup({});
   }
 
   ngOnInit(): void {
@@ -75,6 +84,7 @@ export class GetWagesComponent implements OnInit {
     })
     this.getWages();
     this.primengConfig.ripple = true;
+    this.currentDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate(), this.today.getHours(), this.today.getMinutes(), this.today.getSeconds(), this.today.getMilliseconds());
   }
 
   getWages = () => {
@@ -209,50 +219,100 @@ export class GetWagesComponent implements OnInit {
     });
   }
 
-  accept = () => {
-    this.confirmationService.close();
-    if (this.modalHeading == 'Delete Wages')
-      this.deleteDetail();
-    if (this.modalHeading == 'Save Wages') {
-      this.saveDetail();
+    accept = () => {
+        this.confirmationService.close();
+        if (this.modalHeading == 'Delete Wages')
+        this.deleteDetail();
+        if (this.modalHeading == 'Save Wages') {
+            this.saveDetail();
+        }
+        if (this.modalHeading == 'Final Submit')
+        this.finalSubmit()
+        this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' }];
     }
-    if (this.modalHeading == 'Final Submit')
-      this.finalSubmit()
-    this.msgs = [{ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' }];
-  }
 
-  finalSubmit = () => {
-    this.service.showloader = true;
-    let body = {
-      "user_id": sessionStorage.getItem('user_id'),
-      "project_id": sessionStorage.getItem('project_id'),
-      "wages_number":sessionStorage.getItem('wages_number')
+    finalSubmit = () => {
+        this.service.showloader = true;
+        let body = {
+        "user_id": sessionStorage.getItem('user_id'),
+        "project_id": sessionStorage.getItem('project_id'),
+        "wages_number":sessionStorage.getItem('wages_number')
+        }
+        this.service.postRequest("final-wages-submission", body).subscribe(res => {
+            if (res.body.success == true  || res.body.code == 1000) {
+                this.service.showloader = false;
+                this.getWages();
+                let link = document.createElement('a');
+                this.imageUrl = res.body.data.excel_url;
+                link.setAttribute('href', this.imageUrl);
+                link.setAttribute('download', 'Wages_Booking' + '.xlsx');
+                link.style.visibility = "hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+            else {
+                this.service.showloader = false;
+                this.confirm(res.body.message,'Error',null);
+            }
+        })
     }
-    this.service.postRequest("final-wages-submission", body).subscribe(res => {
-      if (res.body.success == true  || res.body.code == 1000) {
-        this.service.showloader = false;
-        this.getWages();
-        let link = document.createElement('a');
-        this.imageUrl = res.body.data.excel_url;
-        link.setAttribute('href', this.imageUrl);
-        link.setAttribute('download', 'Wages_Booking' + '.xlsx');
-        link.style.visibility = "hidden";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
-      else {
-        this.service.showloader = false;
-        this.confirm(res.body.message,'Error',null);
-      }
-    })
 
-  }
+    reject = () => {
+        this.confirmationService.close();
+    }
+    navigatedTo = () => {
+        window.history.back();
+    }
 
-  reject = () => {
-    this.confirmationService.close();
-  }
-  navigatedTo = () => {
-    window.history.back();
-  }
+  
+    downloadWagesModal(modalKey: any) {
+        this.downloadWagesForm = new UntypedFormGroup({
+            "wages_date": new UntypedFormControl('', [Validators.required]),
+        });
+        this.downloadWagesForm.patchValue({
+          'wages_date':this.currentDate
+        })
+        this.modal.open(modalKey, {centered: true });
+    }
+
+    canceldownloadWagesModal(){
+        this.downloadWagesForm =new UntypedFormGroup({});
+        this.modal.dismissAll();
+    }
+
+    download = () => {
+        this.service.showloader = true;
+        this.modal.dismissAll();
+        let body = {
+            "no_of_records": 1000000,
+            "page_no": 1,
+            "project_id": sessionStorage.getItem('project_id'),
+            "user_id": sessionStorage.getItem('user_id'),
+            "wages_number": sessionStorage.getItem('wages_number'),
+            'wages_date': this.downloadWagesForm?.get('wages_date')?.value ? this.service.dateToUTC(this.downloadWagesForm?.get('wages_date')?.value) : '',
+        }
+        this.service.postRequest("download-wages", body).subscribe(res => {
+            if (res.body.code == 1001) {
+                this.service.showloader = false;
+                this.confirm(res.body.message, 'Download Wages', null);
+            }
+            else if (res.body.success == true || res.body.code == 1000) {
+                this.service.showloader = false;
+                let link = document.createElement('a');
+                this.imageUrl = res.body.data.excel_url;
+                link.setAttribute('href', this.imageUrl);
+                link.setAttribute('download', 'Wages_Booking' + '.xlsx');
+                link.style.visibility = "hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+            else {
+                this.service.showloader = false;
+                this.confirm(res.body.message,  'Download Wages', null);
+            }
+        })
+    }
+
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { CommonService } from '../common.service';
@@ -10,11 +10,11 @@ import { CommonService } from '../common.service';
   styleUrls: ['./add-pay-to.component.css']
 })
 export class AddPayToComponent implements OnInit {
-  addpayTo: FormGroup;
+  addpayTo: UntypedFormGroup;
   submitted: boolean = false;
   msgs: any;
   payTo: any = [];
-  editForm: FormGroup;
+  editForm: UntypedFormGroup;
   heading: any;
   filename: any;
   filenameDescription: any;
@@ -25,13 +25,13 @@ export class AddPayToComponent implements OnInit {
   wages_submitted: boolean = false;
 
   constructor(private router: Router, public service: CommonService,private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) {
-    this.addpayTo = new FormGroup({
-      "pay_to": new FormControl('', Validators.required),
-      "pay_to_code": new FormControl('', Validators.required)
+    this.addpayTo = new UntypedFormGroup({
+      "pay_to": new UntypedFormControl('', Validators.required),
+      "pay_to_code": new UntypedFormControl('', Validators.required)
     })
-    this.editForm = new FormGroup({
-      "wage-number": new FormControl('', Validators.required),
-      "wages-no" : new FormControl('', Validators.required)
+    this.editForm = new UntypedFormGroup({
+      "wage-number": new UntypedFormControl('', Validators.required),
+      "wages-no" : new UntypedFormControl('', Validators.required)
     })
   }
 

@@ -6,14 +6,18 @@
         </div>
         <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
             <ng-template pTemplate="footer">
-                <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="reject()" *ngIf="this.modalHeading == 'Error'"></button>
-                <button type="button" pButton icon="pi pi-times" label="No" (click)="reject()" *ngIf="this.modalHeading != 'Error'"></button>
-                <button type="button" pButton icon="pi pi-check" label="Yes" (click)="accept()" *ngIf="this.modalHeading != 'Error'"></button>
+                <div *ngIf="this.downloadWages">
+
+                </div>
+                <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="reject()" *ngIf="((this.modalHeading == 'Error') && (!this.downloadWages))"></button>
+                <button type="button" pButton icon="pi pi-times" label="No" (click)="reject()" *ngIf="((this.modalHeading != 'Error') && (!this.downloadWages))"></button>
+                <button type="button" pButton icon="pi pi-check" label="Yes" (click)="accept()" *ngIf="((this.modalHeading != 'Error') && (!this.downloadWages))"></button>
             </ng-template>
         </p-confirmDialog>
         <div class="mt-4 inner-card">
             <div class="d-flex justify-content-end">
-                <button class="finalSubmit" (click)="confirm('Are you sure you want to final submit the wages ?','Final Submit',null)">Final Submission</button>
+                <button class="finalSubmit" (click)="downloadWagesModal(selectDateModal)">Download Wages</button>
+                <button class="finalSubmitSecond" (click)="confirm('Are you sure you want to final submit the wages ?','Final Submit',null)">Final Submission</button>
             </div>
             <div class="mt-4 table-body">
                 <p-table [columns]="column" [value]="data" [responsive]="false" [paginator]='true' [alwaysShowPaginator]="false" [(first)]='first' [rows]='10' [totalRecords]='this.totalRecords'>
@@ -54,3 +58,22 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #selectDateModal let-modal>
+    <div class="modalBg id_head" >
+        <div class="id_heading">
+                Please Select Date
+        </div>
+        <div class="wagesDate" [formGroup]="downloadWagesForm">
+            Wages Date:
+            <p-calendar [defaultDate]="this.currentDate" [minDate]="this.dobminDate" [maxDate]="this.currentDate"
+                dateFormat="dd-mm-yy" formControlName="wages_date" timezone="utc"  class="">
+            </p-calendar>
+        </div>
+        <div class="d-flex justify-content-center butSpecs mt-0.5 ml-3 p-0">
+            <button type="button" class="font-fam cancel_grey" (click)="canceldownloadWagesModal()">Cancel</button>
+            <button type="button" class="font-fam submitProcess" (click)="download()" style="margin-left: 10px;">Download</button>
+        </div>
+    </div>
+</ng-template>

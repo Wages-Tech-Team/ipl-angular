@@ -83,7 +83,6 @@ export class UploadExcelComponent implements OnInit {
       "file_path": file,
     }
       this.service.postRequest("import-excel-job", body).subscribe((res) => {
-        debugger;
         if (res.body.success == true || res.body.code == 1000) {
           // this.service.showloader = false;
           this.getProjectId();

@@ -22,6 +22,7 @@ import { GetWagesComponent } from './get-wages/get-wages.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { AddProjectComponent } from './add-project/add-project.component';
+import { CalendarModule } from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { AddProjectComponent } from './add-project/add-project.component';
     BrowserAnimationsModule,
 		MultiSelectModule,
     FormsModule,
-    DropdownModule
+    DropdownModule,
+    CalendarModule
   ],
   providers: [ConfirmationService],
   bootstrap: [AppComponent]
