@@ -19,6 +19,7 @@ import { UploadExcelComponent } from './upload-excel/upload-excel.component';
 import { ConfirmationService } from 'primeng/api';
 import { AddPayToComponent } from './add-pay-to/add-pay-to.component';
 import { GetWagesComponent } from './get-wages/get-wages.component';
+import { GetWagesReportComponent } from './get-wages-report/get-wages-report.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { AddProjectComponent } from './add-project/add-project.component';
@@ -34,6 +35,7 @@ import { CalendarModule } from 'primeng/calendar';
     UploadExcelComponent,
     AddPayToComponent,
     GetWagesComponent,
+    GetWagesReportComponent,
     UserDetailsComponent,
     AddProjectComponent
   ],
