@@ -4,6 +4,7 @@ import { AddPayToComponent } from './add-pay-to/add-pay-to.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { ConstructionDetailsComponent } from './construction-details/construction-details.component';
 import { GetWagesComponent } from './get-wages/get-wages.component';
+import { GetWagesReportComponent } from './get-wages-report/get-wages-report.component';
 import { MainDashboardComponent } from './main-dashboard/main-dashboard.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'sign-up', component: SignUpComponent},
   {path: 'add-payto', component: AddPayToComponent},
   {path: 'get-wages', component: GetWagesComponent},
+  {path: 'get-wages-report', component: GetWagesReportComponent},
   {path: 'get-user-details', component: UserDetailsComponent},
   {path: 'add-project', component: AddProjectComponent},
   {path: '**', component: SignInComponent },

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { Column } from 'src/column.model';
+import { Router } from '@angular/router';
 import { CommonService } from '../common.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -22,6 +23,7 @@ export class GetWagesComponent implements OnInit {
   subTotal = 0;
   dobminDate: Date = new Date(2022, 12, 1);
   downloadWages:boolean = false
+  wagesReport:boolean = false
   editAndDeletePermission = 0;
   modalHeading: any;
   msgs: any;
@@ -33,7 +35,7 @@ export class GetWagesComponent implements OnInit {
   imageUrl: any;
   testDate: any;
 
-  constructor(public service: CommonService, private confirmationService: ConfirmationService,  private modal: NgbModal, private primengConfig: PrimeNGConfig) {
+  constructor(private router: Router,public service: CommonService, private confirmationService: ConfirmationService,  private modal: NgbModal, private primengConfig: PrimeNGConfig) {
     this.editForm = new UntypedFormGroup({
       "amount": new UntypedFormControl('', Validators.required)
     }),
@@ -102,6 +104,7 @@ export class GetWagesComponent implements OnInit {
         this.data = res.body.data.wages_details;
         this.totalRecords = this.data.length;
         this.editAndDeletePermission = res.body.data.edit_and_delete_permission;
+        this.wagesReport = res.body.data.wages_report_permission;
         this.subTotal = res.body.data.total_booking.toFixed(2);
         this.service.showloader = false;
       }
@@ -314,5 +317,10 @@ export class GetWagesComponent implements OnInit {
             }
         })
     }
+
+    
+    navigatedTowagesReport = () => {
+     this.router.navigateByUrl('/get-wages-report')
+  }
 
 }
