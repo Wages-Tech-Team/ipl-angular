@@ -5,8 +5,22 @@
 }
 
 .boxStyle {
+    margin-left: 4em;
+    background-color: white;
     box-shadow: 0 0 10px #ccc;
-    padding: 2em
+    padding: 2em;
+    border-radius: 25px;
+    border: 2px solid #357ace;
+}
+
+
+.boxStyleAddWages {
+    margin-left: 6em;
+    background-color: white;
+    box-shadow: 0 0 10px #ccc;
+    padding: 2em;
+    border-radius: 25px;
+    border: 2px solid #357ace;
 }
 
 .cursor-pointor {

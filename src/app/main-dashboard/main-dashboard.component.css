@@ -23,10 +23,16 @@
     margin-left: 1.5em;
 }
 
+.projectHeading {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #096ead;
+}
+
 .cardStyling {
-    box-shadow: 0 0 10px #ccc;
-    padding: 10em 5em !important;
-    /* background: #096ead; */
+    padding: 5em 5em !important;
+    border-radius: 25px;
+    border: 2px solid #357ace;
     background: white;
 }
 

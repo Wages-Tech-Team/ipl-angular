@@ -1,4 +1,7 @@
 <div class="backstyle" [formGroup]="this.projectForm" [ngClass]="{'loading-css' : this.service.showloader}">
+    <div class="d-flex justify-content-center align-items-center tableColor">
+        <span class="projectHeading">IPL</span>
+    </div>
     <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
         <ng-template pTemplate="footer">
             <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="reject()"></button>

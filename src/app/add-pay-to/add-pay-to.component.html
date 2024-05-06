@@ -1,4 +1,4 @@
-<div [ngClass]="{'loading-css' : this.service.showloader}">
+<div [ngClass]="{'loading-css' : this.service.showloader}" class="backStyleAddPayTo">
     <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
         <ng-template pTemplate="footer">
             <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="reject()"></button>
@@ -6,10 +6,10 @@
                 *ngIf="this.heading=='Delete Detail' || this.heading=='Upload Project' || this.heading=='Upload Project Description' || this.heading=='Update Wages'"></button>
         </ng-template>
     </p-confirmDialog>
-    <div class="d-flex justify-content-center align-items-center mt-4">
+    <div class="d-flex justify-content-center align-items-center">
         <div class="projectHeading">Upload / Delete Pay To</div>
     </div>
-    <div class="d-flex justify-content-center align-items-center mt-4">
+    <div class="d-flex justify-content-right align-items-center  mt-4">
         <div class="boxStyle mt-4" [formGroup]="this.addpayTo">
             <div class="d-block mt-4">
                 <div class="d-flex mt-4">
@@ -49,9 +49,8 @@
                     class="spanColor cursor-pointor">Sign Up</span></div>
             <div class="spanColor cursor-pointor mt-4" (click)="navigatedToAccount()">Manage User Accounts</div>
         </div>
-    </div>
-    <div class="d-flex justify-content-center align-items-center mt-4">
-        <div class="boxStyle mt-4 wid-btn" >
+
+        <div class="boxStyleAddWages mt-4 wid-btn" >
             <div class="d-flex justify-content-center align-items-center">
                 <div class="blockHeading"> Add Wages Number</div>
             </div>
@@ -71,7 +70,10 @@
                 class="spanColor"> {{this.editForm?.get('wages-no')?.value}} </span></div>
         </div>
     </div>
-    <div class="d-flex justify-content-center align-items-center mt-4">
+    <!-- <div class="d-flex justify-content-center align-items-right mt-4">
+        
+    </div> -->
+    <div class="d-flex justify-content-right align-items-center mt-4">
         <div class="boxStyle mt-4 wid-btn">
             <button class="btnStyle w-100"><label class="cursor-pointer m-0 upload-btn" for="upload-doc">Upload PayTo</label></button>
             <input #documentInput (change)="this.handleFileUpload($event)" type="file" id="upload-doc" class="d-none" name="avatar">
@@ -87,9 +89,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="d-flex justify-content-center align-items-center mt-4">
-        <div class="boxStyle mt-4 wid-btn">
+
+        <div class="boxStyleAddWages mt-4 wid-btn">
             <button class="btnStyle w-100"><label class="cursor-pointer m-0 upload-btn" for="upload-doc-description">Upload Main Description & Sub Description</label></button>
             <input #documentInput (change)="this.handleFileUploadDescription($event)" type="file" id="upload-doc-description" class="d-none" name="avatar">
             <p *ngIf="this.errorMessage && !this.filenameDescription" class="error">{{this.errorMessage}}</p>
@@ -105,4 +106,7 @@
             </div>
         </div>
     </div>
+    <!-- <div class="d-flex justify-content-center align-items-center mt-4">
+        
+    </div> -->
 </div>

@@ -1,9 +1,9 @@
-<div [ngClass]="{'loading-css' : this.service.showloader}" class="backGround">
-    <div class="p-4">
+<div [ngClass]="{'loading-css' : this.service.showloader}" class="backGround" >
         <!-- <span class="backoption" (click)="navigatedTo()"> Back</span> -->
-        <div class="d-flex justify-content-center align-item-center tableColor">
-            <span class="projectHeading">IPL</span>
+        <div class="d-flex justify-content-center align-item-center" style="background-color: dodgerblue;">
+            <span class="projectHeading">INTERIOR PARTNERSHIPS LTD</span>
         </div>
+        <div class="p-4">
         <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
             <ng-template pTemplate="footer">
                 <div *ngIf="this.downloadWages">
