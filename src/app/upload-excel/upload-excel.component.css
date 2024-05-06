@@ -14,6 +14,10 @@
     border: none;
 }
 
+.mainBackGround {
+    color: #ccc;
+}
+
 
 .width {
     width: 400px;
@@ -80,7 +84,7 @@
 }
 
 .systemManagement_1 {
-    width: 190px;
+    width: 200px;
     color: white;
     background-color: #096ead;
     border: none;
@@ -91,7 +95,7 @@
 }
 
 .systemManagement_2 {
-    width: 225px;
+    width: 230px;
     color: white;
     background-color: #096ead;
     border: none;
@@ -113,6 +117,10 @@
     width: 475px;
     height: 315px;
     background-color: rgb(255, 255, 255);
+}
+
+.innerCard {
+    padding: 1em;
 }
 
 .spanStyle {

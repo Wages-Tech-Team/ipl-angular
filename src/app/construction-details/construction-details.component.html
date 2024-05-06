@@ -1,9 +1,9 @@
-<div [ngClass]="{'loading-css' : this.service.showloader}" class="backGround">
-    <span class="backoption" (click)="navigatedTo()"> <img src="./../../assets/back_4.png" width="45px"></span>
-    <div class="d-flex justify-content-center align-item-center tableColor">
-        <span class="projectHeading">IPL</span>
+<div [ngClass]="{'loading-css' : this.service.showloader}" class="backStyleNoPadding" >
+    <span class="backoption" (click)="navigatedTo()"> <img src="./../../assets/back_white.png" width="45px"></span>
+    <div class="d-flex justify-content-center align-item-center" style="background-color: dodgerblue;">
+        <span class="projectHeading">INTERIOR PARTNERSHIPS LTD</span>
     </div>
-    <div class="d-flex justify-content-end align-item-right tableColor">
+    <div class="d-flex justify-content-end align-item-right tableColor" >
         <span class="totalHeading"> LT Total : {{this.totalProjectAmount}}</span>
         <span class="totalHeadingSecond">LT Booked Total :{{this.totalBookedAmount}}</span>
     </div>

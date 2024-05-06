@@ -48,7 +48,27 @@ tr>.header-stock-color {
 .backstyle {
     padding: 8em;
     overflow-y: auto;
-    background-image: url(./assets/image.png);
+    background-image: url(./assets/Admin_1.png);
+    background-position-x:100%;
+    background-position-y:100%;
+    background-repeat:no-repeat;
+}
+
+.backStyleNoPadding {
+    overflow-y: auto;
+    background-image: url(./assets/Admin_1.png);
+    background-position-x:100%;
+    background-position-y:100%;
+    background-repeat:no-repeat;
+}
+
+.backStyleAddPayTo {
+    padding: 4em;
+    overflow-y: auto;
+    background-image: url(./assets/Admin_1.png);
+    background-position-x:100%;
+    background-position-y:100%;
+    background-repeat:no-repeat;
 }
 
 .ui-table-tbody :hover {
