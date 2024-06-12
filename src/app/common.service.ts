@@ -15,7 +15,10 @@ export class CommonService extends BaseServiceService {
   //baseUrl = "https://ipl-wages.com/api/";
   authToken: any;
   // for Stg
-  baseUrl = "https://ipl-wages.com/stg.ipl-wages.com/api/"
+  //baseUrl = "https://ipl-wages.com/stg.ipl-wages.com/api/"
+
+  // for replica
+  baseUrl = "https://ipl-wages.com/book.ipl-wages.com/api/"
 
   public postRequest(url: any, baseRequest: Object): Observable<any> {
     const header: HttpHeaders = new HttpHeaders((url == 'register' || url == 'login') ? { 'ClientVersion': 'WEB:1' } : { 'authorization': "Bearer " + this.getToken() });
