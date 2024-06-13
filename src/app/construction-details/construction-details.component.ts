@@ -173,15 +173,15 @@ export class ConstructionDetailsComponent implements OnInit {
     })
     this.column.push({
       field: 'total',
-      header: 'Total Allowance'
+      header: 'Total Quantity'
     })
     this.column.push({
       field: 'total',
-      header: 'Remaining Booking Amount'
+      header: 'Remaining Quantity'
     })
     this.column.push({
       field: '',
-      header: 'Booking Amount'
+      header: 'Booking Quantity'
     })
     this.column.push({
       field: '',
@@ -950,19 +950,19 @@ export class ConstructionDetailsComponent implements OnInit {
     })
     this.column.push({
       field: 'total',
-      header: 'Total Allowance'
+      header: 'Total Quantity'
     }),
       this.column.push({
         field: 'total',
-        header: 'Remaining Allowance'
+        header: 'Remaining Quantity'
       })
     this.column.push({
       field: '',
-      header: '% Completed'
+      header: '% Booked'
     })
     this.column.push({
       field: '',
-      header: 'Booking Amount'
+      header: 'Booking Quantity'
     })
     this.column.push({
       field: '',
@@ -984,10 +984,10 @@ export class ConstructionDetailsComponent implements OnInit {
         this.nestedcolumns = [];
         this.nestedcolumns.push(
           { field: 'sub_description_header', header: 'Booking Description' },
-          { field: 'sub_total', header: 'Total Allowance' },
-          { field: '', header: 'Remaining Allowance' },
-          { field: '', header: '% Completed' },
-          { field: '', header: 'Booking Amont' },
+          { field: 'sub_total', header: 'Total Quantity' },
+          { field: '', header: 'Remaining Quantity' },
+          { field: '', header: '% Booked' },
+          { field: '', header: 'Booking Quantity' },
           { field: '', header: '' },
         )
         for (let index = 0; index < this.data[this.selectedRowIndex].records.length; index++) {

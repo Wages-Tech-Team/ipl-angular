@@ -54,7 +54,7 @@ export class SignInComponent implements OnInit {
     if (this.service.getRole() == "admin")
       this.router.navigateByUrl('/upload-excel');
     else
-      this.router.navigateByUrl('/main');
+      this.router.navigateByUrl('/construction-details');
   }
 
   navigatedToSignUp() {
