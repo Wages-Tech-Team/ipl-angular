@@ -88,7 +88,10 @@
         </div> -->
 
         <div class="boxStyleAddWages mt-4 wid-btn">
-            <button class="btnStyle w-100"><label class="cursor-pointer m-0 upload-btn" for="upload-doc-description">Upload Main Description & Sub Description</label></button>
+            <div class="d-flex justify-content-center mt-2">
+                <span><img src="./../../assets/upload-excel_2.png" width="200px" class="mr"></span>
+            </div>
+            <button class="btnStyle w-100"><label class="cursor-pointer m-0 upload-btn" for="upload-doc-description">Upload Main/Sub Description</label></button>
             <input #documentInput (change)="this.handleFileUploadDescription($event)" type="file" id="upload-doc-description" class="d-none" name="avatar">
             <p *ngIf="this.errorMessage && !this.filenameDescription" class="error">{{this.errorMessage}}</p>
             <div class="d-flex mt-4 justify-content-between" *ngIf="this.filenameDescription">

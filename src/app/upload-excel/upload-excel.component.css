@@ -119,6 +119,11 @@
     color: red;
 }
 
+.card{
+    width: 40em;
+    height: 40em;
+}
+
 .boxStyle {
     box-shadow: 0 0 10px #ccc;
     padding: 0.5em;
