@@ -47,14 +47,22 @@ export class ConstructionDetailsComponent implements OnInit {
   enteredValue: any;
   stock_hit_time: number = 2 * 60 * 1000;
   remainingAmount: Array<any> = [];
+  today : Date = new Date();
+  currentDate: any;
+  bookingDate: any;
+  dobminDate: Date = new Date(2022, 12, 1);
+  dateFromValue: Date = new Date();
+
+
 
   constructor(private router: Router, public service: CommonService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) {
     this.projectForm = new UntypedFormGroup({
       "project_name": new UntypedFormControl('PS'),
       "block_name": new UntypedFormControl('PS'),
       "apartment_name": new UntypedFormControl('PS'),
-      "wages_number": new UntypedFormControl('PS'),
-      "floor_number": new UntypedFormControl('PS')
+      "floor_number": new UntypedFormControl('PS'),
+      "delivery_date": new UntypedFormControl('PS'),
+
     })
     this.wages = new UntypedFormGroup({
       "area": new UntypedFormControl(''),
@@ -64,10 +72,16 @@ export class ConstructionDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate(), this.today.getHours(), this.today.getMinutes(), this.today.getSeconds(), this.today.getMilliseconds());
+    this.bookingDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate());
+    this.projectForm.patchValue({
+      'delivery_date':this.currentDate
+    })
+    this.dobminDate =  this.currentDate;
     this.service.showloader = true;
     this.getProjectData();
     this.primengConfig.ripple = true;
-    this.getWagesNumber();
+    //this.getWagesNumber();
     this.saveFlow();
     this.checkAvailablity();
   }
@@ -91,7 +105,11 @@ export class ConstructionDetailsComponent implements OnInit {
     // for (let i = 199; i <= 1000; i++)
     //   this.wagesNumber.push(i);
   }
-
+  submitDate = () => {
+    this.projectForm.patchValue({
+      'delivery_date':this.dateFromValue
+    });
+  }
   getProjectTotal = (event: any) => {
     event = event?.target?.value ? event.target.value : event;
     if (event == 'PS')
@@ -120,7 +138,6 @@ export class ConstructionDetailsComponent implements OnInit {
       this.getBlockData(this.projectForm.get('project_name')?.value);
       this.getProjectTotal(this.projectForm.get('project_name')?.value);
     this.projectForm.get('block_name')?.setValue(sessionStorage.getItem('block_id') ? sessionStorage.getItem('block_id') : 'PS');
-    this.projectForm.get('wages_number')?.setValue(sessionStorage.getItem('wages_number') ? sessionStorage.getItem('wages_number') : 'PS');
     if (this.projectForm.get('block_name')?.value)
       this.getFloorData();
     this.projectForm.get('apartment_name')?.setValue(sessionStorage.getItem('apartment_name') ? sessionStorage.getItem('apartment_name') : 'PS');
@@ -215,15 +232,15 @@ export class ConstructionDetailsComponent implements OnInit {
     })
     this.column.push({
       field: 'total',
-      header: 'Total Allowance'
+      header: 'Total Quantity'
     })
     this.column.push({
       field: 'total',
-      header: 'Remaining Booking Amount'
+      header: 'Remaining Quantity'
     })
     this.column.push({
       field: '',
-      header: 'Booking Amount'
+      header: 'Booking Quantity'
     })
     this.column.push({
       field: '',
@@ -314,12 +331,10 @@ export class ConstructionDetailsComponent implements OnInit {
   }
 
   checkAvailablity() {
-    if (this.projectForm.get('wages_number')?.value == 'PS') {
-      this.projectForm.get('project_name')?.setValue('PS');
+    if (this.projectForm.get('project_name')?.value == 'PS') {
       this.projectForm.get('block_name')?.setValue('PS');
       this.projectForm.get('apartment_name')?.setValue('PS');
       this.projectForm.get('floor_number')?.setValue('PS');
-      this.projectForm.get('project_name')?.disable();
       this.projectForm.get('block_name')?.disable();
       this.projectForm.get('apartment_name')?.disable();
       this.projectForm.get('floor_number')?.disable();
@@ -327,7 +342,6 @@ export class ConstructionDetailsComponent implements OnInit {
       this.selectionType = 'single';
     }
     else {
-      this.projectForm.get('project_name')?.enable();
       this.projectForm.get('block_name')?.enable();
       this.projectForm.get('apartment_name')?.enable();
       this.projectForm.get('floor_number')?.enable();
@@ -470,14 +484,14 @@ export class ConstructionDetailsComponent implements OnInit {
   }
 
   addWages = (index: number, row: any) => {
-    if (this.projectForm.get('wages_number')?.value == 'PS') {
-      this.confirm1('Please Select Wages Number !', null);
+    if (this.projectForm.get('project_name')?.value == 'PS') {
+      this.confirm1('Please Select Project!', null);
       return
     }
     if ((this.appartmentids.length > 0 || this.floorids.length > 0) && this.bookingAmount[row] <= 0)
       return;
 
-    if (((this.appartmentids.length == 0 && this.floorids.length == 0) ? !this.totalAmount : (!this.percentageAmount[row] || this.percentageAmount[row] > 100)) || this.showerror[row] || this.projectForm.get('wages_number')?.value == 'PS')
+    if (((this.appartmentids.length == 0 && this.floorids.length == 0) ? !this.totalAmount : (!this.percentageAmount[row] || this.percentageAmount[row] > 100)) || this.showerror[row] )
       return;
 
       if( (this.showerror[index] && this.enteredValue) || (this.enteredValue == 0 || this.enteredValue < 0)){
@@ -522,8 +536,7 @@ export class ConstructionDetailsComponent implements OnInit {
                   this.bookWages.push({
                     "project_id": this.projectForm.get('project_name')?.value,
                     "block_id": this.projectForm.get('block_name')?.value,
-                    "pay_to": sessionStorage.getItem('payTo'),
-                    "trade": sessionStorage.getItem('trade'),
+                    "delivery_date": this.projectForm.get('delivery_date')?.value,
                     "level": this.floorName[this.data[i]?.records[j]?.sub_records[sub]?.floor_id] ? this.floorName[this.data[i]?.records[j]?.sub_records[sub]?.floor_id]  : '',
                     "apartment_id": this.data[i]?.records[j]?.sub_records[sub]?.apartment_id ? this.data[i]?.records[j]?.sub_records[sub]?.apartment_id:null,
                     "plot_or_room": this.apartmentName[this.data[i]?.records[j]?.sub_records[sub]?.apartment_id] ? this.apartmentName[this.data[i]?.records[j]?.sub_records[sub]?.apartment_id] : this.floorName[this.data[i]?.records[j]?.sub_records[sub]?.floor_id],
@@ -532,7 +545,6 @@ export class ConstructionDetailsComponent implements OnInit {
                     "m2_or_hours": "",
                     "rate": "",
                     "sum": Number(Number((this.percentageAmount[row] / 100) * this.data[index]?.records[j]?.sub_records[sub]?.remaining_booking_amount).toFixed(2)),
-                    "wages": this.projectForm.get('wages_number')?.value,
                     "user_id": sessionStorage.getItem('user_id'),
                     "floor_id": this.data[i]?.records[j]?.sub_records[sub]?.floor_id,
                     "sub_description_id": this.data[i]?.records[j]?.sub_records[sub]?.sub_description_id
@@ -559,8 +571,7 @@ export class ConstructionDetailsComponent implements OnInit {
       this.bookWages.push({
         "project_id": this.projectForm.get('project_name')?.value,
         "block_id": this.projectForm.get('block_name')?.value,
-        "pay_to": sessionStorage.getItem('payTo'),
-        "trade": sessionStorage.getItem('trade'),
+        "delivery_date": this.projectForm.get('delivery_date')?.value,
         "level": this.floorName[0] ? this.floorName[0] : '',
         "apartment_id": this.projectForm.get('apartment_name')?.value != 'PS' ? this.projectForm.get('apartment_name')?.value : '',
         "plot_or_room": this.apartmentName[0] ? this.apartmentName[0] : this.floorName[0],
@@ -569,7 +580,6 @@ export class ConstructionDetailsComponent implements OnInit {
         "m2_or_hours": "",
         "rate": "",
         "sum": Number(this.totalAmount).toFixed(2),
-        "wages": this.projectForm.get('wages_number')?.value,
         "user_id": sessionStorage.getItem('user_id'),
         "floor_id": this.data[this.selectedRowIndex]?.sub_description_records[index]?.records[0]?.floor_id,
         "sub_description_id": this.data[this.selectedRowIndex]?.sub_description_records[index]?.records[0]?.sub_description_id
@@ -690,10 +700,10 @@ export class ConstructionDetailsComponent implements OnInit {
         this.nestedcolumns = [];
         this.nestedcolumns.push(
           { field: 'description', header: 'Work Description' },
-          { field: 'area', header: 'Area' },
+          { field: 'area', header: 'Quantity' },
           { field: 'unit', header: 'Unit' },
-          { field: 'lab_rate', header: 'Lab Rate' },
-          { field: 'total', header: 'Total' },
+          { field: '', header: '' },
+          { field: '', header: '' },
           // { field: '', header: '' },
         )
         this.totalAmount = '';
@@ -725,15 +735,15 @@ export class ConstructionDetailsComponent implements OnInit {
     })
     this.column.push({
       field: 'total',
-      header: 'Total Allowance'
+      header: 'Total Quantity'
     })
     this.column.push({
       field: 'total',
-      header: 'Remaining Booking Amount'
+      header: 'Remaining Quantity'
     })
     this.column.push({
       field: '',
-      header: 'Booking Amount'
+      header: 'Booking Quantity'
     })
     this.column.push({
       field: '',
@@ -806,7 +816,6 @@ export class ConstructionDetailsComponent implements OnInit {
 
     sessionStorage.setItem('project_id', this.projectForm.get('project_name')?.value);
     sessionStorage.setItem('block_id', this.projectForm.get('block_name')?.value);
-    sessionStorage.setItem('wages_number', this.projectForm.get('wages_number')?.value);
     if (this.projectForm.get('apartment_name')?.value != 'PS') {
       sessionStorage.setItem('apartment_name', this.projectForm.get('apartment_name')?.value);
       sessionStorage.removeItem('appartmentId')
@@ -866,7 +875,6 @@ export class ConstructionDetailsComponent implements OnInit {
       "project_id": this.projectForm.get('project_name')?.value,
       // "block_id": this.projectForm.get('block_name')?.value,
       "user_id": sessionStorage.getItem('user_id'),
-      "wages_number": this.projectForm.get('wages_number')?.value
       //"apartment_id": this.appartmentids.length == 0 ? this.projectForm.get('apartment_name')?.value : this.appartmentids[0]
     }
     this.service.postRequest("download-wages", body).subscribe(res => {

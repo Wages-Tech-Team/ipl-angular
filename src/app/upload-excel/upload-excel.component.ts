@@ -35,7 +35,7 @@ export class UploadExcelComponent implements OnInit {
   }
 
   navigatedTo() {
-    this.router.navigateByUrl('/main');
+    this.router.navigateByUrl('/construction-details');
   }
 
   navigatedToPaytoScreen() {

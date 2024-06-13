@@ -45,7 +45,6 @@ export class GetWagesReportComponent implements OnInit {
     this.projectForm = new UntypedFormGroup({
       "project_name": new UntypedFormControl('PS'),
       "user_id": new UntypedFormControl('PS'),
-      "wages_number": new UntypedFormControl('PS'),
       "wages_date": new UntypedFormControl('PS'),
    
     })
@@ -79,22 +78,22 @@ export class GetWagesReportComponent implements OnInit {
       header: 'Sub Description'
     })
     this.column.push({
-      field: 'trade',
-      header: 'Trade'
+      field: 'delivery_date',
+      header: 'Delivery Date'
     })
     this.column.push({
       field: 'pay_to',
-      header: 'Pay To'
+      header: 'Booked By'
     })
     this.column.push({
       field: 'amount',
-      header: 'Amount'
+      header: 'Quantity'
     })
     this.column.push({
       field: '',
       header: ''
     })
-    this.getWagesNumber();
+    this.getUser();
     this.primengConfig.ripple = true;
     this.currentDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate(), this.today.getHours(), this.today.getMinutes(), this.today.getSeconds(), this.today.getMilliseconds());
     this.projectForm.patchValue({
@@ -145,8 +144,7 @@ export class GetWagesReportComponent implements OnInit {
   }
 
 
-  getUser = (event: any) => {
-    event = event?.target?.value ? event.target.value : event;
+  getUser = () => {
     this.service.showloader = true;
     this.service.getRequest("user-list").subscribe(res => {
       if (res.body.success == true  || res.body.code == 1000) {
@@ -173,7 +171,6 @@ export class GetWagesReportComponent implements OnInit {
         "project_id": this.projectForm.get('project_name')?.value,
         // "block_id": sessionStorage.getItem('block_id'),
         "user_id":  this.projectForm.get('user_id')?.value,
-        "wages_number": this.projectForm.get('wages_number')?.value,
         "date": this.projectForm.get('wages_date')?.value
       }
       this.service.postRequest("wages-report", body).subscribe(res => {
@@ -201,7 +198,6 @@ export class GetWagesReportComponent implements OnInit {
       "project_id": this.projectForm.get('project_name')?.value,
       // "block_id": sessionStorage.getItem('block_id'),
       "user_id":  this.projectForm.get('user_id')?.value,
-      "wages_number": this.projectForm.get('wages_number')?.value,
       "date": this.projectForm.get('wages_date')?.value
     }
     this.service.postRequest("wages-report", body).subscribe(res => {
@@ -293,7 +289,6 @@ export class GetWagesReportComponent implements OnInit {
             "page_no": 1,
             "project_id": this.projectForm.get('project_name')?.value,
             "user_id":  this.projectForm.get('user_id')?.value,
-            "wages_number": this.projectForm.get('wages_number')?.value,
             "date": this.projectForm.get('wages_date')?.value
           }
           this.service.postRequest("download-wages-report", body).subscribe(res => {
@@ -324,7 +319,6 @@ export class GetWagesReportComponent implements OnInit {
         "project_id": this.projectForm.get('project_name')?.value,
         // "block_id": sessionStorage.getItem('block_id'),
         "user_id":  this.projectForm.get('user_id')?.value,
-        "wages_number": this.projectForm.get('wages_number')?.value,
         "date": this.projectForm.get('wages_date')?.value
       }
       this.service.postRequest("wages-report", body).subscribe(res => {
@@ -355,7 +349,6 @@ export class GetWagesReportComponent implements OnInit {
             "page_no": 1,
             "project_id": sessionStorage.getItem('project_id'),
             "user_id": sessionStorage.getItem('user_id'),
-            "wages_number": sessionStorage.getItem('wages_number'),
             'wages_date': this.downloadWagesForm?.get('wages_date')?.value ? this.service.dateToUTC(this.downloadWagesForm?.get('wages_date')?.value) : '',
         }
         this.service.postRequest("download-wages", body).subscribe(res => {

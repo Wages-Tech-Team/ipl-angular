@@ -3,6 +3,21 @@
     box-shadow: 0 0 10px #ccc
 }
 
+.button-card {
+    padding: 30px 35px 35px 30px;
+    box-shadow: 0 0 0 #ccc
+}
+
+.font15 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.date-input {
+    margin-left: 1.5em;
+    cursor: pointer;
+}
+
 .projectHeading {
     font-size: 3rem;
     font-weight: bold;
@@ -50,7 +65,7 @@
     font-weight: bold;
     font-size: 20px;
     color: #000000;
-    padding: 3.5vw; 
+    padding: 1vw; 
 }
 
 
@@ -142,12 +157,24 @@
     font-weight: 600;
 }
 
-.finalSubmitSecond {
+.wagesReport {
     background: white;
     border: 2px solid #096ead;
     width: 220px;
     height: 2.2em;
     color: #096ead;
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 1em;
+}
+
+
+.finalSubmitSecond {
+    background: white;
+    border: 2px solid #257401;
+    width: 220px;
+    height: 2.2em;
+    color: #257401;
     font-size: 16px;
     font-weight: 600;
     margin-left: 1em;

@@ -34,6 +34,8 @@ export class GetWagesComponent implements OnInit {
   errorMessage: Array<boolean> = [];
   imageUrl: any;
   testDate: any;
+  dateFromValue: Date = new Date();
+
 
   constructor(private router: Router,public service: CommonService, private confirmationService: ConfirmationService,  private modal: NgbModal, private primengConfig: PrimeNGConfig) {
     this.editForm = new UntypedFormGroup({
@@ -69,16 +71,16 @@ export class GetWagesComponent implements OnInit {
       header: 'Sub Description'
     })
     this.column.push({
-      field: 'trade',
-      header: 'Trade'
+      field: 'delivery_date',
+      header: 'Delivery Date'
     })
     this.column.push({
       field: 'pay_to',
-      header: 'Pay To'
+      header: 'Booked By'
     })
     this.column.push({
       field: 'amount',
-      header: 'Amount'
+      header: 'Quantity'
     })
     this.column.push({
       field: '',
@@ -96,9 +98,7 @@ export class GetWagesComponent implements OnInit {
       "page_no": 1,
       "project_id": sessionStorage.getItem('project_id'),
       // "block_id": sessionStorage.getItem('block_id'),
-      "user_id": sessionStorage.getItem('user_id'),
-      "wages_number":sessionStorage.getItem('wages_number')
-    }
+      "user_id": sessionStorage.getItem('user_id')    }
     this.service.postRequest("get-wages", body).subscribe(res => {
       if (res.body.success == true  || res.body.code == 1000) {
         this.data = res.body.data.wages_details;
@@ -239,7 +239,6 @@ export class GetWagesComponent implements OnInit {
         let body = {
         "user_id": sessionStorage.getItem('user_id'),
         "project_id": sessionStorage.getItem('project_id'),
-        "wages_number":sessionStorage.getItem('wages_number')
         }
         this.service.postRequest("final-wages-submission", body).subscribe(res => {
             if (res.body.success == true  || res.body.code == 1000) {
@@ -292,7 +291,6 @@ export class GetWagesComponent implements OnInit {
             "page_no": 1,
             "project_id": sessionStorage.getItem('project_id'),
             "user_id": sessionStorage.getItem('user_id'),
-            "wages_number": sessionStorage.getItem('wages_number'),
             'wages_date': this.downloadWagesForm?.get('wages_date')?.value ? this.service.dateToUTC(this.downloadWagesForm?.get('wages_date')?.value) : '',
         }
         this.service.postRequest("download-wages", body).subscribe(res => {

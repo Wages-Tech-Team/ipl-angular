@@ -17,16 +17,16 @@
         <div class="mt-4 inner-card">
             <div class="d-flex justify-content-around"  [formGroup]="this.projectForm">
                     <div class="d-block">
-                        <div class="font15">Wages Number:
+                        <!-- <div class="font15">Wages Number:
                             <select class="selectdropdown1 mt-2 widthSelect" formControlName="wages_number"
                                 (change)="getUser($event)">
                                 <option value="PS">Select Wages Number</option>
                                 <option *ngFor="let detail of this.wagesNumber" value="{{detail}}">{{detail}}
                                 </option>
                             </select>
-                        </div>
+                        </div> -->
                         <div class="wagesDate">
-                            Wages Date:
+                            Booking Date:
                             <p-calendar (onSelect)="submitDate()" [defaultDate]="this.currentDate" [(ngModel)]="dateFromValue" [minDate]="this.dobminDate" [maxDate]="this.currentDate"
                                 dateFormat="dd-mm-yy" formControlName="wages_date" timezone="utc" [showIcon]="true" class="date-input">
                             </p-calendar>

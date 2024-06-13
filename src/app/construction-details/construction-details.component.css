@@ -153,10 +153,28 @@
     margin-right: 1em;
 }
 
+.wagesDate {
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 0.5em;
+}
+
+.date-input {
+    cursor: pointer;
+}
+
 .totalHeadingSecond {
     font-size: 17px;
     font-weight: bold;
     color: #ad0909;
+   margin-left: 1em;
+   margin-right: 2.2em;
+}
+
+.bookingDate {
+    font-size: 17px;
+    font-weight: bold;
+    color: #080808;
    margin-left: 1em;
    margin-right: 2.2em;
 }

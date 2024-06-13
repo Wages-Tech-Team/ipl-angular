@@ -107,7 +107,6 @@ export class MainDashboardComponent implements OnInit {
     if (url.includes('main')) {
       sessionStorage.removeItem('project_id'),
         sessionStorage.removeItem('block_id'),
-        sessionStorage.removeItem('wages_number'),
         sessionStorage.removeItem('apartment_name'),
         sessionStorage.removeItem('floor_number'),
         sessionStorage.removeItem('appartmentId'),

@@ -15,13 +15,16 @@
             </ng-template>
         </p-confirmDialog>
         <div class="mt-4 inner-card">
-            <div class="d-flex justify-content-end">
-                <button class="finalSubmit" (click)="downloadWagesModal(selectDateModal)">Download Wages</button>
-                <button class="finalSubmitSecond" (click)="confirm('Are you sure you want to final submit the wages ?','Final Submit',null)">Final Submission</button>
-            </div>
-            <div class="d-flex justify-content-end mt-2" *ngIf="this.wagesReport">
-                <button class="finalSubmitSecond" (click)="navigatedTowagesReport()">Wages Report</button>
-            </div>
+            <!-- <div class="container"> -->
+                <div class="d-flex">
+                    <button class="finalSubmit" (click)="downloadWagesModal(selectDateModal)">Download Orders</button>
+                    <button class="wagesReport" (click)="navigatedTowagesReport()">Wages Report</button>
+                <!-- </div> -->
+                <!-- <div class="d-flex justify-content-end"> -->
+                    <button class="finalSubmitSecond" *ngIf="this.wagesReport" (click)="confirm('Are you sure you want to final submit the wages ?','Final Submit',null)">Final Submission</button>
+                </div>
+            <!-- </div> -->
+           
             <div class="mt-4 table-body">
                 <p-table [columns]="column" [value]="data" [responsive]="false" [paginator]='true' [alwaysShowPaginator]="false" [(first)]='first' [rows]='10' [totalRecords]='this.totalRecords'>
                     <ng-template pTemplate="header" let-columns>
@@ -35,7 +38,7 @@
                         <tr>
                             <td *ngFor="let col of columns; let i = index">
                                 <span *ngIf="i != 8 && i !=9"> {{rowData[col.field] ? rowData[col.field] : "-"}} </span>
-                                <span *ngIf="i==8 && !this.editOption[row]">£ {{this.service.formatNumber(number(rowData[col.field])?.toFixed(2))}}</span>
+                                <span *ngIf="i==8 && !this.editOption[row]"> {{this.service.formatNumber(number(rowData[col.field])?.toFixed(2))}}</span>
                                 <span *ngIf="i==8 && this.editOption[row]"><input type="text" class="w-100" formControlName="amount" (input)="amountCheck(row)"></span>
                                 <p *ngIf="i==8 && this.editOption[row] && this.errorMessage[row]" class="error mb-0 font11">Amount Should be less than Remaining Amount.</p>
                                 <div *ngIf="i==9 && this.editAndDeletePermission == 1" class="d-flex boxStyle">
@@ -56,7 +59,7 @@
             </div>
             <div class="d-flex justify-content-end">
                 <span class="sub-total">Total :</span>
-                <span class="sub-total-value">£ {{this.subTotal}}</span>
+                <span class="sub-total-value"> {{this.subTotal}}</span>
             </div>
         </div>
     </div>
@@ -68,13 +71,13 @@
         <div class="id_heading">
                 Please Select Date
         </div>
-        <div class="wagesDate" [formGroup]="downloadWagesForm">
-            Wages Date:
-            <p-calendar [defaultDate]="this.currentDate" [minDate]="this.dobminDate" [maxDate]="this.currentDate"
-                dateFormat="dd-mm-yy" formControlName="wages_date" timezone="utc"  class="">
-            </p-calendar>
-        </div>
-        <div class="d-flex justify-content-center butSpecs mt-0.5 ml-3 p-0">
+        <div class="font15"> Booking Date :</div>
+            <div class="wagesDate" [formGroup]="downloadWagesForm">
+                <p-calendar [(ngModel)]="dateFromValue" [defaultDate]="this.currentDate" [minDate]="this.dobminDate" [maxDate]="this.currentDate"
+                    dateFormat="dd-mm-yy" formControlName="wages_date" timezone="utc"  [showIcon]="true" class="date-input">
+                </p-calendar>
+            </div>
+        <div class="d-flex justify-content-center butSpecs mt-4 ml-3 p-0">
             <button type="button" class="font-fam cancel_grey" (click)="canceldownloadWagesModal()">Cancel</button>
             <button type="button" class="font-fam submitProcess" (click)="download()" style="margin-left: 10px;">Download</button>
         </div>

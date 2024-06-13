@@ -6,7 +6,11 @@
     <div class="d-flex justify-content-end align-item-right tableColor" >
         <span class="totalHeading"> LT Total : {{this.totalProjectAmount}}</span>
         <span class="totalHeadingSecond">LT Booked Total :{{this.totalBookedAmount}}</span>
-    </div>
+   </div>
+   <div class="d-flex justify-content-end align-item-right tableColor" >
+    <span class="bookingDate">Booking Date : {{this.bookingDate| date}}</span>
+</div>
+   
     <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
         <ng-template pTemplate="footer">
             <button type="button" pButton icon="pi pi-times" label="No" (click)="reject()"
@@ -18,13 +22,19 @@
     <div class="p-4 tableColor" [formGroup]="this.projectForm">
         <div class="boxShadow justify-content-around mainBox">
             <div class="d-block">
-                <div class="font15">Wages Number</div>
+                <div class="font15"> Delivery Date:</div>
+                <div class="wagesDate">
+                    <p-calendar (onSelect)="submitDate()" [defaultDate]="this.currentDate" [(ngModel)]="dateFromValue" [minDate]="this.dobminDate" 
+                        dateFormat="dd-mm-yy" formControlName="delivery_date" timezone="utc" [showIcon]="true" class="date-input">
+                    </p-calendar>
+                </div>
+                <!-- <div class="font15">Wages Number</div>
                 <select class="selectdropdown1 mt-2 widthSelect" formControlName="wages_number"
                     (change)="checkAvailablity()">
                     <option value="PS">Select Wages Number</option>
                     <option *ngFor="let detail of this.wagesNumber" value="{{detail}}">{{detail}}
                     </option>
-                </select>
+                </select> -->
                 <div class="font15">Block Number</div>
                 <select (change)="getFloorData()" class="selectdropdown1 mt-2 widthSelect" formControlName="block_name">
                     <option value="PS">Select Block Number</option>
@@ -35,7 +45,7 @@
             </div>
             <div class="d-block">
                 <div class="font15">Project Name</div>
-                <select (change)="getProjectTotal($event)" (change)="getBlockData($event)"  class="selectdropdown1 mt-2 widthSelect"
+                <select (change)="getProjectTotal($event)"  (change)="checkAvailablity()" (change)="getBlockData($event)"  class="selectdropdown1 mt-2 widthSelect"
                     formControlName="project_name">
                     <option value="PS">Select Project Name</option>
                     <option *ngFor="let detail of this.projectDetails" value="{{detail?.id}}">{{detail?.project_name}}
@@ -83,7 +93,7 @@
             </div>
             <div class="d-flex align-items-start mt-4 spacingTop">
                 <!-- <p-button label="Download Wages" download target="_blank" class="mt-2" (click)="download()"></p-button> -->
-                <p-button (click)="navigatedTowages()" label="Check Wages" class="mt-2"></p-button>
+                <p-button (click)="navigatedTowages()" label="Check Orders" class="mt-2"></p-button>
             </div>
         </div>
         <div class="inner-card mt-4 w-100"
@@ -140,32 +150,32 @@
                                     <ng-template pTemplate="header">
                         <tr>
                             <th>Sub Description</th>
-                            <th>Total Allowance</th>
-                            <th>Remaining Booking Amount</th>
-                            <th>Booking Amount</th>
+                            <th>Total Quantity</th>
+                            <th>Remaining Quantity</th>
+                            <th>Booking Quantity</th>
                             <th></th>
                         </tr>
                         <tr>
                             <th class="subHeading p-2">{{i+1}}. {{description?.sub_description}}
                             </th>
-                             <th class="marginLeft p-2">£ {{(description.sub_total) ?
+                             <th class="marginLeft p-2"> {{(description.sub_total) ?
                                 this.service.formatNumber((description.sub_total).toFixed(2)) : 0.00}}</th>
-                            <th class="marginLeft p-2">£ {{(description.sub_total -
+                            <th class="marginLeft p-2"> {{(description.sub_total -
                                 description.sub_total_amount_booked) ? this.service.formatNumber((description.sub_total -
                                 description.sub_total_amount_booked).toFixed(2)) : 0.00}}</th>
                             <th>
-                                <div class="d-block position-relative"><span class="currency">£</span><input
+                                <div class="d-block position-relative"><input
                                         type="number" value="this.totalAmount" (input)="calculate(i,$event)"
                                         class="paddingLeft">
                                     <p class="error mb-0" *ngIf="this.showerror[i] && this.enteredValue && this.enteredValue >= 0  ">
-                                        Booking Amount Should be less
-                                        than total Amount.</p>
+                                        Booking Quantity Should be less
+                                        than total Quantity.</p>
                                     <p class="error mb-0" *ngIf="this.showerror[i] && this.enteredValue && this.enteredValue <= 0">
-                                        Booking Amount Should be greater than 0.</p>
+                                        Booking Quantity Should be greater than 0.</p>
                                 </div>
                             </th>
                             <th class="p-2" (click)="addWages(i,null)"><span class="addWages cursor-pointer">Add
-                                    Wages</span>
+                                QTY</span>
                             </th>
                         </tr>
                         <tr>
@@ -181,16 +191,20 @@
                             <td *ngFor="let cols of nestedcolumns; let j = index" class="table-span">
                                 <span *ngIf="i!=this.selectedTable || !this.editOption[row]">
                                     <span *ngIf="j!=3 && j!=4"> {{rowData[cols.field]}}</span>
-                                    <span *ngIf="j==3 || j==4">£ {{rowData[cols.field] ?
-                                        this.service.formatNumber(rowData[cols.field]) : 0.00}}</span>
+                                    <!-- <span *ngIf="j==3 || j==4">£ {{rowData[cols.field] ?
+                                        this.service.formatNumber(rowData[cols.field]) : 0.00}}</span> -->
                                 </span>
                                 <span *ngIf="this.editOption[row] && i==this.selectedTable">
                                     <span *ngIf="j==0">{{rowData[cols.field]}}</span>
                                     <span *ngIf="j==1"><input type="text" formControlName="area"></span>
                                     <span *ngIf="j==2"><input type="text" formControlName="unit"></span>
-                                    <span *ngIf="j==3"><input type="text" formControlName="lab_rate"></span>
-                                    <span *ngIf="j==4">£ {{rowData[cols.field] ?
-                                        this.service.formatNumber(rowData[cols.field]) : 0.00}}</span>
+                                    <!-- <span *ngIf="j==3">
+                                        <input type="text" formControlName="lab_rate">
+                                    </span>
+                                    <span *ngIf="j==4">
+                                        £ {{rowData[cols.field] ?
+                                        this.service.formatNumber(rowData[cols.field]) : 0.00}}
+                                    </span> -->
                                 </span>
                                 <span *ngIf="j==4 && this.service.getRole()=='admin'" class="marginLeft">
                                     <button class="addWages marginLeft" (click)="edit(i , row)"

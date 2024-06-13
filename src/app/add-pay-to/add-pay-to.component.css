@@ -15,12 +15,13 @@
 
 
 .boxStyleAddWages {
-    margin-left: 6em;
+    align-self: center;
     background-color: white;
     box-shadow: 0 0 10px #ccc;
     padding: 2em;
     border-radius: 25px;
     border: 2px solid #357ace;
+    height: 30em;
 }
 
 .cursor-pointor {
