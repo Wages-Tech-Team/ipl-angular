@@ -1004,7 +1004,7 @@ export class ConstructionDetailsComponent implements OnInit {
         }
         this.service.showloader = false;
         if (type == 'addWages')
-          this.confirm1('Wages Added Successfully !', null);
+          this.confirm1('Material booked successfully!', null);
       }
       else {
         this.service.showloader = false;
