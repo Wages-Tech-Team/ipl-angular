@@ -712,7 +712,7 @@ export class ConstructionDetailsComponent implements OnInit {
         this.totalAmount = '';
         this.service.showloader = false;
         if (value == 'addWages')
-          this.confirm1('Wages Added Successfully !', null);
+          this.confirm1('Material booked successfully!', null);
       }
       else {
         this.service.showloader = false;
