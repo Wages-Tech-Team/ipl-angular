@@ -83,6 +83,10 @@ export class GetWagesComponent implements OnInit {
       header: 'Quantity'
     })
     this.column.push({
+      field: 'unit',
+      header: 'Unit'
+    })
+    this.column.push({
       field: '',
       header: ''
     })
@@ -212,7 +216,7 @@ export class GetWagesComponent implements OnInit {
   confirm(message: any, heading: any, index: any) {
     this.selectedRowIndexDelete = index;
     this.modalHeading = heading;
-    if (this.modalHeading == 'Save Wages') {
+    if (this.modalHeading == 'Save Order') {
       if (this.errorMessage[this.selectedRowIndex])
         return;
     }
@@ -224,9 +228,9 @@ export class GetWagesComponent implements OnInit {
 
     accept = () => {
         this.confirmationService.close();
-        if (this.modalHeading == 'Delete Wages')
+        if (this.modalHeading == 'Delete Order')
         this.deleteDetail();
-        if (this.modalHeading == 'Save Wages') {
+        if (this.modalHeading == 'Save Order') {
             this.saveDetail();
         }
         if (this.modalHeading == 'Final Submit')

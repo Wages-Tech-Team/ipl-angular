@@ -136,7 +136,7 @@ export class ConstructionDetailsComponent implements OnInit {
     this.projectForm.get('project_name')?.setValue(sessionStorage.getItem('project_id') ? sessionStorage.getItem('project_id') : 'PS');
     if (this.projectForm.get('project_name')?.value)
       this.getBlockData(this.projectForm.get('project_name')?.value);
-      this.getProjectTotal(this.projectForm.get('project_name')?.value);
+    //  this.getProjectTotal(this.projectForm.get('project_name')?.value);
     this.projectForm.get('block_name')?.setValue(sessionStorage.getItem('block_id') ? sessionStorage.getItem('block_id') : 'PS');
     if (this.projectForm.get('block_name')?.value)
       this.getFloorData();
@@ -547,7 +547,9 @@ export class ConstructionDetailsComponent implements OnInit {
                     "sum": Number(Number((this.percentageAmount[row] / 100) * this.data[index]?.records[j]?.sub_records[sub]?.remaining_booking_amount).toFixed(2)),
                     "user_id": sessionStorage.getItem('user_id'),
                     "floor_id": this.data[i]?.records[j]?.sub_records[sub]?.floor_id,
-                    "sub_description_id": this.data[i]?.records[j]?.sub_records[sub]?.sub_description_id
+                    "sub_description_id": this.data[i]?.records[j]?.sub_records[sub]?.sub_description_id,
+                    "unit": this.data[i]?.records[j]?.units
+
                   })
                 }
               }
@@ -582,7 +584,8 @@ export class ConstructionDetailsComponent implements OnInit {
         "sum": Number(this.totalAmount).toFixed(2),
         "user_id": sessionStorage.getItem('user_id'),
         "floor_id": this.data[this.selectedRowIndex]?.sub_description_records[index]?.records[0]?.floor_id,
-        "sub_description_id": this.data[this.selectedRowIndex]?.sub_description_records[index]?.records[0]?.sub_description_id
+        "sub_description_id": this.data[this.selectedRowIndex]?.sub_description_records[index]?.records[0]?.sub_description_id,
+        "unit": this.data[this.selectedRowIndex]?.sub_description_records[index]?.records[0]?.unit
       })
     }
 
@@ -956,14 +959,14 @@ export class ConstructionDetailsComponent implements OnInit {
         field: 'total',
         header: 'Remaining Quantity'
       })
-    this.column.push({
-      field: '',
-      header: '% Booked'
-    })
-    this.column.push({
-      field: '',
-      header: 'Booking Quantity'
-    })
+    // this.column.push({
+    //   field: '',
+    //   header: '% Booked'
+    // })
+    // this.column.push({
+    //   field: '',
+    //   header: 'Booking Quantity'
+    // })
     this.column.push({
       field: '',
       header: ''
@@ -985,6 +988,7 @@ export class ConstructionDetailsComponent implements OnInit {
         this.nestedcolumns.push(
           { field: 'sub_description_header', header: 'Booking Description' },
           { field: 'sub_total', header: 'Total Quantity' },
+          { field: 'units', header: 'Unit' },
           { field: '', header: 'Remaining Quantity' },
           { field: '', header: '% Booked' },
           { field: '', header: 'Booking Quantity' },

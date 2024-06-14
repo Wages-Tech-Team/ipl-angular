@@ -3,10 +3,10 @@
     <div class="d-flex justify-content-center align-item-center" style="background-color: dodgerblue;">
         <span class="projectHeading">INTERIOR PARTNERSHIPS LTD</span>
     </div>
-    <div class="d-flex justify-content-end align-item-right tableColor" >
+    <!-- <div class="d-flex justify-content-end align-item-right tableColor" >
         <span class="totalHeading"> LT Total : {{this.totalProjectAmount}}</span>
         <span class="totalHeadingSecond">LT Booked Total :{{this.totalBookedAmount}}</span>
-   </div>
+   </div> -->
    <div class="d-flex justify-content-end align-item-right tableColor" >
     <span class="bookingDate">Booking Date : {{this.bookingDate| date}}</span>
 </div>
@@ -45,7 +45,7 @@
             </div>
             <div class="d-block">
                 <div class="font15">Project Name</div>
-                <select (change)="getProjectTotal($event)"  (change)="checkAvailablity()" (change)="getBlockData($event)"  class="selectdropdown1 mt-2 widthSelect"
+                <select (change)="checkAvailablity()" (change)="getBlockData($event)"  class="selectdropdown1 mt-2 widthSelect"
                     formControlName="project_name">
                     <option value="PS">Select Project Name</option>
                     <option *ngFor="let detail of this.projectDetails" value="{{detail?.id}}">{{detail?.project_name}}
@@ -166,7 +166,7 @@
                             <th>
                                 <div class="d-block position-relative"><input
                                         type="number" value="this.totalAmount" (input)="calculate(i,$event)"
-                                        class="paddingLeft">
+                                        class="paddingLeft"  style="width: 10em;">
                                     <p class="error mb-0" *ngIf="this.showerror[i] && this.enteredValue && this.enteredValue >= 0  ">
                                         Booking Quantity Should be less
                                         than total Quantity.</p>
@@ -254,8 +254,10 @@
                                     {{rowData[col.field]}} <span class="addIcon marginLeft"
                                         *ngIf="!expanded">+</span><span class="addIcon marginLeft"
                                         *ngIf="expanded">-</span></span>
-                                <span *ngIf="i==1" class="marginLeft">£ {{(rowData.total) ?
+                                <span *ngIf="i==1" class="marginLeft">{{(rowData.total) ?
                                     this.service.formatNumber((rowData.total).toFixed(2)) : 0.00}}</span>
+                                    <span *ngIf="i==2" class="marginLeft">{{(rowData.remaining_total) ?
+                                        this.service.formatNumber((rowData.remaining_total).toFixed(2)) : 0.00}}</span>
                                 <!-- <span class="cursor-pointer" *ngIf="i == 2"><input type="number"
                                         value="{{percentageAmount[row]}}" (input)="getBookingAmount($event, row)">
                                     <p class="error mb-0"
@@ -290,19 +292,20 @@
                         <tr>
                             <td *ngFor="let cols of nestedcolumns; let j = index" class="table-span">
                                 <span *ngIf="j==0">{{rowData[cols.field]}}</span>
-                                <span *ngIf="j==1">£ {{rowData[cols.field] ?
+                                <span *ngIf="j==1">{{rowData[cols.field] ?
                                     this.service.formatNumber(rowData[cols.field]) : 0.00}}</span>
-                                <span *ngIf="j==2">£ {{this.remainingAmount[row] ? this.service.formatNumber(this.remainingAmount[row].toFixed(2)) : 0.00}}</span>
-                                <span class="cursor-pointer" *ngIf="j == 3"><input type="number"
-                                        value="{{percentageAmount[row]}}" (input)="getBookingAmount($event,row,this.selectedRowIndex)">
+                                <span *ngIf="j==2" style="width: 5em;">{{rowData[cols.field]}}</span>
+                                <span *ngIf="j==3">{{this.remainingAmount[row] ? this.service.formatNumber(this.remainingAmount[row].toFixed(2)) : 0.00}}</span>
+                                <span class="cursor-pointer" *ngIf="j == 4"><input type="number"
+                                        value="{{percentageAmount[row]}}" (input)="getBookingAmount($event,row,this.selectedRowIndex)"  style="width: 10em;">
                                     <p class="error mb-0"
                                         *ngIf="percentageAmount[row] && (percentageAmount[row] > 100)">% Completed can't
                                         be greater than 100.</p>
                                 </span>
-                                <span class="cursor-pointer position-relative" *ngIf="j == 4"><span class="currency">£</span><input type="number" value="{{bookingAmount[row]}}" class="paddingLeft" [disabled] = "true">
-                                    <p class="error mb-0" *ngIf="bookingAmount[row] && (bookingAmount[row] <= 0)">Booking Amount can't be smaller than 0.</p>
+                                <span class="cursor-pointer position-relative" *ngIf="j == 5"><input type="number" value="{{bookingAmount[row]}}" class="paddingLeft" [disabled] = "true"  style="width: 10em;">
+                                    <p class="error mb-0" *ngIf="bookingAmount[row] && (bookingAmount[row] <= 0)">Booking Quantity can't be smaller than 0.</p>
                                 </span>
-                                <div *ngIf="j==5" (click)="addWages(this.selectedRowIndex,row)" class="cursor-pointer paddingLeft"><span class="addWages">Add Wages</span></div>
+                                <div *ngIf="j==6" (click)="addWages(this.selectedRowIndex,row)" class="cursor-pointer paddingLeft"><span class="addWages">Add QTY</span></div>
                             </td>
                         </tr>
                     </ng-template>

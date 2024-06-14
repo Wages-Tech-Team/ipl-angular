@@ -18,10 +18,10 @@
             <!-- <div class="container"> -->
                 <div class="d-flex">
                     <button class="finalSubmit" (click)="downloadWagesModal(selectDateModal)">Download Orders</button>
-                    <button class="wagesReport" (click)="navigatedTowagesReport()">Wages Report</button>
+                    <button class="wagesReport" (click)="navigatedTowagesReport()">Recent Orders</button>
                 <!-- </div> -->
                 <!-- <div class="d-flex justify-content-end"> -->
-                    <button class="finalSubmitSecond" *ngIf="this.wagesReport" (click)="confirm('Are you sure you want to final submit the wages ?','Final Submit',null)">Final Submission</button>
+                    <button class="finalSubmitSecond" *ngIf="this.wagesReport" (click)="confirm('Are you sure you want to final submit the order ?','Final Submit',null)">Final Submission</button>
                 </div>
             <!-- </div> -->
            
@@ -37,14 +37,14 @@
                     <ng-template pTemplate="body" let-rowData let-columns="columns" let-row="rowIndex" [formGroup]="this.editForm">
                         <tr>
                             <td *ngFor="let col of columns; let i = index">
-                                <span *ngIf="i != 8 && i !=9"> {{rowData[col.field] ? rowData[col.field] : "-"}} </span>
+                                <span *ngIf="i != 8 && i !=10"> {{rowData[col.field] ? rowData[col.field] : "-"}} </span>
                                 <span *ngIf="i==8 && !this.editOption[row]"> {{this.service.formatNumber(number(rowData[col.field])?.toFixed(2))}}</span>
                                 <span *ngIf="i==8 && this.editOption[row]"><input type="text" class="w-100" formControlName="amount" (input)="amountCheck(row)"></span>
                                 <p *ngIf="i==8 && this.editOption[row] && this.errorMessage[row]" class="error mb-0 font11">Amount Should be less than Remaining Amount.</p>
-                                <div *ngIf="i==9 && this.editAndDeletePermission == 1" class="d-flex boxStyle">
+                                <div *ngIf="i==10 && this.editAndDeletePermission == 1" class="d-flex boxStyle">
                                 <button class="editOption" *ngIf="!this.editOption[row]" (click)="editDetail(row)">Edit</button>
-                                <button class="delete mt-2" *ngIf="!this.editOption[row]" (click)="confirm('Are you sure you want to delete the wage ?','Delete Wages',row)">Delete</button>
-                                <button class="editOption" *ngIf="this.editOption[row]" (click)="confirm('Are you sure you want to save the wage ?','Save Wages',null)">Save</button>
+                                <button class="delete mt-2" *ngIf="!this.editOption[row]" (click)="confirm('Are you sure you want to delete the order ?','Delete Order',row)">Delete</button>
+                                <button class="editOption" *ngIf="this.editOption[row]" (click)="confirm('Are you sure you want to save the order ?','Save Order',null)">Save</button>
                                 <button class="delete mt-2" *ngIf="this.editOption[row]" (click)="this.editOption[row] = false">X</button>
                                 </div>
                             </td>
@@ -57,10 +57,10 @@
                     </td>
                 </div>
             </div>
-            <div class="d-flex justify-content-end">
+            <!-- <div class="d-flex justify-content-end">
                 <span class="sub-total">Total :</span>
                 <span class="sub-total-value"> {{this.subTotal}}</span>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

@@ -90,6 +90,10 @@ export class GetWagesReportComponent implements OnInit {
       header: 'Quantity'
     })
     this.column.push({
+      field: 'unit',
+      header: 'Unit'
+    })
+    this.column.push({
       field: '',
       header: ''
     })
