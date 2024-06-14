@@ -46,7 +46,7 @@ tr>.header-stock-color {
 }
 
 .backstyle {
-    padding: 8em;
+    padding: 4em;
     overflow-y: auto;
     background-image: url(./assets/Admin_1.png);
     background-position-x:100%;

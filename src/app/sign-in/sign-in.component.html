@@ -1,4 +1,5 @@
 <div class="backstyle" [ngClass]="{'loading-css' : this.service.showloader}">
+   
     <p-confirmDialog [style]="{ width: '20vw',background:'white' }" [baseZIndex]="10000">
         <ng-template pTemplate="footer">
             <button type="button" pButton icon="pi pi-times" label="Cancel" (click)="reject()"></button>
@@ -9,6 +10,10 @@
             <div class="headingSihnIn">Sign In</div>
             <div class="signInCardSpan">
                 <span><img src="./../../assets/sign-in.png" width="220px" class="mr"></span>
+            </div>
+            <div class="d-flex justify-content-center">
+                <p style="color: red;  font-size: 1vw;   font-weight: 800;"> System is currently under maintenance! <br> Please visit <a href="https://ipl-material.web.app/">https://ipl-material.web.app/</a> <br> for material booking.</p>
+                
             </div>
             <div class="d-flex mt-4 w-100">
                 <div class="d-block  w-100">
@@ -31,7 +36,7 @@
                 </div>
             </div>
             <div class="mt-4">
-                <button class="mt-4 signIn w-100" (click)="submit()">Sign In</button>
+                <button class="mt-4 signIn w-100" >Sign In</button>
             </div>
             <!-- <div class="inputLabel mt-2 cursor-pointor" (click)="navigatedToSignUp()">Don't have an Account? <span class="spanColor">Sign Up</span></div> -->
         </div>
