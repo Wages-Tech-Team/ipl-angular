@@ -175,7 +175,7 @@
                                 </div>
                             </th>
                             <th class="p-2" (click)="addWages(i,null)"><span class="addWages cursor-pointer">Add
-                                QTY</span>
+                                Qty</span>
                             </th>
                         </tr>
                         <tr>
@@ -305,7 +305,7 @@
                                 <span class="cursor-pointer position-relative" *ngIf="j == 5"><input type="number" value="{{bookingAmount[row]}}" class="paddingLeft" [disabled] = "true"  style="width: 10em;">
                                     <p class="error mb-0" *ngIf="bookingAmount[row] && (bookingAmount[row] <= 0)">Booking Quantity can't be smaller than 0.</p>
                                 </span>
-                                <div *ngIf="j==6" (click)="addWages(this.selectedRowIndex,row)" class="cursor-pointer paddingLeft"><span class="addWages">Add QTY</span></div>
+                                <div *ngIf="j==6" (click)="addWages(this.selectedRowIndex,row)" class="cursor-pointer paddingLeft"><span class="addWages">Add Qty</span></div>
                             </td>
                         </tr>
                     </ng-template>
