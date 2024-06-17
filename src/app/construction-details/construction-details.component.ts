@@ -951,14 +951,14 @@ export class ConstructionDetailsComponent implements OnInit {
       field: 'description_header',
       header: 'Booking Description'
     })
-    this.column.push({
-      field: 'total',
-      header: 'Total Quantity'
-    }),
-      this.column.push({
-        field: 'total',
-        header: 'Remaining Quantity'
-      })
+    // this.column.push({
+    //   field: 'total',
+    //   header: 'Total Quantity'
+    // }),
+    //   this.column.push({
+    //     field: 'total',
+    //     header: 'Remaining Quantity'
+    //   })
     // this.column.push({
     //   field: '',
     //   header: '% Booked'

@@ -7,7 +7,7 @@
         <span class="totalHeading"> LT Total : {{this.totalProjectAmount}}</span>
         <span class="totalHeadingSecond">LT Booked Total :{{this.totalBookedAmount}}</span>
    </div> -->
-   <div class="d-flex justify-content-end align-item-right tableColor" >
+   <div class="d-flex justify-content-left align-item-left tableColor" >
     <span class="bookingDate">Booking Date : {{this.bookingDate| date}}</span>
 </div>
    
@@ -254,10 +254,10 @@
                                     {{rowData[col.field]}} <span class="addIcon marginLeft"
                                         *ngIf="!expanded">+</span><span class="addIcon marginLeft"
                                         *ngIf="expanded">-</span></span>
-                                <span *ngIf="i==1" class="marginLeft">{{(rowData.total) ?
+                                <!-- <span *ngIf="i==1" class="marginLeft">{{(rowData.total) ?
                                     this.service.formatNumber((rowData.total).toFixed(2)) : 0.00}}</span>
                                     <span *ngIf="i==2" class="marginLeft">{{(rowData.remaining_total) ?
-                                        this.service.formatNumber((rowData.remaining_total).toFixed(2)) : 0.00}}</span>
+                                        this.service.formatNumber((rowData.remaining_total).toFixed(2)) : 0.00}}</span> -->
                                 <!-- <span class="cursor-pointer" *ngIf="i == 2"><input type="number"
                                         value="{{percentageAmount[row]}}" (input)="getBookingAmount($event, row)">
                                     <p class="error mb-0"
