@@ -168,6 +168,17 @@
     margin-left: 1em;
 }
 
+.groupedReport {
+    background: white;
+    border: 2px solid #096ead;
+    width: 220px;
+    height: 2.2em;
+    color: #096ead;
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 1em;
+}
+
 
 .finalSubmitSecond {
     background: white;

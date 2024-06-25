@@ -17,11 +17,14 @@ export class ConstructionDetailsComponent implements OnInit {
   data: any = [];
   nestedcolumn: any = [];
   apartmentDetails: any;
+  enterAmountUpperRowIndex: number = -1;
+  enterAmountLowwerRowIndex: number = -1;
   selectedRowIndex: number = 0;
   blockDetails: any;
   projectForm: UntypedFormGroup;
   projectDetails: any;
   showerror: Array<boolean> = [];
+  nestedShowerror: boolean[][] = [];
   totalAmount: any;
   totalProjectAmount: any;
   totalBookedAmount: any;
@@ -425,42 +428,48 @@ export class ConstructionDetailsComponent implements OnInit {
     this.percentageAmount = [];
     this.bookingAmount = [];
     this.remainingAmount = []
-    for (let index = 0; index < this.data[this.selectedRowIndex].records.length; index++) {
-      this.remainingAmount[index] = 0;
-      //  if(index == this.selectedRowIndex){
-      for (let innerIndex = 0; innerIndex < this.data[this.selectedRowIndex].records[index].sub_records.length; innerIndex++) {
-        this.remainingAmount[index] += Number(this.data[this.selectedRowIndex].records[index].sub_records[innerIndex].remaining_booking_amount);
-      }
-      //  }
-    }
+    // for (let index = 0; index < this.data[this.selectedRowIndex].records.length; index++) {
+    //   this.remainingAmount[index] = 0;
+    //   //  if(index == this.selectedRowIndex){
+    //   for (let innerIndex = 0; innerIndex < this.data[this.selectedRowIndex].records[index].length; innerIndex++) {
+    //     // this.remainingAmount[index] += Number(this.data[this.selectedRowIndex].records[index].sub_records[innerIndex].remaining_booking_amount);
+    //   }
+    //   //  }
+    // }
 
     this.wages.get('area')?.setValue(''),
       this.wages.get('unit')?.setValue(''),
       this.wages.get('lab_rate')?.setValue('')
   }
 
-  calculate = (row: number, event: any) => {
+  calculate = (sub_row:number,row: number, event: any) => {
     for (let i = 0; i < this.data.length; i++) {
       this.message[i] = false;
     }
+
     event = Number(event.target.value);
     if (event <= 0) {
-      this.showerror[row] = true;
+      this.enterAmountUpperRowIndex = sub_row;
+      this.enterAmountLowwerRowIndex = row;
       this.enteredValue = event
     }
+
     if (event) {
-      if (Number((this.data[this.selectedRowIndex].sub_description_records[row].sub_total - this.data[this.selectedRowIndex].sub_description_records[row].sub_total_amount_booked).toFixed(2)) < event) {
-        this.showerror[row] = true;
+      if (Number((this.data[this.selectedRowIndex].sub_description_records[sub_row].records[row].total - this.data[this.selectedRowIndex].sub_description_records[sub_row].records[row].amount_booked).toFixed(2)) < event) {
+        this.enterAmountUpperRowIndex = sub_row;
+        this.enterAmountLowwerRowIndex = row;
         this.enteredValue = event
       }
       else {
         this.totalAmount = event;
-        this.showerror[row] = false;
+        this.enterAmountUpperRowIndex = -1;
+        this.enterAmountLowwerRowIndex = -1;
         this.enteredValue = event
       }
     }
     if (event <= 0) {
-      this.showerror[row] = true;
+      this.enterAmountUpperRowIndex = sub_row;
+      this.enterAmountLowwerRowIndex = row;
       this.enteredValue = event
     }
   }
@@ -473,17 +482,15 @@ export class ConstructionDetailsComponent implements OnInit {
       if (col == id) {
         for (let record = 0; record < this.data[id].records.length; record++) {
           if (rowId == record) {
-            for (let sub = 0; sub < this.data[id].records[rowId].sub_records.length; sub++) {
-              this.bookingAmount[rowId] = this.bookingAmount[rowId] + ((event / 100) * this.data[id].records[record].sub_records[sub].remaining_booking_amount);
-            }
+            this.bookingAmount[rowId] = this.bookingAmount[rowId] + ((event / 100) * this.data[id].records[record].remaining_booking_amount)
           }
         }
       }
     }
-    this.bookingAmount[rowId] = Number(this.bookingAmount[rowId]).toFixed(2)
+    this.bookingAmount[rowId] = Number(this.bookingAmount[rowId]).toFixed()
   }
 
-  addWages = (index: number, row: any) => {
+  addWages = (index: number, row: any, internal_row: any) => {
     if (this.projectForm.get('project_name')?.value == 'PS') {
       this.confirm1('Please Select Project!', null);
       return
@@ -498,12 +505,13 @@ export class ConstructionDetailsComponent implements OnInit {
         return;
       }
 
-    this.service.showloader = true;
-    this.bookWages = []
+   
     for (let i = 0; i < this.data.length; i++) {
       this.message[i] = false;
     }
     if (this.appartmentids.length > 0 || this.floorids.length > 0) {
+      this.service.showloader = true;
+      this.bookWages = []
       let i = 0;
       if (this.apartmentDetails.length > 0) {
         this.appartmentids = this.appartmentids.sort(function (a, b) { return a - b });
@@ -541,14 +549,16 @@ export class ConstructionDetailsComponent implements OnInit {
                     "apartment_id": this.data[i]?.records[j]?.sub_records[sub]?.apartment_id ? this.data[i]?.records[j]?.sub_records[sub]?.apartment_id:null,
                     "plot_or_room": this.apartmentName[this.data[i]?.records[j]?.sub_records[sub]?.apartment_id] ? this.apartmentName[this.data[i]?.records[j]?.sub_records[sub]?.apartment_id] : this.floorName[this.data[i]?.records[j]?.sub_records[sub]?.floor_id],
                     "description_work": this.data[index]?.description_header,
+                    "description": this.data[index]?.records[j]?.description,
+                    "consruction_id": this.data[index]?.records[j]?.sub_records[sub]?.id,
                     "main_description_id": this.data[index]?.records[j]?.sub_records[sub]?.main_description_id,
                     "m2_or_hours": "",
                     "rate": "",
-                    "sum": Number(Number((this.percentageAmount[row] / 100) * this.data[index]?.records[j]?.sub_records[sub]?.remaining_booking_amount).toFixed(2)),
+                    "sum": Number(Number((this.percentageAmount[row] / 100) * this.data[index]?.records[j]?.sub_records[sub]?.remaining_booking_amount).toFixed()),
                     "user_id": sessionStorage.getItem('user_id'),
                     "floor_id": this.data[i]?.records[j]?.sub_records[sub]?.floor_id,
                     "sub_description_id": this.data[i]?.records[j]?.sub_records[sub]?.sub_description_id,
-                    "unit": this.data[i]?.records[j]?.units
+                    "unit": this.data[i]?.records[j]?.unit
 
                   })
                 }
@@ -560,6 +570,11 @@ export class ConstructionDetailsComponent implements OnInit {
       }
     }
     else {
+      if( (this.enterAmountUpperRowIndex >=0 && this.enterAmountLowwerRowIndex >=0 && this.enteredValue) || (this.enteredValue == 0 || this.enteredValue < 0)){
+        return;
+      }
+      this.service.showloader = true;
+      this.bookWages = []
       for (let detail = 0; detail < this.apartmentDetails.length; detail++) {
         if (this.projectForm.get('apartment_name')?.value == this.apartmentDetails[detail].id) {
           this.apartmentName[0] = this.apartmentDetails[detail].apartment_number;
@@ -578,6 +593,8 @@ export class ConstructionDetailsComponent implements OnInit {
         "apartment_id": this.projectForm.get('apartment_name')?.value != 'PS' ? this.projectForm.get('apartment_name')?.value : '',
         "plot_or_room": this.apartmentName[0] ? this.apartmentName[0] : this.floorName[0],
         "description_work": this.data[this.selectedRowIndex]?.description_header,
+        "description": this.data[this.selectedRowIndex]?.sub_description_records[index]?.records[internal_row]?.description,
+        "consruction_id": this.data[this.selectedRowIndex]?.sub_description_records[index]?.records[internal_row]?.id,
         "main_description_id": this.data[this.selectedRowIndex]?.sub_description_records[index]?.records[0]?.main_description_id,
         "m2_or_hours": "",
         "rate": "",
@@ -622,6 +639,7 @@ export class ConstructionDetailsComponent implements OnInit {
   getConstructionData = (event: any, value: any, type: any) => {
     this.totalAmount = []
     this.showerror = []
+    this.nestedShowerror = []
     this.bookingAmount = []
     this.percentageAmount = []
     if (type == 'apartment') {
@@ -705,6 +723,7 @@ export class ConstructionDetailsComponent implements OnInit {
           { field: 'description', header: 'Work Description' },
           { field: 'area', header: 'Quantity' },
           { field: 'unit', header: 'Unit' },
+          { field: 'remaining', header: 'Remaining Qty' },
           { field: '', header: '' },
           { field: '', header: '' },
           // { field: '', header: '' },
@@ -986,22 +1005,22 @@ export class ConstructionDetailsComponent implements OnInit {
         this.data = res.body.data.description_work_details;
         this.nestedcolumns = [];
         this.nestedcolumns.push(
-          { field: 'sub_description_header', header: 'Booking Description' },
-          { field: 'sub_total', header: 'Total Quantity' },
-          { field: 'units', header: 'Unit' },
-          { field: '', header: 'Remaining Quantity' },
+          { field: 'description', header: 'Booking Description' },
+          { field: 'total', header: 'Total Quantity' },
+          { field: 'unit', header: 'Unit' },
+          { field: 'remaining_booking_amount', header: 'Remaining Quantity' },
           { field: '', header: '% Booked' },
           { field: '', header: 'Booking Quantity' },
           { field: '', header: '' },
         )
-        for (let index = 0; index < this.data[this.selectedRowIndex].records.length; index++) {
-          this.remainingAmount[index] = 0;
-          //  if(index == this.selectedRowIndex){
-          for (let innerIndex = 0; innerIndex < this.data[this.selectedRowIndex].records[index].sub_records.length; innerIndex++) {
-            this.remainingAmount[index] += Number(this.data[this.selectedRowIndex].records[index].sub_records[innerIndex].remaining_booking_amount);
-          }
-          //  }
-        }
+        // for (let index = 0; index < this.data[this.selectedRowIndex].records.length; index++) {
+        //   this.remainingAmount[index] = 0;
+        //   //  if(index == this.selectedRowIndex){
+        //   for (let innerIndex = 0; innerIndex < this.data[this.selectedRowIndex].records[index].sub_records.length; innerIndex++) {
+        //     this.remainingAmount[index] += Number(this.data[this.selectedRowIndex].records[index].sub_records[innerIndex].remaining_booking_amount);
+        //   }
+        //   //  }
+        // }
         this.service.showloader = false;
         if (type == 'addWages')
           this.confirm1('Material booked successfully!', null);

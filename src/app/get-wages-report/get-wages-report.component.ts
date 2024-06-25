@@ -71,11 +71,15 @@ export class GetWagesReportComponent implements OnInit {
     })
     this.column.push({
       field: 'description_work',
-      header: 'Description'
+      header: 'Main Description'
     })
     this.column.push({
       field: 'sub_description_header',
       header: 'Sub Description'
+    })
+    this.column.push({
+      field: 'description',
+      header: 'Description'
     })
     this.column.push({
       field: 'delivery_date',

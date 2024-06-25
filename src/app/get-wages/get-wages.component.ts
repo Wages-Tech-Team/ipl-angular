@@ -64,11 +64,15 @@ export class GetWagesComponent implements OnInit {
     })
     this.column.push({
       field: 'description_work',
-      header: 'Description'
+      header: 'Main Description'
     })
     this.column.push({
       field: 'sub_description_header',
       header: 'Sub Description'
+    })
+    this.column.push({
+      field: 'description',
+      header: 'Description'
     })
     this.column.push({
       field: 'delivery_date',
@@ -319,6 +323,38 @@ export class GetWagesComponent implements OnInit {
             }
         })
     }
+
+    grouped_download = () => {
+      this.service.showloader = true;
+      this.modal.dismissAll();
+      let body = {
+          "no_of_records": 1000000,
+          "page_no": 1,
+          "project_id": sessionStorage.getItem('project_id'),
+          "user_id": sessionStorage.getItem('user_id'),
+      }
+      this.service.postRequest("download-groupped-report", body).subscribe(res => {
+          if (res.body.code == 1001) {
+              this.service.showloader = false;
+              this.confirm(res.body.message, 'Download Wages', null);
+          }
+          else if (res.body.success == true || res.body.code == 1000) {
+              this.service.showloader = false;
+              let link = document.createElement('a');
+              this.imageUrl = res.body.data.excel_url;
+              link.setAttribute('href', this.imageUrl);
+              link.setAttribute('download', 'Wages_Booking' + '.xlsx');
+              link.style.visibility = "hidden";
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+          }
+          else {
+              this.service.showloader = false;
+              this.confirm(res.body.message,  'Download Wages', null);
+          }
+      })
+  }
 
     
     navigatedTowagesReport = () => {

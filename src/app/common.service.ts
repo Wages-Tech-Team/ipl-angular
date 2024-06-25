@@ -76,6 +76,15 @@ export class CommonService extends BaseServiceService {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
   }
 
+  checkNegativeValue(numb : any){
+    if(!numb)
+      return;
+    if(numb < 0){
+      return 0.00;
+    }
+    return numb;
+  }
+
   
   dateToUTC(value: any) {
     let date = new Date(value);
