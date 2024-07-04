@@ -17,9 +17,9 @@
         <div class="mt-4 inner-card">
             <!-- <div class="container"> -->
                 <div class="d-flex">
-                    <button class="groupedReport" (click)="grouped_download()">Download Grouped Orders</button>
+                    <!-- <button class="groupedReport" (click)="grouped_download()">Download Grouped Orders</button> -->
                     <button class="finalSubmit" (click)="downloadWagesModal(selectDateModal)">Download Orders</button>
-                    <button class="wagesReport" (click)="navigatedTowagesReport()">Recent Orders</button>
+                    <button class="wagesReport" *ngIf="this.recentOrderPermission" (click)="navigatedTowagesReport()">Recent Orders</button>
                 <!-- </div> -->
                 <!-- <div class="d-flex justify-content-end"> -->
                     <button class="finalSubmitSecond" *ngIf="this.wagesReport" (click)="confirm('Are you sure you want to final submit the order ?','Final Submit',null)">Final Submission</button>

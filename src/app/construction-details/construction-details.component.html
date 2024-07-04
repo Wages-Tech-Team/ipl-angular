@@ -24,7 +24,7 @@
             <div class="d-block">
                 <div class="font15"> Delivery Date:</div>
                 <div class="wagesDate">
-                    <p-calendar (onSelect)="submitDate()" [defaultDate]="this.currentDate" [(ngModel)]="dateFromValue" [minDate]="this.dobminDate" 
+                    <p-calendar (onSelect)="submitDate()" [defaultDate]="this.currentDate" placeholder="{{this.datePlaceholder}}"  [minDate]="this.dobminDate" 
                         dateFormat="dd-mm-yy" formControlName="delivery_date" timezone="utc" [showIcon]="true" class="date-input">
                     </p-calendar>
                 </div>

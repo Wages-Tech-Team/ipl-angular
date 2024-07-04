@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import { ConfirmationService, Message, PrimeNGConfig } from 'primeng/api';
 import { Column } from 'src/column.model';
 import { CommonService } from '../common.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-construction-details',
   templateUrl: './construction-details.component.html',
   styleUrls: ['./construction-details.component.css'],
-  providers: [ConfirmationService]
+  providers: [ConfirmationService,DatePipe]
 })
 export class ConstructionDetailsComponent implements OnInit {
   column: Array<Column> = new Array<Column>();
@@ -55,16 +56,23 @@ export class ConstructionDetailsComponent implements OnInit {
   bookingDate: any;
   dobminDate: Date = new Date(2022, 12, 1);
   dateFromValue: Date = new Date();
+  datePlaceholder: string = 'dd-mm-yyyy';
 
 
 
-  constructor(private router: Router, public service: CommonService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) {
+
+  constructor(private router: Router, public service: CommonService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig, private datePipe: DatePipe) {
+
+    // const currentDate = new Date();
+    // const transformedDate = this.datePipe.transform(currentDate, 'dd-MM-yy');
+    // this.dateFromValue = transformedDate ? transformedDate : '';
+
     this.projectForm = new UntypedFormGroup({
       "project_name": new UntypedFormControl('PS'),
       "block_name": new UntypedFormControl('PS'),
       "apartment_name": new UntypedFormControl('PS'),
       "floor_number": new UntypedFormControl('PS'),
-      "delivery_date": new UntypedFormControl('PS'),
+      "delivery_date": new UntypedFormControl(''),
 
     })
     this.wages = new UntypedFormGroup({
@@ -74,13 +82,14 @@ export class ConstructionDetailsComponent implements OnInit {
     })
   }
 
+
   ngOnInit(): void {
     this.currentDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate(), this.today.getHours(), this.today.getMinutes(), this.today.getSeconds(), this.today.getMilliseconds());
     this.bookingDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate());
-    this.projectForm.patchValue({
-      'delivery_date':this.currentDate
-    })
-    this.dobminDate =  this.currentDate;
+    // this.projectForm.patchValue({
+    //   'delivery_date':this.dateFromValue
+    // })
+    this.dobminDate =  this.today;
     this.service.showloader = true;
     this.getProjectData();
     this.primengConfig.ripple = true;
@@ -109,9 +118,7 @@ export class ConstructionDetailsComponent implements OnInit {
     //   this.wagesNumber.push(i);
   }
   submitDate = () => {
-    this.projectForm.patchValue({
-      'delivery_date':this.dateFromValue
-    });
+    this.projectForm.get('project_name')?.enable();
   }
   getProjectTotal = (event: any) => {
     event = event?.target?.value ? event.target.value : event;
@@ -334,10 +341,12 @@ export class ConstructionDetailsComponent implements OnInit {
   }
 
   checkAvailablity() {
-    if (this.projectForm.get('project_name')?.value == 'PS') {
+    if (this.projectForm.get('delivery_date')?.value == '') {
+      this.projectForm.get('project_name')?.setValue('PS');
       this.projectForm.get('block_name')?.setValue('PS');
       this.projectForm.get('apartment_name')?.setValue('PS');
       this.projectForm.get('floor_number')?.setValue('PS');
+      this.projectForm.get('project_name')?.disable();
       this.projectForm.get('block_name')?.disable();
       this.projectForm.get('apartment_name')?.disable();
       this.projectForm.get('floor_number')?.disable();

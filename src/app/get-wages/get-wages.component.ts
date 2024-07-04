@@ -24,6 +24,7 @@ export class GetWagesComponent implements OnInit {
   dobminDate: Date = new Date(2022, 12, 1);
   downloadWages:boolean = false
   wagesReport:boolean = false
+  recentOrderPermission:boolean = false
   editAndDeletePermission = 0;
   modalHeading: any;
   msgs: any;
@@ -113,6 +114,7 @@ export class GetWagesComponent implements OnInit {
         this.totalRecords = this.data.length;
         this.editAndDeletePermission = res.body.data.edit_and_delete_permission;
         this.wagesReport = res.body.data.wages_report_permission;
+        this.recentOrderPermission = res.body.data.recent_order_permission;
         this.subTotal = res.body.data.total_booking.toFixed(2);
         this.service.showloader = false;
       }
