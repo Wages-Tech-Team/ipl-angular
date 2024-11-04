@@ -26,6 +26,7 @@ export class AppComponent {
   ngOnInit(): void {
     this.checkCurrentScreen();
     // this.getProjectData();
+    this.service.startCleanupInterval()
   }
 
   selectedDetails = (event: any) => {
