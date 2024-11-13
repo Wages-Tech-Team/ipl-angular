@@ -47,6 +47,9 @@ export class ConstructionDetailsComponent implements OnInit {
   enteredValue: any;
   stock_hit_time: number = 2 * 60 * 1000;
   remainingAmount: Array<any> = [];
+  private lastCallTime: Map<string, number> = new Map();
+  private readonly limitMs: number = 2500;
+  ipAddress: any;
 
   constructor(private router: Router, public service: CommonService, private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) {
     this.projectForm = new UntypedFormGroup({
@@ -470,6 +473,8 @@ export class ConstructionDetailsComponent implements OnInit {
   }
 
   addWages = (index: number, row: any) => {
+    this.ipAddress = null;
+    this.startCleanupInterval();
     if (this.projectForm.get('wages_number')?.value == 'PS') {
       this.confirm1('Please Select Wages Number !', null);
       return
@@ -579,31 +584,66 @@ export class ConstructionDetailsComponent implements OnInit {
     let body = {
       "book_wages": this.bookWages
     }
-
-    this.service.postRequest("book-wages", body).subscribe(res => {
-      if (res.body.success == true || res.body.code == 1000) {
-        this.message[index] = true;
-        this.message[0] = true;
-        if (this.projectForm.get('apartment_name')?.value != 'PS')
-          this.getConstructionData(this.projectForm.get('apartment_name')?.value, 'addWages', 'apartment');
-        if (this.projectForm.get('floor_number')?.value != 'PS')
-          this.getConstructionData(this.projectForm.get('floor_number')?.value, 'addWages', 'floor');
-        if (this.appartmentids.length > 0)
-          this.getDescription(this.appartmentids, 'addWages', 'aparment');
-        if (this.floorids.length > 0)
-          this.getDescription(this.floorids, 'addWages', 'floor');
-        this.percentageAmount[index] = '';
-        this.bookingAmount[index] = ''
-      }
-      else {
+    console.log(this.lastCallTime);
+    this.service.getIPAddress("https://api.ipify.org/?format=json").subscribe(res => {
+      this.ipAddress = res.body.ip;
+      const now = Date.now();
+      const lastTime = this.lastCallTime.get(this.ipAddress);
+      debugger;
+      if (!lastTime) {
+        this.lastCallTime.set(this.ipAddress, now);
+        debugger;
+        this.service.postRequest("book-wages", body).subscribe(res => {
+          if (res.body.success == true || res.body.code == 1000) {
+            this.message[index] = true;
+            this.message[0] = true;
+            if (this.projectForm.get('apartment_name')?.value != 'PS')
+              this.getConstructionData(this.projectForm.get('apartment_name')?.value, 'addWages', 'apartment');
+            if (this.projectForm.get('floor_number')?.value != 'PS')
+              this.getConstructionData(this.projectForm.get('floor_number')?.value, 'addWages', 'floor');
+            if (this.appartmentids.length > 0)
+              this.getDescription(this.appartmentids, 'addWages', 'aparment');
+            if (this.floorids.length > 0)
+              this.getDescription(this.floorids, 'addWages', 'floor');
+            this.percentageAmount[index] = '';
+            this.bookingAmount[index] = ''
+          }
+          else {
+            this.service.showloader = false;
+            this.message[0] = true;
+            this.percentageAmount[index] = '';
+            this.bookingAmount[index] = ''
+            this.confirm1(res.body.message, null);
+          }
+        }
+        )
+      }else{
         this.service.showloader = false;
         this.message[0] = true;
         this.percentageAmount[index] = '';
         this.bookingAmount[index] = ''
-        this.confirm1(res.body.message, null);
+        this.confirm1("Process is already in-progress.", null);
       }
-    }
-    )
+      
+    });
+
+
+    
+  }
+
+
+
+  public startCleanupInterval(): void {
+    setInterval(() => {
+      const now = Date.now();
+      for (const [url, lastTime] of this.lastCallTime.entries()) {
+        if (now - lastTime >= this.limitMs) {
+          console.log(this.lastCallTime);
+          debugger;
+          this.lastCallTime.delete(url);
+        }
+      }
+    }, this.limitMs);
   }
 
   getConstructionData = (event: any, value: any, type: any) => {
