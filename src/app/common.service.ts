@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { BaseServiceService } from './base-service.service';
 import { map, catchError , retry} from 'rxjs/operators';
@@ -9,8 +9,6 @@ import { map, catchError , retry} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CommonService extends BaseServiceService {
-  private lastCallTime: Map<string, number> = new Map();
-  private readonly limitMs: number = 700;
   showloader: boolean = false;
   emailPattern: RegExp = /^[\w-]+(\.[\w-]+)*@([A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*?\.[A-Za-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$/;
   password: RegExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
@@ -25,35 +23,17 @@ export class CommonService extends BaseServiceService {
   public postRequest(url: any, baseRequest: Object): Observable<any> {
     const header: HttpHeaders = new HttpHeaders((url == 'register' || url == 'login') ? { 'ClientVersion': 'WEB:1' } : { 'authorization': "Bearer " + this.getToken() });
     const body = { request: baseRequest };
-    const path = url.split('/api/')[1];
-    if(this.isAllowed(path)){
-      return super
-      .makePostRequest(this.baseUrl + url, body, header)
-      .pipe(
-        retry(0),
-        catchError( (error: HttpErrorResponse) => {
-          this.showloader = false;
-          return throwError(
-             alert(`Something Went Wrong. The server is temporarily unable to service your request due to some technical problems. Please try again later or contact to website manager.`)
-          );
-        })
-      );
-    }else{
-      const defaultResponse = new HttpResponse({
-        status: 200,
-        body: {
-            success: true,
-            message: 'Success',
-            code: 1000,
-            data: {
-                message: 'Request is already in process'
-            }
-        }
-      });
-
-      return of(defaultResponse);
-    }
-    
+    return super
+        .makePostRequest(this.baseUrl + url, body, header)
+        .pipe(
+          retry(0),
+          catchError( (error: HttpErrorResponse) => {
+            this.showloader = false;
+            return throwError(
+               alert(`Something Went Wrong. The server is temporarily unable to service your request due to some technical problems. Please try again later or contact to website manager.`)
+            );
+          })
+        );
   }
 
   public getRequest(url: any): Observable<any> {
@@ -83,27 +63,6 @@ export class CommonService extends BaseServiceService {
 
   getRole() {
     return sessionStorage.getItem("role");
-  }
-
-  isAllowed(url: string): boolean {
-    const now = Date.now();
-    const lastTime = this.lastCallTime.get(url);
-    if (!lastTime) {
-      this.lastCallTime.set(url, now);
-      return true;
-    }
-    return false;
-  }
-
-  public startCleanupInterval(): void {
-    setInterval(() => {
-      const now = Date.now();
-      for (const [url, lastTime] of this.lastCallTime.entries()) {
-        if (now - lastTime >= this.limitMs) {
-          this.lastCallTime.delete(url);
-        }
-      }
-    }, this.limitMs);
   }
 
   formatNumber(num : any) {
