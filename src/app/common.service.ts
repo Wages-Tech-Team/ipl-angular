@@ -46,12 +46,6 @@ export class CommonService extends BaseServiceService {
       .makePostRequest(this.baseUrl + url, body, header)
   }
 
-  public getIPAddress(url: any): Observable<any> {
-    const header: HttpHeaders = new HttpHeaders();
-    return super
-      .makegetRequest(url, header)
-  }
-
   setToken(token: any) {
     sessionStorage.setItem("token",token);
   }
